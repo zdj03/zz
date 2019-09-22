@@ -1,8 +1,8 @@
 //
-//  WXModuleTest.h
-//  Test
+//  ZzModuleTest.h
+//  ZzMachO
 //
-//  Created by 周登杰 on 2019/9/18.
+//  Created by 周登杰 on 2019/9/22.
 //  Copyright © 2019 zdj. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WXModuleTest : NSObject<WXModuleProtocol>
+@interface ZzModuleTest : NSObject
 
 @end
 

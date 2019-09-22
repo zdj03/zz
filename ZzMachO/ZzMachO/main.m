@@ -40,10 +40,20 @@ void dynamic_call_function(){
     }
 }
 
+
+__attribute__((constructor))void beforeMain(){
+    NSLog(@"beforeMain");
+}
+
+__attribute__((desctructor))void afterMain(){
+    NSLog(@"afterMain");
+}
+
 int main(int argc, char * argv[]) {
     
-    dynamic_call_function();
+   // dynamic_call_function();
 
+    NSLog(@"Main");
     
     NSString * appDelegateClassName;
     @autoreleasepool {
