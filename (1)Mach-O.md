@@ -43,6 +43,14 @@ cputype 和 cpusubtype 确定 cpu 类型、平台
 
 filetype 文件类型，可执行文件、符号文件（DSYM）、内核扩展等
 
+文件类型包括以下：
+
+- OBJECT：.o文件或者.a文件
+- EXECUTE：IPA拆包后的文件
+- DYLIB：.dylib或.framework文件
+- DYLINKER：动态链接器
+- DSYM：保存有符号信息用于分析闪退信息的文件
+
 ncmds 加载 Load Commands 的数量
 
 flags dyld 加载的标志
