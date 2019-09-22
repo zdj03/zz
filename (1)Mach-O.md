@@ -274,6 +274,97 @@ int main(int argc, char * argv[]) {
 
 
 
+**Mach-O应用**
+
+Weex库`WeexPluginLoader`，使用宏可方便注册组件，用法如下：
+
+```
+注册module
+WX_PlUGIN_EXPORT_MODULE(test,WXTestModule)
+注册component
+WX_PlUGIN_EXPORT_COMPONENT(test,WXTestCompnonent)
+注册handler
+WX_PlUGIN_EXPORT_HANDLER(WXImgLoaderDefaultImpl,WXImgLoaderProtocol)
+```
+
+注册代码可直接写在组件代码，而无需写在工程业务代码，无需在appDelegate调用register相关的注册代码。
+
+最终的调用实际上是下面的宏：
+
+```
+#define WeexPluginDATA __attribute((used, section("__DATA,WeexPlugin")))
+```
+
+实际上是将数据保存在WeexPlugin的section中。
+
+我们使用宏实际上是：
+
+```
+#define WX_PlUGIN_EXPORT_MODULE_DATA(jsname,classname) \
+char const * k##classname##Configuration WeexPluginDATA = WX_PLUGIN_NAME("module",jsname,classname);
+```
+
+调用了宏之后，与组件相关的信息被保存到section中，实际上是保存一个字符串，如：
+
+```
+module&test&WXTestModule
+component&test&WXTestCompnonent
+protocol&WXImgLoaderDefaultImpl&WXImgLoaderProtocol
+```
+
+那么，我们只需从WeexPluginsection中取出来这些字符串，即可完成自动自动注册。
+
+Demo工程中（ZzMachO，我根据此原理写了相关类ZzWXPluginLoader，宏的定义参照WeexPluginLoader的定义），ZzWXPluginLoader类方法如下：
+
+```objective-c
+
++ (NSArray<NSString *> *)readConfigFromSectionName:(NSString *)sectionName
+{
+    NSMutableArray *configs = [NSMutableArray array];
+    if (sectionName.length)
+    {
+        if (machHeader == NULL)
+        {
+            //获取mach_headers信息
+            Dl_info info;
+            dladdr((__bridge const void *)(configuration), &info);
+            machHeader = (struct mach_header*)info.dli_fbase;
+        }
+        unsigned long size = 0;
+        //取得该section的数据
+        uintptr_t *memory = (uintptr_t*)getsectiondata(machHeader, SEG_DATA, [sectionName UTF8String], & size);
+        //获取该section每条信息
+        NSUInteger counter = size/sizeof(void*);
+        NSError *converError = nil;
+        for(int idx = 0; idx < counter; ++idx){
+            char *string = (char*)memory[idx];
+            
+            NSString *str = [NSString stringWithUTF8String:string];
+            
+            if (str || str.length > 0)
+            {
+                [configs addObject:str];
+            }
+        }
+    }
+    return configs;
+}
+```
+
+根据app的启动机制，只需在该类的+load方法中调用此方法即可。具体实现见Demo。
+
+输出结果：
+
+>**2019-09-22 17:25:17.585408+0800 ZzMachO[23375:811862] register protocol:WXResourceRequestHandler with jsimpl:ZzHandler**
+>
+>**2019-09-22 17:25:17.588759+0800 ZzMachO[23375:811862] register component:ZzComponent with jsname:componentTest**
+>
+>**2019-09-22 17:25:17.621288+0800 ZzMachO[23375:811862] register module:ZzModuleTest with jsname:moduleTest**
+
+
+
+
+
 参考：
 
 1、[探秘 Mach-O 文件](https://juejin.im/post/5ab47ca1518825611a406a39)
@@ -281,3 +372,5 @@ int main(int argc, char * argv[]) {
 2、iOS开发高手课：05|链接器：符号是怎么绑定到地址上的？
 
 3、[LLVM](https://blog.csdn.net/xhhjin/article/details/81164076)
+
+5、[Use Mach-O section as plist](https://www.jianshu.com/p/710f71f0247f)
