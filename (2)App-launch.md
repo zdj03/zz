@@ -49,17 +49,28 @@ pre-main阶段：主要是系统dylib（动态链接库）和自身App可执行�
 
 可以看到加载的相关动态链接库和加载时间。
 
-
-
 使用命令：`OTool -L ZzMachO `可以查看相关动态库的信息：
 
 ![dylib](/System/Volumes/Data/Users/zhoudengjie/文档/zz/pics/dylib.jpeg)
 
 
 
+**`dyld`是苹果的动态链接器**
+
+系统先读取App的可执行文件（Mach-O文件），从里面获得dyld的路径，然后加载dyld，dyld去初始化运行环境，开启缓存策略，加载程序相关依赖库(其中也包含我们的可执行文件)，并对这些库进行链接，最后调用每个依赖库的初始化方法，在这一步，runtime被初始化。当所有依赖库的初始化后，轮到最后一位(程序可执行文件)进行初始化，在这时runtime会对项目中所有类进行类结构初始化，然后调用所有的load方法。最后dyld返回main函数地址，main函数被调用，我们便来到了熟悉的程序入口。
 
 
-dylid加载过程：
+
+**dyld共享库缓存**
+
+当你构建一个真正的程序时，将会链接各种各样的库。它们又会依赖其他一些framework和动态库。需要加载的动态库会非常多。而对于相互依赖的符号就更多了。可能将会有上千个符号需要解析处理，这将花费很长的时间
+**为了缩短这个处理过程所花费时间，OS X 和 iOS 上的动态链接器使用了共享缓存，OS X的共享缓存位于/private/var/db/dyld/，iOS的则在/System/Library/Caches/com.apple.dyle/。**
+
+**对于每一种架构，操作系统都有一个单独的文件，文件中包含了绝大多数的动态库，这些库都已经链接为一个文件，并且已经处理好了它们之间的符号关系。当加载一个 Mach-O 文件 (一个可执行文件或者一个库) 时，动态链接器首先会检查共享缓存看看是否存在其中，如果存在，那么就直接从共享缓存中拿出来使用。每一个进程都把这个共享缓存映射到了自己的地址空间中。这个方法大大优化了 OS X 和 iOS 上程序的启动时间**
+
+
+
+**dylid加载过程：**
 
 - load dylibs image
 
@@ -85,6 +96,20 @@ dylid加载过程：
   >然后就是重复不断地对 __DATA 段中需要 rebase 的指针加上这个偏移量
 
 
+
+- 这里主要解决几个疑惑：
+
+  > 1、ASLR（地址空间布局随机化）
+  >
+  > ​		1.传统方式下，进程每次启动采用的都是固定可预见的方式，这意味着一个给定的程序在给定的架构上的进程初始虚拟内存都是基本一致的，而且在进程正常运行的生命周期中，内存中的地址分布具有非常强的可预测性，这给了黑客很大的施展空间（代码注入，重写内存）；
+  >
+  > ​		2.如果采用ASLR，进程每次启动，地址空间都会被简单地随机化，但是只是偏移，不是搅乱。大体布局——程序文本、数据和库是一样的，但是具体的地址都不同了，可以阻挡黑客对地址的猜测 。
+  >
+  > 2、rebase：针对mach-o在加载到内存中不是固定的首地址 这一现象做数据修正的过程；
+  >
+  > 3、binding就是将这个二进制调用的外部符号进行绑定的过程。比如我们objc代码中需要使用到NSObject, 即符号`_OBJC_CLASS_$_NSObject`，但是这个符号又不在我们的二进制中，在系统库 `Foundation.framework`中，因此就需要binding这个操作将对应关系绑定到一起；
+  >
+  > 4、、`lazyBinding`就是在加载动态库的时候不会立即binding, 当时当第一次调用这个方法的时候再实施binding。 做到的方法也很简单： 通过`dyld_stub_binder`这个符号来做。`lazyBinding`的方法第一次会调用到`dyld_stub_binder`, 然后`dyld_stub_binder`负责找到真实的方法，并且将地址bind到桩上，下一次就不用再bind了。
 
 
 
@@ -126,6 +151,41 @@ dylid加载过程：
 
     所有初始化工作结束后，dyld开始调用main()函数
 
+
+
+**attribute黑魔法**
+
+示例1：constructor / destructor
+
+```objective-c
+__attribute__((constructor))void beforeMain(){
+    NSLog(@"beforeMain");
+}
+
+__attribute__((desctructor))void afterMain(){
+    NSLog(@"afterMain");
+}
+
+int main(int argc, char * argv[]) {
+    
+    NSLog(@"Main");
+    
+    NSString * appDelegateClassName;
+    @autoreleasepool {
+        // Setup code that might create autoreleased objects goes here.
+        appDelegateClassName = NSStringFromClass([AppDelegate class]);
+    }
+
+    return UIApplicationMain(argc, argv, nil, appDelegateClassName);
+}
+```
+
+输出：
+
+> beforeMain —> Main—>afterMain
+
+
+
 ###### pre-main阶段优化：
 
 - 删除无用代码（未被调用的静态变量、类、方法）
@@ -137,7 +197,22 @@ dylid加载过程：
 
 ##### 4、main阶段(main到appDidFinishLaunchingWithOptions:)
 
+项目中此阶段主要是做了以下工作：
+
+- 配置App运行环境
+
+- 集成第三方SDK
+- 显示app的第一屏
+
 ![main](/System/Volumes/Data/Users/zhoudengjie/文档/zz/pics/main.jpeg)
+
+优化点：
+
+- 不使用xib或storyboard，直接使用代码
+- 对于`viewDidLoad`以及`viewWillAppear`方法中尽量去尝试少做，晚做，不做，或者采用异步的方式去做；
+- 当首页逻辑比较复杂的时候，建议CD冷却放大招：通过`instruments`的`Time Profiler`分析耗时瓶颈。
+
+
 
 参考：
 
@@ -146,3 +221,5 @@ dylid加载过程：
 2、iOS开发高手课：33|iOS系统内部XNU：App 如何加载？
 
 3、[iOS启动优化](http://lingyuncxb.com/2018/01/30/iOS启动优化/)
+
+4、[Clang Attibutes](http://blog.sunnyxx.com/2016/05/14/clang-attributes/)
