@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		584A7013B229C92247ECA129 /* libPods-ZzMachO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 753F0DF0AE4986A59F0968D0 /* libPods-ZzMachO.a */; };
+		981763B823376BC5008927C9 /* ZzWXPluginLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 981763B623376B30008927C9 /* ZzWXPluginLoader.m */; };
+		981763C023376F05008927C9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 981763BF23376F05008927C9 /* UIKit.framework */; };
+		981763C223376F0D008927C9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 981763C123376F0D008927C9 /* Foundation.framework */; };
+		981763C523377298008927C9 /* ZzModuleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 981763C423377298008927C9 /* ZzModuleTest.m */; };
+		981763C8233772E2008927C9 /* ZzComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 981763C7233772E2008927C9 /* ZzComponent.m */; };
+		981763CB23377378008927C9 /* ZzHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 981763CA23377378008927C9 /* ZzHandler.m */; };
 		987050EF22F6819500F57A40 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 987050EE22F6819500F57A40 /* AppDelegate.m */; };
 		987050F222F6819500F57A40 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 987050F122F6819500F57A40 /* SceneDelegate.m */; };
 		987050F522F6819500F57A40 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 987050F422F6819500F57A40 /* ViewController.m */; };
@@ -21,6 +27,16 @@
 		3AD9B7BD31C2B95D989E379D /* Pods-Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.release.xcconfig"; path = "Target Support Files/Pods-Test/Pods-Test.release.xcconfig"; sourceTree = "<group>"; };
 		57AA589AC2FDB3E462DA8EB1 /* Pods-ZzMachO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZzMachO.release.xcconfig"; path = "Target Support Files/Pods-ZzMachO/Pods-ZzMachO.release.xcconfig"; sourceTree = "<group>"; };
 		753F0DF0AE4986A59F0968D0 /* libPods-ZzMachO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZzMachO.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		981763B523376B30008927C9 /* ZzWXPluginLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZzWXPluginLoader.h; path = "../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/ZzMachO/ZzMachO/ZzWXPluginLoader.h"; sourceTree = "<group>"; };
+		981763B623376B30008927C9 /* ZzWXPluginLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZzWXPluginLoader.m; path = "../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/ZzMachO/ZzMachO/ZzWXPluginLoader.m"; sourceTree = "<group>"; };
+		981763BF23376F05008927C9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		981763C123376F0D008927C9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		981763C323377298008927C9 /* ZzModuleTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZzModuleTest.h; path = "../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/ZzMachO/ZzMachO/ZzModuleTest.h"; sourceTree = "<group>"; };
+		981763C423377298008927C9 /* ZzModuleTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZzModuleTest.m; path = "../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/ZzMachO/ZzMachO/ZzModuleTest.m"; sourceTree = "<group>"; };
+		981763C6233772E1008927C9 /* ZzComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZzComponent.h; path = "../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/ZzMachO/ZzMachO/ZzComponent.h"; sourceTree = "<group>"; };
+		981763C7233772E2008927C9 /* ZzComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZzComponent.m; path = "../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/ZzMachO/ZzMachO/ZzComponent.m"; sourceTree = "<group>"; };
+		981763C923377378008927C9 /* ZzHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZzHandler.h; path = "../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/ZzMachO/ZzMachO/ZzHandler.h"; sourceTree = "<group>"; };
+		981763CA23377378008927C9 /* ZzHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZzHandler.m; path = "../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/ZzMachO/ZzMachO/ZzHandler.m"; sourceTree = "<group>"; };
 		987050EA22F6819500F57A40 /* ZzMachO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZzMachO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		987050ED22F6819500F57A40 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		987050EE22F6819500F57A40 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -43,6 +59,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				584A7013B229C92247ECA129 /* libPods-ZzMachO.a in Frameworks */,
+				981763C223376F0D008927C9 /* Foundation.framework in Frameworks */,
+				981763C023376F05008927C9 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +99,14 @@
 				987050FB22F6819D00F57A40 /* LaunchScreen.storyboard */,
 				987050FE22F6819D00F57A40 /* Info.plist */,
 				987050FF22F6819D00F57A40 /* main.m */,
+				981763B523376B30008927C9 /* ZzWXPluginLoader.h */,
+				981763B623376B30008927C9 /* ZzWXPluginLoader.m */,
+				981763C323377298008927C9 /* ZzModuleTest.h */,
+				981763C423377298008927C9 /* ZzModuleTest.m */,
+				981763C6233772E1008927C9 /* ZzComponent.h */,
+				981763C7233772E2008927C9 /* ZzComponent.m */,
+				981763C923377378008927C9 /* ZzHandler.h */,
+				981763CA23377378008927C9 /* ZzHandler.m */,
 			);
 			path = ZzMachO;
 			sourceTree = "<group>";
@@ -99,6 +125,8 @@
 		D39E94717EFBDD12E9B89D85 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				981763C123376F0D008927C9 /* Foundation.framework */,
+				981763BF23376F05008927C9 /* UIKit.framework */,
 				753F0DF0AE4986A59F0968D0 /* libPods-ZzMachO.a */,
 			);
 			name = Frameworks;
@@ -115,6 +143,7 @@
 				987050E622F6819500F57A40 /* Sources */,
 				987050E722F6819500F57A40 /* Frameworks */,
 				987050E822F6819500F57A40 /* Resources */,
+				34090EF90141593CAEBDDB93 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -171,6 +200,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		34090EF90141593CAEBDDB93 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZzMachO/Pods-ZzMachO-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZzMachO/Pods-ZzMachO-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ZzMachO/Pods-ZzMachO-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		54A6C8E15AC2C81EA926A7E3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -200,10 +246,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				981763CB23377378008927C9 /* ZzHandler.m in Sources */,
+				981763B823376BC5008927C9 /* ZzWXPluginLoader.m in Sources */,
 				987050F522F6819500F57A40 /* ViewController.m in Sources */,
 				987050EF22F6819500F57A40 /* AppDelegate.m in Sources */,
+				981763C8233772E2008927C9 /* ZzComponent.m in Sources */,
 				9870510022F6819D00F57A40 /* main.m in Sources */,
 				987050F222F6819500F57A40 /* SceneDelegate.m in Sources */,
+				981763C523377298008927C9 /* ZzModuleTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +397,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RBZ4UX882P;
 				INFOPLIST_FILE = ZzMachO/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -365,6 +416,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RBZ4UX882P;
 				INFOPLIST_FILE = ZzMachO/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

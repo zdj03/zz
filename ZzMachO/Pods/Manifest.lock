@@ -1,3 +1,22 @@
-PODFILE CHECKSUM: 9cfd8975181df7b062371a0fe7987749ff667441
+PODS:
+  - SDWebImage (4.4.7):
+    - SDWebImage/Core (= 4.4.7)
+  - SDWebImage/Core (4.4.7)
+  - WeexSDK (0.26.0)
+
+DEPENDENCIES:
+  - SDWebImage (= 4.4.7)
+  - WeexSDK (= 0.26.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SDWebImage
+    - WeexSDK
+
+SPEC CHECKSUMS:
+  SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
+  WeexSDK: 55b67d1c411eb28ec1e356f763a335d0ddcc5324
+
+PODFILE CHECKSUM: de20289a87cf6d1e723b7e8611dd1e5ce9aa5387
 
 COCOAPODS: 1.7.5
