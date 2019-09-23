@@ -81,7 +81,6 @@ static NSString *configuration = @"";
         uintptr_t *memory = (uintptr_t*)getsectiondata(machHeader, SEG_DATA, [sectionName UTF8String], & size);
         //获取该section每条信息
         NSUInteger counter = size/sizeof(void*);
-        NSError *converError = nil;
         for(int idx = 0; idx < counter; ++idx){
             char *string = (char*)memory[idx];
             
