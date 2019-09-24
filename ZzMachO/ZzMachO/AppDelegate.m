@@ -11,7 +11,11 @@
 
 @interface AppDelegate()
 {
-    CFRunLoopObserverRef runLoopObserver;
+   int timeoutCount;
+        CFRunLoopObserverRef runLoopObserver;
+        @public
+        dispatch_semaphore_t dispatchSemaphore;
+        CFRunLoopActivity runLoopActivity;
        
 }
 @end
@@ -24,52 +28,71 @@
     // Override point for customization after application launch.
 
     
-    
+    //监测卡顿
+        if (runLoopObserver) {
+            return YES;
+        }
+        dispatchSemaphore = dispatch_semaphore_create(0); //Dispatch Semaphore保证同步
     
     //创建一个观察者
-//       CFRunLoopObserverContext context = {0,(__bridge void*)self,NULL,NULL};
-//       runLoopObserver = CFRunLoopObserverCreate(kCFAllocatorDefault,
-//                                                 kCFRunLoopAllActivities,
-//                                                 YES,
-//                                                 0,
-//                                                 &runLoopObserverCallBack,
-//                                                 &context);
-//       //将观察者添加到主线程runloop的common模式下的观察中
-//       CFRunLoopAddObserver(CFRunLoopGetMain(), runLoopObserver, kCFRunLoopCommonModes);
+       CFRunLoopObserverContext context = {0,(__bridge void*)self,NULL,NULL};
+       runLoopObserver = CFRunLoopObserverCreate(kCFAllocatorDefault,
+                                                 kCFRunLoopAllActivities,
+                                                 YES,
+                                                 0,
+                                                 &runLoopObserverCallBack,
+                                                 &context);
+       //将观察者添加到主线程runloop的common模式下的观察中
+       CFRunLoopAddObserver(CFRunLoopGetMain(), runLoopObserver, kCFRunLoopCommonModes);
 
+    
+     //创建子线程监控
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            //子线程开启一个持续的loop用来进行监控
+            while (YES) {
+                long semaphoreWait = dispatch_semaphore_wait(dispatchSemaphore, dispatch_time(DISPATCH_TIME_NOW, 20*NSEC_PER_MSEC));
+                
+                NSLog(@"semaphoreWait:%ld",semaphoreWait);
+                
+                if (semaphoreWait != 0) {
+                    if (!runLoopObserver) {
+                        timeoutCount = 0;
+                        dispatchSemaphore = 0;
+                        runLoopActivity = 0;
+                        return;
+                    }
+                    //两个runloop的状态，BeforeSources和AfterWaiting这两个状态区间时间能够检测到是否卡顿
+                    if (runLoopActivity == kCFRunLoopBeforeSources || runLoopActivity == kCFRunLoopAfterWaiting) {
+                        //出现三次出结果
+                        if (++timeoutCount < 3) {
+                            continue;
+                        }
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                            
+                            NSLog(@"monitor trigger");
+
+                            
+    //                        [SMCallStack callStackWithType:SMCallStackTypeAll];
+                        });
+                    } //end activity
+                }// end semaphore wait
+                timeoutCount = 0;
+            }// end while
+        });
+    
+    
+CADisplayLink
     
     return YES;
 }
 
 
 static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info){
+    AppDelegate *appdelegate = (__bridge AppDelegate *)info;
+    appdelegate->runLoopActivity = activity;
     
-    switch (activity) {
-    case kCFRunLoopEntry:
-            NSLog(@"kCFRunLoopEntry");
-        break;
-        case kCFRunLoopBeforeTimers:
-                    NSLog(@"kCFRunLoopBeforeTimers");
-                break;
-        case kCFRunLoopBeforeSources:
-                    NSLog(@"kCFRunLoopBeforeSources");
-                break;
-        case kCFRunLoopBeforeWaiting:
-                    NSLog(@"kCFRunLoopBeforeWaiting");
-                break;
-        case kCFRunLoopAfterWaiting:
-                    NSLog(@"kCFRunLoopAfterWaiting");
-                break;
-        case kCFRunLoopExit:
-                    NSLog(@"kCFRunLoopExit");
-                break;
-        case kCFRunLoopAllActivities:
-                    NSLog(@"kCFRunLoopAllActivities");
-                break;
-    default:
-        break;
-    }
-    
+    dispatch_semaphore_t semaphore = appdelegate->dispatchSemaphore;
+    dispatch_semaphore_signal(semaphore);
 }
 
 - (void)addRunLoopObserver{

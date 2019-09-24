@@ -261,6 +261,403 @@ RunLoop的核心就是mach_msg()，RunLoop调用这个函数去接收消息，�
 
 
 
+#### App启动时RunLoop状态
+
+打印启动后currentRunLoop如下(经整理)：
+
+```
+(lldb) po [NSRunLoop currentRunLoop]
+CFRunLoop 
+current mode = kCFRunLoopDefaultMode,
+common modes = {
+	UITrackingRunLoopMode
+	kCFRunLoopDefaultMode
+}
+,
+common mode items = {
+	<CFRunLoopSource{order = -1, callout = PurpleEventSignalCallback}
+	<CFRunLoopSource{order = -2, callout = __handleHIDEventFetcherDrain}
+	<CFRunLoopObserver{order = 2147483647, callout = _wrapRunLoopWithAutoreleasePoolHandler}
+	<CFRunLoopObserver{order = 1999000, callout = _beforeCACommitHandler}
+	<CFRunLoopSource{order = -1, callout = __handleEventQueue}
+	<CFRunLoopObserver{order = 2000000, callout = _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv}
+	<CFRunLoopObserver{order = 2001000, callout = _afterCACommitHandler}
+	<CFRunLoopObserver{order = 0, callout = _UIGestureRecognizerUpdateObserver}
+	<CFRunLoopSource{order = 0,callout = FBSSerialQueueRunLoopSourceHandler}
+	<CFRunLoopSource{order = -1,callout = PurpleEventCallback}
+	<CFRunLoopObserver{order = -2147483647, callout = _wrapRunLoopWithAutoreleasePoolHandler}
+,
+modes = {
+	<CFRunLoopMode{name = UITrackingRunLoopMode,
+	sources0 = {
+	<CFRunLoopSource{order = -1, callout = PurpleEventSignalCallback}
+	<CFRunLoopSource{order = -1, callout = __handleEventQueue}
+	<CFRunLoopSource{order = -2, callout = __handleHIDEventFetcherDrain}
+	<CFRunLoopSource{order = 0,callout = FBSSerialQueueRunLoopSourceHandler}
+}
+,
+	sources1 = {
+	<CFRunLoopSource{order = -1,callout = PurpleEventCallback}
+}
+,
+	observers = (
+    <CFRunLoopObserver{order = -2147483647, callout = _wrapRunLoopWithAutoreleasePoolHandler},
+    <CFRunLoopObserver{order = 0, callout = _UIGestureRecognizerUpdateObserver},
+    <CFRunLoopObserver{order = 1999000, callout = _beforeCACommitHandler},
+    <CFRunLoopObserver{order = 2000000, callout = _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv},
+    <CFRunLoopObserver{order = 2001000, callout = _afterCACommitHandler},
+    <CFRunLoopObserver{order = 2147483647, callout = _wrapRunLoopWithAutoreleasePoolHandler}
+),
+	timers = (null),
+},
+
+	<CFRunLoopMode{name = GSEventReceiveRunLoopMode
+	sources0 ={
+		<CFRunLoopSource{order = -1,callout = PurpleEventSignalCallback}
+}
+,
+	sources1 ={
+		<CFRunLoopSource{order = -1,callout = PurpleEventCallback}
+}
+,
+	observers = (null),
+	timers = (null),
+},
+
+	<CFRunLoopMode{name = kCFRunLoopDefaultMode
+	sources0 {
+  	<CFRunLoopSource{order = -1,callout = PurpleEventSignalCallback}
+		<CFRunLoopSource{order = -1,callout = __handleEventQueue}
+		<CFRunLoopSource{order = -2,callout = __handleHIDEventFetcherDrain}
+		<CFRunLoopSource{order = 0,callout = FBSSerialQueueRunLoopSourceHandler}
+}
+,
+	sources1 ={
+		<CFRunLoopSource{order = -1,callout = PurpleEventCallback}
+}
+,
+	observers = (
+    "<CFRunLoopObserver{order = -2147483647, callout = _wrapRunLoopWithAutoreleasePoolHandler}",
+    "<CFRunLoopObserver{order = 0, callout = _UIGestureRecognizerUpdateObserver}",
+    "<CFRunLoopObserver{order = 1999000, callout = _beforeCACommitHandler (0x7fff46ca67a8)}",
+    "<CFRunLoopObserver{order = 2000000, callout = _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv}",
+    "<CFRunLoopObserver{order = 2001000, callout = _afterCACommitHandler}",
+    "<CFRunLoopObserver{order = 2147483647, callout = _wrapRunLoopWithAutoreleasePoolHandler}"
+),
+	timers ={
+	0 : <CFRunLoopTimer{callout = (Delayed Perform) UIApplication _accessibilitySetUpQuickSpeak},
+}
+```
+
+系统默认注册了5个Mode:
+1. kCFRunLoopDefaultMode: App的默认 Mode，通常主线程是在这个 Mode 下运行的。
+2. UITrackingRunLoopMode: 界面跟踪 Mode，用于 ScrollView 追踪触摸滑动，保证界面滑动时不受其他 Mode 影响。
+3. UIInitializationRunLoopMode: 在刚启动 App 时第进入的第一个 Mode，启动完成后就不再使用。
+4.  GSEventReceiveRunLoopMode: 接受系统事件的内部 Mode，通常用不到。
+5.  kCFRunLoopCommonModes: 这是一个占位的 Mode，没有实际作用。
+
+这里我们能看到其中的三个：kCFRunLoopDefaultMode、UITrackingRunLoopMode、GSEventReceiveRunLoopMode
+
+
+
+#### RunLoop与事件响应
+
+苹果注册了一个 Source1 (基于 mach port 的) 用来接收系统事件，其回调函数为 __IOHIDEventSystemClientQueueCallback()。
+
+当一个硬件事件发生后，首先由 IOKit.framework 生成一个 IOHIDEvent 事件并由 SpringBoard 接收。SpringBoard 只接收按键(锁屏/静音等)，触摸，加速，接近传感器等几种 Event，随后用 mach port 转发给需要的App进程。随后苹果注册的那个 Source1 就会触发__IOHIDEventSystemClientQueueCallback()回调，Source1内部触发Source0回调_UIApplicationHandleEventQueue() ，进行应用内部的分发。
+
+_UIApplicationHandleEventQueue() 会把 IOHIDEvent 处理并包装成 UIEvent 进行处理或分发，其中包括识别 UIGesture/处理屏幕旋转/发送给 UIWindow 等。通常事件比如 UIButton 点击、touchesBegin/Move/End/Cancel 事件都是在这个回调中完成的。
+
+#### RunLoop与手势识别
+
+当 _UIApplicationHandleEventQueue() 识别了一个手势时，其首先会调用 Cancel 将当前的 touchesBegin/Move/End 系列回调打断。随后系统将对应的 UIGestureRecognizer 标记为待处理。
+
+苹果注册了一个 Observer （在kCFRunLoopDefaultMode、UITrackingRunLoopMode两种Mode下都有注册）监测 BeforeWaiting (Loop即将进入休眠) 事件，这个Observer的回调函数是 _UIGestureRecognizerUpdateObserver()，其内部会获取所有刚被标记为待处理的 GestureRecognizer，并执行GestureRecognizer的回调。
+
+当有 UIGestureRecognizer 的变化(创建/销毁/状态改变)时，这个回调都会进行相应处理。
+
+#### RunLoop与界面更新
+
+当在操作 UI 时，比如改变了 Frame、更新了 UIView/CALayer 的层次时，或者手动调用了 UIView/CALayer 的 setNeedsLayout/setNeedsDisplay方法后，这个 UIView/CALayer 就被标记为待处理，并被提交到一个全局的容器去。
+
+苹果注册了一个 Observer 监听 BeforeWaiting(即将进入休眠) 和 Exit (即将退出Loop) 事件，回调去执行一个很长的函数：
+_ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()。这个函数里会遍历所有待处理的 UIView/CAlayer 以执行实际的绘制和调整，并更新 UI 界面。
+
+#### RunLoop与定时器
+
+NSTimer 其实就是 CFRunLoopTimerRef，他们之间是 toll-free bridged 的。一个 NSTimer 注册到 RunLoop 后，RunLoop 会为其重复的时间点注册好事件RunLoop为了节省资源，并不会在非常准确的时间点回调这个Timer。Timer 有个属性叫做 Tolerance (宽容度)，标示了当时间点到后，容许有多少最大误差。
+
+如果某个时间点被错过了，例如执行了一个很长的任务，则那个时间点的回调也会跳过去，不会延后执行。
+
+CADisplayLink 是一个和屏幕刷新率一致的定时器（但实际实现原理更复杂，和 NSTimer 并不一样，其内部实际是操作了一个 Source）。如果在两次屏幕刷新之间执行了一个长任务，那其中就会有一帧被跳过去（和 NSTimer 相似），造成界面卡顿的感觉。在快速滑动TableView时，即使一帧的卡顿也会让用户有所察觉。Facebook 开源的 AsyncDisplayLink 就是为了解决界面卡顿的问题，其内部也用到了 RunLoop。
+
+
+
+#### PerformSelector
+
+当调用 NSObject 的 performSelecter:afterDelay: 后，实际上其内部会创建一个 Timer 并添加到当前线程的 RunLoop 中。所以如果当前线程没有 RunLoop，则这个方法会失效。
+
+当调用 performSelector:onThread: 时，实际上其会创建一个 Timer 加到对应的线程去，同样的，如果对应线程没有 RunLoop 该方法也会失效。
+
+
+
+#### GCD
+
+实际上 RunLoop 底层也会用到 GCD 的东西，~~比如 RunLoop 是用 dispatch_source_t 实现的 Timer~~（评论中有人提醒，NSTimer 是用了 XNU 内核的 mk_timer，我也仔细调试了一下，发现 NSTimer 确实是由 mk_timer 驱动，而非 GCD 驱动的）。但同时 GCD 提供的某些接口也用到了 RunLoop， 例如 dispatch_async()。
+
+当调用 dispatch_async(dispatch_get_main_queue(), block) 时，libDispatch 会向主线程的 RunLoop 发送消息，RunLoop会被唤醒，并从消息中取得这个 block，并在回调 \_\_CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__() 里执行这个 block。但这个逻辑仅限于 dispatch 到主线程，dispatch 到其他线程仍然是由 libDispatch 处理的。
+
+#### NSURLConnection
+
+通常使用 NSURLConnection 时，会传入一个 Delegate，当调用了 [connection start] 后，这个 Delegate 就会不停收到事件回调。实际上，start 这个函数的内部会会获取 CurrentRunLoop，然后在其中的 DefaultMode 添加了4个 Source0 (即需要手动触发的Source)。CFMultiplexerSource 是负责各种 Delegate 回调的，CFHTTPCookieStorage 是处理各种 Cookie 的。
+
+当开始网络传输时，我们可以看到 NSURLConnection 创建了两个新线程：com.apple.NSURLConnectionLoader 和 com.apple.CFSocket.private。其中 CFSocket 线程是处理底层 socket 连接的。NSURLConnectionLoader 这个线程内部会使用 RunLoop 来接收底层 socket 的事件，并通过之前添加的 Source0 通知到上层的 Delegate。
+
+![NSURLConnection](/System/Volumes/Data/Users/zhoudengjie/文档/zz/pics/NSURLConnection.png)
+
+NSURLConnectionLoader 中的 RunLoop 通过一些基于 mach port 的 Source 接收来自底层 CFSocket 的通知。当收到通知后，其会在合适的时机向 CFMultiplexerSource 等 Source0 发送通知，同时唤醒 Delegate 线程的 RunLoop 来让其处理这些通知。CFMultiplexerSource 会在 Delegate 线程的 RunLoop 对 Delegate 执行实际的回调。
+
+
+
+#### 利用RunLoop监测卡顿
+
+原理：如果RunLoop在进入休眠前（kCFRunLoopBeforeSources）和被唤醒后（kCFRunLoopAfterWaiting）两种状态被阻塞（在一定时间内状态没有变化），可以认为线程被阻塞了。
+
+创建observer监听RunLoop状态：
+
+```
+ dispatchSemaphore = dispatch_semaphore_create(0); //Dispatch Semaphore保证同步
+
+ //创建一个观察者
+       CFRunLoopObserverContext context = {0,(__bridge void*)self,NULL,NULL};
+       runLoopObserver = CFRunLoopObserverCreate(kCFAllocatorDefault,
+                                                 kCFRunLoopAllActivities,
+                                                 YES,
+                                                 0,
+                                                 &runLoopObserverCallBack,
+                                                 &context);
+       //将观察者添加到主线程runloop的common模式下的观察中
+       CFRunLoopAddObserver(CFRunLoopGetMain(), runLoopObserver, kCFRunLoopCommonModes);
+       
+       
+       
+static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info){
+    AppDelegate *appdelegate = (__bridge AppDelegate *)info;
+    appdelegate->runLoopActivity = activity;
+    
+    dispatch_semaphore_t semaphore = appdelegate->dispatchSemaphore;
+    dispatch_semaphore_signal(semaphore);
+    }
+```
+
+
+
+开启子线程监控主线程RunLoop:
+
+```
+// 创建子线程监控
+dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    // 子线程开启一个持续的 loop 用来进行监控
+    while (YES) {
+        long semaphoreWait = dispatch_semaphore_wait(dispatchSemaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC));
+        if (semaphoreWait != 0) {
+            if (!runLoopObserver) {
+                timeoutCount = 0;
+                dispatchSemaphore = 0;
+                runLoopActivity = 0;
+                return;
+            }
+            //BeforeSources 和 AfterWaiting 这两个状态能够检测到是否卡顿
+            if (runLoopActivity == kCFRunLoopBeforeSources || runLoopActivity == kCFRunLoopAfterWaiting) {
+                // 将堆栈信息上报服务器的代码放到这里
+            } 
+        }
+        timeoutCount = 0;
+    }
+});
+```
+
+
+
+#### NSThread 与RunLoop
+
+在Weex的WXBridgeManager类中，创建了两个子线程：
+
+```objective-c
+static NSThread *WXBridgeThread;
+static NSThread *WXBackupBridgeThread;
+```
+
+用来执行block：
+
+```objective-c
+
++ (void)_performBlockOnBackupBridgeThread:(void (^)(void))block instance:(NSString*)instanceId
+{
+    if ([NSThread currentThread] == [self backupJsThread]) {
+        block();
+    } else {
+        [self performSelector:@selector(_performBlockOnBridgeThread:instance:)
+                     onThread:[self backupJsThread]
+                   withObject:[block copy]
+                waitUntilDone:NO];
+    }
+}
+
++ (void)_performBlockOnBridgeThread:(void (^)(void))block instance:(NSString*)instanceId
+{
+    if ([NSThread currentThread] == [self jsThread] || [NSThread currentThread] == [self backupJsThread]) {
+        block();
+    } else {
+        WXSDKInstance* instance = nil;
+        if (instanceId) {
+            instance = [WXSDKManager instanceForID:instanceId];
+        }
+
+        if (instance && instance.useBackupJsThread) {
+            [self performSelector:@selector(_performBlockOnBridgeThread:instance:)
+                             onThread:[self backupJsThread]
+                           withObject:[block copy]
+                        waitUntilDone:NO];
+        } else {
+            [self performSelector:@selector(_performBlockOnBridgeThread:instance:)
+                             onThread:[self jsThread]
+                           withObject:[block copy]
+                        waitUntilDone:NO];
+        }
+    }
+}
+```
+
+
+
+这两个方法接受外部传进来的block，并传到对应的子线程执行。子线程的创建如下：
+
+```objective-c
+
+- (void)_runLoopThread
+{
+    [[NSRunLoop currentRunLoop] addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];
+    
+    while (!_stopRunning) {
+        @autoreleasepool {
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        }
+    }
+}
+
++ (NSThread *)jsThread
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        WXBridgeThread = [[NSThread alloc] initWithTarget:[[self class]sharedManager] selector:@selector(_runLoopThread) object:nil];
+        [WXBridgeThread setName:WX_BRIDGE_THREAD_NAME];
+        if(WX_SYS_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+            [WXBridgeThread setQualityOfService:[[NSThread mainThread] qualityOfService]];
+        } else {
+            [WXBridgeThread setThreadPriority:[[NSThread mainThread] threadPriority]];
+        }
+        
+        [WXBridgeThread start];
+    });
+    
+    return WXBridgeThread;
+}
+
++ (NSThread *)backupJsThread
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        WXBackupBridgeThread = [[NSThread alloc] initWithTarget:[[self class]sharedManager] selector:@selector(_runLoopThread) object:nil];
+        [WXBackupBridgeThread setName:WX_BACKUP_BRIDGE_THREAD_NAME];
+        if(WX_SYS_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+            [WXBackupBridgeThread setQualityOfService:[[NSThread mainThread] qualityOfService]];
+        } else {
+            [WXBackupBridgeThread setThreadPriority:[[NSThread mainThread] threadPriority]];
+        }
+
+        [WXBackupBridgeThread start];
+    });
+
+    return WXBackupBridgeThread;
+}
+```
+
+子线程创建时传入的SEL：_runLoopThread方法里，获取了NSRunLoop(创建了runloop)，并传入了一个Source：NSMachPort的实例（如果NSRunLoop的Mode里没有Source/Timer/Observer，会自动退出），然后手动将runLoop run起来（注意设置的日期是[NSDate distantFuture]），以`达到维护线程生命周期的目的`，除非外部使之停止（\_stopRunning）。
+
+
+
+其他用法：
+
+- 创建常驻线程：
+
+```objective-c
+@autoreleasepool {
+        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+        [runLoop addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];
+        [runLoop run];
+}
+```
+
+- 在一定时间内监听某种事件
+
+  在30min内，每隔30s执行onTimerFired：
+
+  ```objective-c
+  @autoreleasepool {
+      NSRunLoop * runLoop = [NSRunLoop currentRunLoop];
+      NSTimer * udpateTimer = [NSTimer timerWithTimeInterval:30
+                                                      target:self
+                                                    selector:@selector(onTimerFired:)
+                                                    userInfo:nil
+                                                     repeats:YES];
+      [runLoop addTimer:udpateTimer forMode:NSRunLoopCommonModes];
+      [runLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:60*30]];
+  }
+  ```
+
+AFNetwroking中的RunLoop
+
+```objective-c
++ (void)networkRequestThreadEntryPoint:(id)__unused object {
+    @autoreleasepool {
+        [[NSThread currentThread] setName:@"AFNetworking"];
+
+        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+         // 这里主要是监听某个 port，目的是让RunLoop不会退出，确保该 Thread 不会被回收
+        [runLoop addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode]; 
+        [runLoop run];
+    }
+}
+
++ (NSThread *)networkRequestThread {
+    static NSThread *_networkRequestThread = nil;
+    static dispatch_once_t oncePredicate;
+    dispatch_once(&oncePredicate, ^{
+        _networkRequestThread =
+        [[NSThread alloc] initWithTarget:self
+                                selector:@selector(networkRequestThreadEntryPoint:)
+                                  object:nil];
+        [_networkRequestThread start];
+    });
+    return _networkRequestThread;
+}
+```
+
+
+
+
+
+### CADisplayLink
+
+CADisplayLink 的selector是在屏幕内容刷新完成的时候调用。实质上是向RunLoop注册了一个Source0事件。
+
+
+
+
+
 参考：
 
 1、[深入理解RunLoop](https://blog.ibireme.com/2015/05/18/runloop/)
+
+2、[SpringBoard.app](http://iphonedevwiki.net/index.php/SpringBoard.app)
