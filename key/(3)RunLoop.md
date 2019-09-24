@@ -376,6 +376,10 @@ _UIApplicationHandleEventQueue() 会把 IOHIDEvent 处理并包装成 UIEvent �
 
 当有 UIGestureRecognizer 的变化(创建/销毁/状态改变)时，这个回调都会进行相应处理。
 
+
+
+**事件响应与手势识别会另外详细讲解**
+
 #### RunLoop与界面更新
 
 当在操作 UI 时，比如改变了 Frame、更新了 UIView/CALayer 的层次时，或者手动调用了 UIView/CALayer 的 setNeedsLayout/setNeedsDisplay方法后，这个 UIView/CALayer 就被标记为待处理，并被提交到一个全局的容器去。
