@@ -5,3 +5,4 @@
 - (1)Mach-O
 - (2)App-launch
 - (3)RunLoop
+- (4)触摸事件传递及响应链
