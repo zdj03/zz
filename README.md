@@ -6,3 +6,4 @@
 - (2)App-launch
 - (3)RunLoop
 - (4)触摸事件传递及响应链
+- (5)Runtime消息发送与转发
