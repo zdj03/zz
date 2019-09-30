@@ -1,5 +1,7 @@
 ####1、objc_msgSend
 
+消息发送的过程详细可见源码：objc/Source/objc-msg-arm系列文件（汇编代码），包含各种架构下。
+
 一个对象的方法像这样[obj foo]，会被编译器转化成消息发送
 
 ```objective-c
