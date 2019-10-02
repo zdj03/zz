@@ -39,15 +39,19 @@ objc_msgSend处理消息分为：发送消息、消息转发两个阶段；
 
   2、动态方法解析过程如下：
 
-- 动态方法解析：Runtime调用类的实例方法+resolveInstanceMethod:或者类方法+resolveClassMethod:，让你有机会提供一个函数实现。如果添加函数并返回YES，Runtime就会重新启动一次消息发送的过程；
+- 动态方法解析：Runtime调用类的实例方法-`resolveInstanceMethod:`或者类方法`+resolveClassMethod:`，让你有机会提供一个函数实现。如果添加函数并返回YES，Runtime就会重新启动一次消息发送的过程；
 
   3、方法转发：
 
-- 如果返回NO，就会继续执行下一步：forwardingTargetForSelector:，Runtime这时就会调用此方法，把消息转发给其他对象；
+- 如果返回NO，就会继续执行下一步：`-forwardingTargetForSelector:`，Runtime这时就会调用此方法，把消息转发给其他对象；
+
+  - 注意，此处如果不是返回nil或self，runtime会重走一遍消息发送的过程。如果返回nil或者self，则继续fast forwarding。
+
+    > 这里，有网友说如果返回self，会导致循环，我试过返回self，并不会
 
 - 如果还不能处理消息，那么就启动完整的消息转发机制。
 
-- 首先会发送-methodSignatureForSelector:消息获得函数的参数和返回类型
+- 首先会发送`-methodSignatureForSelector:`返回方法签名，签名封装了消息函数的参数和返回类型
 
 - 如果上一步返回nil，Runtime会发出-doesNotRecognizeSelector:消息，程序会崩溃
 
