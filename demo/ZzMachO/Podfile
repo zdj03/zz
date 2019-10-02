@@ -1,0 +1,11 @@
+
+platform :ios,'9.0'
+
+target 'ZzMachO' do
+  
+  pod 'WeexSDK','0.26.0'
+  
+pod 'SDWebImage','4.4.7'
+
+
+end
