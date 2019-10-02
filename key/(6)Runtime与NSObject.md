@@ -609,6 +609,313 @@ isMemberOfClass的源码实现是拿到自己的isa指针和自己比较，是�
 
 
 
+#### NSObject 与 NSProxy
+
+先看NSProxy类定义：
+
+```objective-c
+@interface NSProxy <NSObject> {
+    Class	isa;
+}
+
++ (id)alloc;
++ (id)allocWithZone:(nullable NSZone *)zone NS_AUTOMATED_REFCOUNT_UNAVAILABLE;
++ (Class)class;
+
+- (void)forwardInvocation:(NSInvocation *)invocation;
+- (nullable NSMethodSignature *)methodSignatureForSelector:(SEL)sel NS_SWIFT_UNAVAILABLE("NSInvocation and related APIs not available");
+- (void)dealloc;
+- (void)finalize;
+@property (readonly, copy) NSString *description;
+@property (readonly, copy) NSString *debugDescription;
++ (BOOL)respondsToSelector:(SEL)aSelector;
+
+- (BOOL)allowsWeakReference API_UNAVAILABLE(macos, ios, watchos, tvos);
+- (BOOL)retainWeakReference API_UNAVAILABLE(macos, ios, watchos, tvos);
+
+// - (id)forwardingTargetForSelector:(SEL)aSelector;
+
+@end
+```
+
+相比NSObject，NSProxy类定义的接口很少，相对轻量级。
+
+官方说明如下：
+
+>| Summary                                                      |
+>| ------------------------------------------------------------ |
+>| An abstract superclass defining an API for objects that act as stand-ins for other objects or for objects that don’t exist yet. |
+>| Declaration`@interface NSProxy`                              |
+>| DiscussionTypically, a message to a proxy is forwarded to the real object or causes the proxy to load (or transform itself into) the real object. Subclasses of `NSProxy` can be used to implement transparent distributed messaging (for example, [NSDistantObject](apple-reference-documentation://hcjbKo5Y4O)) or for lazy instantiation of objects that are expensive to create.`NSProxy` implements the basic methods required of a root class, including those defined in the [NSObject](apple-reference-documentation://hcG_DhA_-L) protocol. However, as an abstract class it doesn’t provide an initialization method, and it raises an exception upon receiving any message it doesn’t respond to. A concrete subclass must therefore provide an initialization or creation method and override the [forwardInvocation:](apple-reference-documentation://hcINGMrSPT) and [methodSignatureForSelector:](apple-reference-documentation://hcI0I_Bfhp) methods to handle messages that it doesn’t implement itself. A subclass’s implementation of [forwardInvocation:](apple-reference-documentation://hcINGMrSPT) should do whatever is needed to process the invocation, such as forwarding the invocation over the network or loading the real object and passing it the invocation. [methodSignatureForSelector:](apple-reference-documentation://hcI0I_Bfhp) is required to provide argument type information for a given message; a subclass’s implementation should be able to determine the argument types for the messages it needs to forward and should construct an [NSMethodSignature](apple-reference-documentation://hcLJKSpwpo) object accordingly. See the [NSDistantObject](apple-reference-documentation://hcjbKo5Y4O), [NSInvocation](apple-reference-documentation://hcjVj4h-wP), and [NSMethodSignature](apple-reference-documentation://hcLJKSpwpo) class specifications for more information. |
+>|                                                              |
+
+意思是：NSProxy是个抽象的超类，为其他对象（或者不存在的对象）扮演替身的角色。通常，给proxy的消息被转发给实际对象或者导致proxy加载（转化它为）实际对象。NSProxy的子类能被用来实现透明的分布式消息(例如:NSDistantObject)或者延缓要花费昂贵代价创建的对象的实现。
+
+注意：NSProxy不像NSObject，它没有定义默认的指定构造器方法（init方法）；
+
+
+
+场景一（官方Demo）：多继承
+
+我们知道OC不同于其他面向对象语言（如C++），有多重继承的特性。但是OC可以通过Runtime的消息转发特性实现多重继承。
+
+```
+@implementation TargetProxy
+
+- (id)initWithTarget1:(id)t1 target2:(id)t2 {
+    realObject1 = [t1 retain];
+    realObject2 = [t2 retain];
+    return self;
+}
+
+- (void)dealloc {
+    [realObject1 release];
+    [realObject2 release];
+    [super dealloc];
+}
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+    NSMethodSignature *sig;
+    sig = [realObject1 methodSignatureForSelector:aSelector];
+    if (sig) return sig;
+    sig = [realObject2 methodSignatureForSelector:aSelector];
+    return sig;
+}
+
+// Invoke the invocation on whichever real object had a signature for it.
+- (void)forwardInvocation:(NSInvocation *)invocation {
+    id target = [realObject1 methodSignatureForSelector:[invocation selector]] ? realObject1 : realObject2;
+    [invocation invokeWithTarget:target];
+}
+
+// Override some of NSProxy's implementations to forward them...
+- (BOOL)respondsToSelector:(SEL)aSelector {
+    if ([realObject1 respondsToSelector:aSelector]) return YES;
+    if ([realObject2 respondsToSelector:aSelector]) return YES;
+    return NO;
+}
+
+```
+
+通过自定义init初始化方法，传进来两个对象，用于消息的转发过程中的接收对象。注意，此处两个对象类型是透明的。具体类型要看调用时的代码。
+
+```objective-c
+ // Create an empty mutable string, which will be one of the
+    // real objects for the proxy.
+    NSMutableString *string = [[NSMutableString alloc] init];
+
+    // Create an empty mutable array, which will be the other
+    // real object for the proxy.
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+
+    // Create a proxy to wrap the real objects.  This is rather
+    // artificial for the purposes of this example -- you'd rarely
+    // have a single proxy covering two objects.  But it is possible.
+    id proxy = [[TargetProxy alloc] initWithTarget1:string target2:array];
+
+    // Note that we can't use appendFormat:, because vararg methods
+    // cannot be forwarded!
+    [proxy appendString:@"This "];
+    [proxy appendString:@"is "];
+    [proxy addObject:string];
+    [proxy appendString:@"a "];
+    [proxy appendString:@"test!"];
+
+    NSLog(@"count should be 1, it is: %d", [proxy count]);
+    
+    if ([[proxy objectAtIndex:0] isEqualToString:@"This is a test!"]) {
+        NSLog(@"Appending successful.got: '%@'", proxy);
+    } else {
+        NSLog(@"Appending failed, got: '%@'", proxy);
+    }
+
+    NSLog(@"Example finished without errors.");
+```
+
+输出：
+
+>count should be 1, it is: 1
+>
+>Appending successful.got: '<TargetProxy: 0x10061a680>
+>
+>Example finished without errors.
+
+
+
+此处，用于初始化proxy的两个对象类型是 NSMutableString和NSMutableArray，而用于转发的消息分别是appendString:和addObject：。当向TargetProxy实例发送消息时，它并没有具体实现，于是开始消息的转发过程，分别交由realObject1、realObject2去接收消息，实现：一个对象实现另外多个不同的对象的方法功能。
+
+**注意：从NSProxy的定义可以看出，官方将消息转发的第一步forwardingTargetForSelector：注释掉了**，我将方法添加进去，可以实现同样的功能。如下：
+
+```objective-c
+- (id)forwardingTargetForSelector:(SEL)aSelector {
+    NSLog(@"forwardingTargetForSelector");
+    
+    if ([realObject1 respondsToSelector:aSelector]) {
+        return realObject1;
+    }
+    
+    if ([realObject2 respondsToSelector:aSelector]) {
+        return realObject2;
+    }
+    
+    return nil;
+}
+```
+
+输出：
+
+>forwardingTargetForSelector
+>
+>forwardingTargetForSelector
+>
+> forwardingTargetForSelector
+>
+>forwardingTargetForSelector
+>
+> forwardingTargetForSelector
+>
+>forwardingTargetForSelector
+>
+> count should be 1, it is: 1
+>
+>forwardingTargetForSelector
+>
+>Appending successful.got: '<TargetProxy: 0x10181cb60>
+>
+>Example finished without errors.
+
+那么官方为什么要注释掉这个方法，why？？？
+
+> 猜测：在前面消息发送与转发中，如果在这个方法中返回的不是nil或者self，则有可能由于开发者的误操作，一直处于“消息发送->forwardingTargetForSelector：->消息发送 ”的无限循环中。所以官方干脆注释掉，不建议实现，直接进行消息转发的后面两步
+
+如果返回错误的方法签名或者，invokeWithTarget时传入错误的target
+
+```ocaml
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+    
+    NSLog(@"methodSignatureForSelector");
+    
+    NSObject *obj = [NSObject new];
+    NSMethodSignature *sig = [obj methodSignatureForSelector:aSelector];
+    return sig;
+    
+//    NSMethodSignature *sig;
+//    sig = [realObject1 methodSignatureForSelector:aSelector];
+//    if (sig) return sig;
+//    sig = [realObject2 methodSignatureForSelector:aSelector];
+//    return sig;
+}
+//----------------------
+
+- (void)forwardInvocation:(NSInvocation *)invocation {
+    NSLog(@"forwardInvocation");
+    
+    id target = [realObject1 methodSignatureForSelector:[invocation selector]] ? realObject1 : realObject2;
+    
+    NSObject *obj = [NSObject new];
+    [invocation invokeWithTarget:obj];
+    
+}
+```
+
+会直接导致崩溃：
+
+> ***\** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[NSObject appendString:]: unrecognized selector sent to instance 0x100547520'**
+
+这样会提高程序的健壮性。
+
+
+
+场景二：利用代理打破引用循环（NSTimer与self的互相强引用）
+
+思路是将self以弱引用的方式传递给proxy，然后将proxy设置为Timer的target，以打破循环引用。
+
+主要代码如下：
+
+```objective-c
+@interface ZzProxy : NSProxy
+/**
+ *  代理的对象
+ */
+@property (nonatomic,weak)id obj;
+@end
+
+@implementation ZzProxy
+
+/**
+ 这个函数让重载方有机会抛出一个函数的签名，再由后面的forwardInvocation:去执行
+    为给定消息提供参数类型信息
+ */
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector{
+    NSMethodSignature *sig = nil;
+    sig = [self.obj methodSignatureForSelector:aSelector];
+    return sig;
+}
+
+/**
+ *  NSInvocation封装了NSMethodSignature，通过invokeWithTarget方法将消息转发给其他对象.这里转发给控制器执行。
+ */
+- (void)forwardInvocation:(NSInvocation *)anInvocation{
+    [anInvocation invokeWithTarget:self.obj];
+}
+@end
+```
+
+调用如下：
+
+```objective-c
+self.timer = [NSTimer timerWithTimeInterval:1 target:self.proxy selector:@selector(timerEvent) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+```
+
+
+
+场景三：借用其他类的方法实现本类没有实现的功能
+
+```objective-c
+//返回和参数的类型信息
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector{
+
+    NSString *sel = NSStringFromSelector(aSelector);
+
+    if ([sel isEqualToString:@"run"]) {
+
+        return [NSMethodSNSInvocationignature signatureWithObjCTypes:"v@:"];
+
+    }
+
+    return [super methodSignatureForSelector:aSelector];
+
+    //引发NSInvalidArgumentException。在你具体子类中重写这个方法，为被给选择器和你的代理对象代表的类返回合适的NSMethodSignature对象
+
+}
+
+//加载对象，把对象传递给anInvocation
+
+- (void)forwardInvocation:(NSInvocation *)anInvocation{
+
+    SEL selector = [anInvocation selector];
+
+    Car *car = [[Car alloc] init];
+
+    if ([car respondsToSelector:selector]) {
+
+        [anInvocation invokeWithTarget:car];//传递一个invocation给proxy代表的真的对象
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 参考：
