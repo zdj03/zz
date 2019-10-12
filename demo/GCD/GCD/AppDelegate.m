@@ -19,47 +19,53 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    Test *test = Test.sharedInstance;
-    
-    
-    __block NSInteger number = 0;
-       NSLog(@"0---number:%d",number);
-
-    dispatch_group_t group = dispatch_group_create();
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
-    
-       //A耗时操作
-       dispatch_group_async(group, queue, ^{
-           [NSThread sleepForTimeInterval:3];
-           NSLog(@"1---number:%d",number);
-       });
-       
-    
-    //模拟3次网络请求
-    for (int i = 0; i < 3; i++) {
-         dispatch_group_enter(group);
-              [self sendRequestWithCompletion:^(id response) {
-                  number += [response integerValue];
-                  NSLog(@"%d---number:%d",i+2,number);
-                  dispatch_group_leave(group);
-              }];
-    }
-    
-    
-//    dispatch_group_wait(group, dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC));
-//    NSLog(@"999999---number:%d",number);
-    
-    
-    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        NSLog(@"999999---number:%d",number);
-        NSLog(@"currentThread:%@",[NSThread currentThread]);
-    });
+  //  Test *test = Test.sharedInstance;
     
     
     
     return YES;
+}
+
+
+
+
+- (void)dispatch_group{
+
+        __block NSInteger number = 0;
+           NSLog(@"0---number:%d",number);
+
+        dispatch_group_t group = dispatch_group_create();
+        
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        
+        
+           //A耗时操作
+           dispatch_group_async(group, queue, ^{
+               [NSThread sleepForTimeInterval:3];
+               NSLog(@"1---number:%d",number);
+           });
+           
+        
+        //模拟3次网络请求
+        for (int i = 0; i < 3; i++) {
+             dispatch_group_enter(group);
+                  [self sendRequestWithCompletion:^(id response) {
+                      number += [response integerValue];
+                      NSLog(@"%d---number:%d",i+2,number);
+                      dispatch_group_leave(group);
+                  }];
+        }
+        
+        
+    //    dispatch_group_wait(group, dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC));
+    //    NSLog(@"999999---number:%d",number);
+        
+        
+        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+            NSLog(@"999999---number:%d",number);
+            NSLog(@"currentThread:%@",[NSThread currentThread]);
+        });
+        
 }
 
 
