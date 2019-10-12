@@ -1,5 +1,32 @@
 使用的源码：[libdispatch-84.5.5](https://opensource.apple.com/tarballs/libdispatch/)
 
+
+
+先看一个GCD的基本数据结构：
+
+```c
+typedef union {
+    struct dispatch_object_s *_do;          // dispatch_object_s结构体，这个是 GCD 的基类
+    struct dispatch_continuation_s *_dc;    // 任务类型，通常 dispatch_async内的block最终都会封装成这个数据类型
+    struct dispatch_queue_s *_dq;           // 任务队列，我们创建的对列都是这个类型的，不管是串行队列还是并发队列
+    struct dispatch_queue_attr_s *_dqa;     // 任务队列的属性，任务队列的属性里面包含了任务队列里面的一些操作函数，可以表明这个任务队列是串行还是并发队列
+    struct dispatch_group_s *_dg;           // GCD的group
+    struct dispatch_source_s *_ds;          // GCD的sourece ，可以监测内核事件，文件读写事件和 socket 通信事件等
+    struct dispatch_source_attr_s *_dsa;    // sourece的属性。
+    struct dispatch_semaphore_s *_dsema;    // 信号量，如果了解过 pthread 都知道，信号量可以用来调度线程
+} dispatch_object_t __attribute__((transparent_union));
+```
+
+dispatch_object_t是一个联合体，所以当用dispatch_object_t 可以代表这个联合体内的所有数据类型。
+
+**注意__attribute__((transparent_union))**是一种典型的 **透明联合体**，
+
+透明联合类型削弱了C语言的类型检测机制。起到了类似强制类型转换的效果，通过透明联合体，使得`dispatch_object_s`就像C++中的基类，在函数参数类型的转换上，给C语言的参数传递带来极大的方便。
+
+参考：[C语言共用体（C语言union用法）详解](http://c.biancheng.net/view/2035.html)
+
+
+
 #### dispatch_once
 
 dispatch_once如何在多线程情况下保证生成对象的唯一性？
