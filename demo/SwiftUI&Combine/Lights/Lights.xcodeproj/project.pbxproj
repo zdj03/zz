@@ -17,6 +17,8 @@
 		9874684A233E550C00828020 /* LightsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98746849233E550C00828020 /* LightsTests.swift */; };
 		98746855233E550C00828020 /* LightsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98746854233E550C00828020 /* LightsUITests.swift */; };
 		98746863233E554F00828020 /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98746862233E554F00828020 /* Light.swift */; };
+		9882225B23450CA400D760F1 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9882225A23450CA400D760F1 /* History.swift */; };
+		9882225D2345104B00D760F1 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9882225C2345104B00D760F1 /* HistoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		98746854233E550C00828020 /* LightsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightsUITests.swift; sourceTree = "<group>"; };
 		98746856233E550C00828020 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98746862233E554F00828020 /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
+		9882225A23450CA400D760F1 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		9882225C2345104B00D760F1 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,8 @@
 				9874683A233E550B00828020 /* Preview Content */,
 				98746862233E554F00828020 /* Light.swift */,
 				98250E84233F40BC0025EABB /* GameManager.swift */,
+				9882225A23450CA400D760F1 /* History.swift */,
+				9882225C2345104B00D760F1 /* HistoryView.swift */,
 			);
 			path = Lights;
 			sourceTree = "<group>";
@@ -273,6 +279,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9882225D2345104B00D760F1 /* HistoryView.swift in Sources */,
+				9882225B23450CA400D760F1 /* History.swift in Sources */,
 				98746833233E550400828020 /* AppDelegate.swift in Sources */,
 				98746835233E550400828020 /* SceneDelegate.swift in Sources */,
 				98746863233E554F00828020 /* Light.swift in Sources */,

@@ -28,6 +28,10 @@ enum CalculatorButtonItem {
     case dot
     case op(Op)
     case command(Command)
+    
+    var description: String {
+        title
+    }
 }
 
 

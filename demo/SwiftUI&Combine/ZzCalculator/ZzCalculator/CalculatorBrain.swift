@@ -28,21 +28,25 @@ enum CalculatorBrain {
         f.maximumFractionDigits = 8
         f.numberStyle = .decimal
         return f
-    }()
+    }
     
     var output: String {
-        let result: String
+        var result: String = ""
         switch self {
         case .left(let left):
             result = left
+//        case .leftOp(left: , op: ):
+//        case .leftOpRight(left: , op: , right: ):
+//        case .error:
+            
         default:
             break
         }
         
-            guard let value = Double(result) else {
-                return "Error"
-            }
-            return formatter.string(from: value as NSNumber)!
+        guard let value = Double(result) else {
+            return "Error"
+        }
+        return formatter.string(from: value as NSNumber)!
     }
     
     typealias CalculatorState = CalculatorBrain
@@ -68,6 +72,19 @@ enum CalculatorBrain {
         case .command(let command):
             return apply(command: command)
         }
+    }
+    
+    func apply(num: Int) -> CalculatorBrain {
+        return self
+    }
+    func applyDot() -> CalculatorBrain{
+        return self
+    }
+    func apply(op: CalculatorButtonItem.Op) -> CalculatorBrain {
+        return self
+    }
+    func apply(command: CalculatorButtonItem.Command) -> CalculatorBrain {
+        return self
     }
     
 }

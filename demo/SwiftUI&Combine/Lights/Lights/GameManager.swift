@@ -8,10 +8,23 @@
 
 import SwiftUI
 import Combine
+import Foundation
 
 class GameManager: ObservableObject {
     @Published var lights = [[Light]]()
     @Published var isWin = false
+    
+    
+    /// 对外发布的格式化计时器字符串
+    @Published var timeString = "00:00"
+    
+    /// 游戏计时器
+    private var timer: Timer?
+    
+    /// 游戏持续时间
+    private var durations = 0
+    
+    @Published var clickTimes = 0
     
     private var currentStatus: GameStatus = .during {
         didSet{
@@ -54,6 +67,46 @@ class GameManager: ObservableObject {
         lights = Array(repeating: Array(repeating: Light(), count: size), count: size)
         
         start(lightSequence)
+        
+        timerRestart()
+    }
+    
+    private func save(){
+        let documentUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
+        let historyUrl = documentUrl.appendingPathComponent("gameHistory.plist")
+        
+        let history = History(createTime: Date(), durations: durations, isWin: isWin, clickTimes: clickTimes)
+        var gameHistorys = NSArray(contentsOf: historyUrl)
+        if gameHistorys == nil {
+            gameHistorys = [History]() as NSArray
+        }
+        
+        gameHistorys?.adding(history)
+        
+        gameHistorys!.write(to: historyUrl, atomically: true)
+        
+    }
+    
+    func timerStop(){
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    func timerRestart(){
+        self.durations = 0
+        self.timeString = "00:00"
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ timer in
+            self.durations += 1
+            
+            let min = self.durations >= 60 ? self.durations / 60 : 0
+            let seconds = self.durations - min * 60
+            
+            let minString = min > 10 ? "\(min)" : "0\(min)"
+            let secondString = seconds >= 10 ? "\(seconds)" : "0\(seconds)"
+            self.timeString = minString + ":" + secondString
+            
+        }
     }
     
     func start(_ lightSequence: [Int]){
@@ -76,13 +129,18 @@ class GameManager: ObservableObject {
                 }
             }
             
+            
             if lightingCount == size * size {
                 currentStatus = .lose
+                
+                timerStop()
                 return
             }
             
             if lightingCount == 0 {
                 currentStatus = .win
+                
+                timerStop()
                 return
             }
         }

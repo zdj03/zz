@@ -6,8 +6,20 @@
 //  Copyright © 2019 zdj. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class History: NSObject {
-
+struct  History: Codable {
+    
+    /// 游戏创建时间
+    let createTime: Date
+    
+    /// 游戏持续时间
+    let durations: Int
+    
+    /// 游戏状态
+    let isWin: Bool
+    
+    /// 游戏进行步数
+    let clickTimes: Int
+    
 }

@@ -6,8 +6,12 @@
 //  Copyright © 2019 zdj. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class HistoryView: NSObject {
+struct HistoryView: View {
+    
+    var body: some View{
+        Text("history")
+    }
 
 }

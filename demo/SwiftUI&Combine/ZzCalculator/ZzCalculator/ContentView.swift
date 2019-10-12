@@ -11,37 +11,36 @@ import SwiftUI
 struct ContentView: View {
     let scale: CGFloat = UIScreen.main.bounds.width / 414
     
+   // @State private var brain: CalculatorBrain = .left("0")
+   // @ObservedObject var model = CalculatorModel()
+    @EnvironmentObject var model: CalculatorModel
     var body: some View {
         
         VStack(spacing: 12) {
-            
-            HStack{
-                Spacer()
-                Text("0")
-                                       .font(.system(size:76))
-                                       .minimumScaleFactor(0.5)
-                                       .padding(.trailing,24)
-                                       .lineLimit(1)
-                                       .frame(
-                                        minHeight: 0, maxHeight: .infinity, alignment: .bottom)
+            Spacer()
+            //HStack{
+            Button(action: {
+                print(self.model.history)
+            }) {
+                Text("操作履历:\(model.history.count)")
             }
-                   CalculatorButtonPad()
-                   .padding(.bottom)
-               }
-               .scaleEffect(scale)
-        
-//        VStack(spacing: 12) {
-//            Spacer()
-//            Text("0")
-//                .font(.system(size:76))
-//                .minimumScaleFactor(0.5)
-//                .padding(.trailing,24)
-//                .lineLimit(1)
-//                .frame(minWidth: 0, maxWidth: .infinity,alignment: .trailing)
-//            CalculatorButtonPad()
-//            .padding(.bottom)
-//        }
-//        .scaleEffect(scale)
+            Text(model.brain.output)
+                    .font(Font.system(size: 76))
+                    .minimumScaleFactor(0.5)
+                    .padding(.trailing,24)
+                    .lineLimit(1)
+                    .frame(
+                            minHeight: 0,
+                            maxHeight: .infinity,
+                            alignment: .bottom)
+//                Button("Test"){
+//                    self.model.brain = .left("1.23")
+//                }
+           // }
+            CalculatorButtonPad()
+                .padding(.bottom)
+        }
+       // .scaleEffect(scale)
     }
 }
 
@@ -69,31 +68,35 @@ struct CalculatorButton: View {
     
     var body: some View {
         
-        return ZStack {
-          
-            Text(title)
-                .font(.system(size: fontSize))
-                .frame(width:size.width,height: size.height)
-                .foregroundColor(.white)
-                .background(Color(backgroundColorName))
-                .clipShape(Circle())
-
-                
-        }
-        
-//        return Button(action: action) {
+//        return ZStack {
+//
 //            Text(title)
 //                .font(.system(size: fontSize))
 //                .frame(width:size.width,height: size.height)
 //                .foregroundColor(.white)
 //                .background(Color(backgroundColorName))
-//                .cornerRadius(size.width/2)
+//                .clipShape(Circle())
+//
+//
 //        }
+//
+        return Button(action: action) {
+            Text(title)
+                .font(.system(size: fontSize))
+                .frame(width:size.width,height: size.height)
+                .foregroundColor(.white)
+                .background(Color(backgroundColorName))
+                .cornerRadius(size.width/2)
+        }
     }
 }
 
 
 struct CalculatorButtonRow: View {
+   // @Binding var brain: CalculatorBrain
+   // var model: CalculatorModel
+    @EnvironmentObject var model: CalculatorModel
+    
     let row: [CalculatorButtonItem]
 
     var body: some View {
@@ -104,7 +107,8 @@ struct CalculatorButtonRow: View {
                 CalculatorButton(
                 title: item.title, size: item.size, backgroundColorName: item.backgroundColorName)
                 {
-                    print("Button: \(item.title)")
+                    //print("Button: \(item.title)")
+                    self.model.apply(item)
                 }
             }
         }
@@ -113,6 +117,8 @@ struct CalculatorButtonRow: View {
 
 
 struct CalculatorButtonPad: View {
+   // @Binding var brain: CalculatorBrain
+    //var model: CalculatorModel
     
     let pad: [[CalculatorButtonItem]] = [
     [.command(.clear),.
