@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9882866023556A2200C52286 /* LinkList.c in Sources */ = {isa = PBXBuildFile; fileRef = 9882865F23556A2200C52286 /* LinkList.c */; };
 		9882866323556AC600C52286 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = 9882866223556AC600C52286 /* Array.c */; };
+		98AE3B65235703FE0032A121 /* RecursionExample.c in Sources */ = {isa = PBXBuildFile; fileRef = 98AE3B64235703FE0032A121 /* RecursionExample.c */; };
+		98AE3B68235763C80032A121 /* Sort.c in Sources */ = {isa = PBXBuildFile; fileRef = 98AE3B67235763C80032A121 /* Sort.c */; };
 		98C037772354402F00380FEB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C037762354402F00380FEB /* main.m */; settings = {COMPILER_FLAGS = "-fno-stack-protector"; }; };
 		98E251FA2355AD14005CE7A3 /* Stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 98E251F92355AD13005CE7A3 /* Stack.c */; };
 /* End PBXBuildFile section */
@@ -30,6 +32,10 @@
 		9882865F23556A2200C52286 /* LinkList.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = LinkList.c; path = "../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/DataStructureAndAlgorithm/DataStructureAndAlgorithm/LinkList.c"; sourceTree = "<group>"; };
 		9882866123556AC600C52286 /* Array.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Array.h; path = "../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/DataStructureAndAlgorithm/DataStructureAndAlgorithm/Array.h"; sourceTree = "<group>"; };
 		9882866223556AC600C52286 /* Array.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = Array.c; path = "../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/DataStructureAndAlgorithm/DataStructureAndAlgorithm/Array.c"; sourceTree = "<group>"; };
+		98AE3B63235703FE0032A121 /* RecursionExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RecursionExample.h; path = "../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/DataStructureAndAlgorithm/DataStructureAndAlgorithm/RecursionExample.h"; sourceTree = "<group>"; };
+		98AE3B64235703FE0032A121 /* RecursionExample.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = RecursionExample.c; path = "../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/DataStructureAndAlgorithm/DataStructureAndAlgorithm/RecursionExample.c"; sourceTree = "<group>"; };
+		98AE3B66235763C80032A121 /* Sort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Sort.h; path = "../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/DataStructureAndAlgorithm/DataStructureAndAlgorithm/Sort.h"; sourceTree = "<group>"; };
+		98AE3B67235763C80032A121 /* Sort.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = Sort.c; path = "../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/DataStructureAndAlgorithm/DataStructureAndAlgorithm/Sort.c"; sourceTree = "<group>"; };
 		98C037732354402F00380FEB /* DataStructureAndAlgorithm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DataStructureAndAlgorithm; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C037762354402F00380FEB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		98C0377E235446B300380FEB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -75,6 +81,10 @@
 				9882866223556AC600C52286 /* Array.c */,
 				98E251F82355AD13005CE7A3 /* Stack.h */,
 				98E251F92355AD13005CE7A3 /* Stack.c */,
+				98AE3B63235703FE0032A121 /* RecursionExample.h */,
+				98AE3B64235703FE0032A121 /* RecursionExample.c */,
+				98AE3B66235763C80032A121 /* Sort.h */,
+				98AE3B67235763C80032A121 /* Sort.c */,
 			);
 			path = DataStructureAndAlgorithm;
 			sourceTree = "<group>";
@@ -145,8 +155,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9882866323556AC600C52286 /* Array.c in Sources */,
+				98AE3B68235763C80032A121 /* Sort.c in Sources */,
 				9882866023556A2200C52286 /* LinkList.c in Sources */,
 				98E251FA2355AD14005CE7A3 /* Stack.c in Sources */,
+				98AE3B65235703FE0032A121 /* RecursionExample.c in Sources */,
 				98C037772354402F00380FEB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

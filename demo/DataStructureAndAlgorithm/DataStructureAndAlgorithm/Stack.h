@@ -11,19 +11,21 @@
 
 
 #include <stdio.h>
+#include <string.h>
 
 
 struct Stack {
     int elemCount;//栈中元素个数
     int size;//栈的大小
-    char items[];//数组
+    int *items;//数组
 };
 
-typedef struct  Stack *stack;
+typedef struct  Stack *Stack;
 
-stack init(int size);
+Stack init(int size);
+void push(Stack stack, int e);
+int pop(Stack stack);
 
-void push(char *ch);
-char pop(stack stack);
+void printStack(Stack stack);
 
 #endif /* Stack_h */
