@@ -17,6 +17,8 @@ void bubbleSort(int a[], int length);
 void insertSort(int a[], int length);
 //选择排序
 void selectionSort(int a[], int length);
+//归并排序
+void mergeSort(int *a, int length);
 //快速排序
 void quickSort(int a[], int length);
 

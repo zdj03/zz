@@ -10,39 +10,106 @@
 #include <stdlib.h>
 
 
-/// 归并排序
-/// @param a 将数组分成两部分，无限分割，直到不能再分，最后将排好序的两个部分合并
-/// @param length <#length description#>
-void mergeSort(int a[], int length){
+/***************************************/
+/********** 归并排序 *****************/
+/***************************************/
+void _merge(int *a, int start, int mid, int end){
+    int *tmp = (int*)malloc((end - start -1) * sizeof(int));
     
+    if (!tmp) {
+        abort();
+    }
+    
+    int i, j, k;
+    for (i = start, j = mid+1,k = 0; i <= mid && j <= end;) {
+        if (a[i] <= a[j]) {
+            tmp[k++] = a[i++];
+        } else {
+            tmp[k++] = a[j++];
+        }
+    }
+    
+    if (i == mid + 1) {
+        for (; j <= end;) {
+            tmp[k++] = a[j++];
+        }
+    } else {
+        for (; i <= mid; ) {
+            tmp[k++] = a[i++];
+        }
+    }
+    memcpy(a+start, tmp, (end - start + 1) * sizeof(int));
+    
+    free(tmp);
 }
 
-void merge(int a[], int mid, int end){
-    int tmp[size] = {0};
-    
-    
-}
-
-void merge_sort(int a[], int p, int r) {
+void merge_sort(int *a, int p, int r) {
     if (p >= r) {
         return;
     }
     
     int q = (p+r) / 2;
     
+    //先处理子问题，再合并
     merge_sort(a, p, q);
     merge_sort(a, q+1, r);
-    merge(a, q, r);
+    _merge(a, p, q, r);
 }
 
 
+/// 归并排序
+/// @param a 将数组分成两部分，无限分割，直到不能再分，最后将排好序的两个部分合并。时间复杂度：O(nlogn)，空间复杂度：O(n)
+/// @param length 数组长度
+void mergeSort(int *a, int length){
+    merge_sort(a, 0, length - 1);
+}
 
-/// <#Description#>
-/// @param a <#a description#>
-/// @param length <#length description#>
-void quickSort(int a[], int length){
+/***************************************/
+/********** 快速排序 *****************/
+/***************************************/
+
+int partition(int *a, int p, int r){
     
+    int pivot = a[r];
+    int i = p;//i是已排区间尾部
+    for (int j = p; j < r; ++j) {
+        if (a[j] < pivot) {
+            int tmp = a[i];
+            a[i] = a[j];
+            a[j] = tmp;
+            ++i;
+        }
+    }
+    
+    int tmp = a[i];
+    a[i] = pivot;
+    a[r] = tmp;
+    
+    return i;
 }
+
+void quick_sort_c(int *a, int p, int r){
+    if (p >= r) {//只剩一个元素，自然是有序的
+        return;
+    }
+    
+    
+    //先分区，再处理子问题
+    int q = partition(a, p, r);//获取分区点
+    quick_sort_c(a, p, q-1);
+    quick_sort_c(a, q+1, r);
+}
+
+/// 选择数组中下标p到r之间的数据任意一个数据作为分区点（pivot），遍历这组数据，将小于pivot的放到坐标，大于pivot的放到右边。时间复杂度：一般情况：O(nlogn)，极端：O(n2)
+/// @param a 数组
+/// @param length 数组长度
+void quickSort(int a[], int length){
+    quick_sort_c(a, 0, length - 1);
+}
+
+/***************************************/
+/********** 选择排序 *****************/
+/***************************************/
 
 /// 将数组分为已排序和未排序区间，每次在未排序区间找到最小的元素，放到已排序区间的末尾（即未排区间的头部）。时间复杂度：O(n*n)
 /// @param a 数组
@@ -65,6 +132,9 @@ void selectionSort(int a[], int length) {
 }
 
 
+/***************************************/
+/********** 插入排序 *****************/
+/***************************************/
 
 /// 将数组分为已排序和未排序区间，每次取未排序区间的一个元素与已排序区间的元素比较，找到插入位置，将已排序区间该位置后的元素向后移动，最后插入该元素。时间复杂度：O(n*n)
 /// @param a 数组
@@ -91,7 +161,9 @@ void insertSort(int a[], int length){
     }
 }
 
-
+/***************************************/
+/********** 冒泡排序 *****************/
+/***************************************/
 
 //
 /// 每轮排序都是相邻元素两两比较，将较小元素排到后面，最后将最小的元素排到最上面
@@ -125,6 +197,9 @@ void bubbleSort(int a[], int length){
 }
 
 
+/***************************************/
+/********** 数组打印 *****************/
+/***************************************/
 void print_after_sort(int a[], int length) {
     for (int i = 0; i < length; ++i) {
         printf("[%d] : %d\n", i, a[i]);

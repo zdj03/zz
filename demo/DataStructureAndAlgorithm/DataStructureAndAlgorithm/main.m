@@ -24,13 +24,13 @@ int main(int argc, const char * argv[]) {
 
 
 void bubble_Sort(){
-    int a[] = {9,7,3,1};
+    int a[] = {9,2,7,1};
     
     //bubbleSort(a, 4);
     
    //insertSort(a, 4);
     
-    selectionSort(a, 4);
+    quickSort(a, 4);
     
     print_after_sort(a, 4);
 }
