@@ -81,7 +81,7 @@
         });
     
     
-CADisplayLink
+
     
     return YES;
 }
@@ -92,7 +92,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     appdelegate->runLoopActivity = activity;
     
     dispatch_semaphore_t semaphore = appdelegate->dispatchSemaphore;
-    dispatch_semaphore_signal(semaphore);
+    dispatch_semaphore_signal(semaphore);
 }
 
 - (void)addRunLoopObserver{
