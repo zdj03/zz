@@ -120,7 +120,7 @@ attachCategories方法代码就不贴了，有兴趣的可以自己去看看。�
 
 但是在实际加载Category的时候，会把-(void)foo加载进去，由于是实例方法，所以会放在NSObject的实例方法链表里面。
 
-根据第二章分析的objc_msgSend源码实现，我们可以知道：
+根据objc_msgSend源码实现，我们可以知道：
 
 在调用[NSObject foo]的时候，会先在NSObject的meta-class中去查找foo方法的IMP，未找到，继续在superClass中去查找，NSObject的meta-class的superClass就是本身NSObject，于是又回到NSObject的类方法中查找foo方法，于是乎找到了，执行foo方法，输出：
 

@@ -133,7 +133,7 @@ struct dispatch_queue_s {
 
 - 3、自定义队列
 
-  一般像下面自顶一个一个队列：
+  一般像下面自定义一个一个队列：
 
   ```
   //并发队列
@@ -342,3 +342,4 @@ _dispatch_queue_push_list(dispatch_queue_t dq, dispatch_object_t _head, dispatch
 ```
 
 \_dispatch_wakeup在前面dispatch_sync中已分析。
+

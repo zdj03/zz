@@ -31,7 +31,7 @@ struct __CFRunLoop {
 
 #### RunLoop和线程
 
-RunLoop和线程是一一对应的，其关系保存在一个全局的字典中。RunLoop在线程刚创建时没有创建，是在第一次获取时才创建，销毁发生在线程结束时，只能在线程内容获取其RunLoop(主线程除外)。
+RunLoop和线程是一一对应的，其关系保存在一个全局的字典中。RunLoop在线程刚创建时并没有创建，是在第一次获取时才创建，销毁发生在线程结束时，只能在线程内获取其RunLoop(主线程除外)。
 
 #### RunLoop对外接口
 
@@ -126,7 +126,7 @@ typedef CF_OPTIONS(CFOptionFlags, CFRunLoopActivity) {
 
 -----------------------------------
 static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info){
-   //通过activity即对应的状态
+   //activity即对应的状态
 }
 ```
 
@@ -192,7 +192,7 @@ int CFRunLoopRunSpecific(runloop, modeName, seconds, stopAfterHandle) {
             /// • 一个基于 port 的Source 的事件。
             /// • 一个 Timer 到时间了
             /// • RunLoop 自身的超时时间到了
-            /// • 被其他什么调用者手动唤醒
+            /// • 被其他调用者手动唤醒
             __CFRunLoopServiceMachPort(waitSet, &msg, sizeof(msg_buffer), &livePort) {
                 mach_msg(msg, MACH_RCV_MSG, port); // thread wait for receive msg
             }
@@ -352,7 +352,7 @@ modes = {
 系统默认注册了5个Mode:
 1. kCFRunLoopDefaultMode: App的默认 Mode，通常主线程是在这个 Mode 下运行的。
 2. UITrackingRunLoopMode: 界面跟踪 Mode，用于 ScrollView 追踪触摸滑动，保证界面滑动时不受其他 Mode 影响。
-3. UIInitializationRunLoopMode: 在刚启动 App 时第进入的第一个 Mode，启动完成后就不再使用。
+3. UIInitializationRunLoopMode: 在刚启动 App 时进入的第一个 Mode，启动完成后就不再使用。
 4.  GSEventReceiveRunLoopMode: 接受系统事件的内部 Mode，通常用不到。
 5.  kCFRunLoopCommonModes: 这是一个占位的 Mode，没有实际作用。
 
@@ -389,7 +389,7 @@ _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()。这个函�
 
 #### RunLoop与定时器
 
-NSTimer 其实就是 CFRunLoopTimerRef，他们之间是 toll-free bridged 的。一个 NSTimer 注册到 RunLoop 后，RunLoop 会为其重复的时间点注册好事件RunLoop为了节省资源，并不会在非常准确的时间点回调这个Timer。Timer 有个属性叫做 Tolerance (宽容度)，标示了当时间点到后，容许有多少最大误差。
+NSTimer 其实就是 CFRunLoopTimerRef，他们之间是 toll-free bridged 的。一个 NSTimer 注册到 RunLoop 后，RunLoop 会为其重复的时间点注册好事件。RunLoop为了节省资源，并不会在非常准确的时间点回调这个Timer。Timer 有个属性叫做 Tolerance (宽容度)，标示了当时间点到后，容许有多少最大误差。
 
 如果某个时间点被错过了，例如执行了一个很长的任务，则那个时间点的回调也会跳过去，不会延后执行。
 
@@ -405,7 +405,7 @@ CADisplayLink 是一个和屏幕刷新率一致的定时器（但实际实现原
 
 
 
-#### GCD
+#### GCD（详见GCD系列）
 
 实际上 RunLoop 底层也会用到 GCD 的东西，~~比如 RunLoop 是用 dispatch_source_t 实现的 Timer~~（评论中有人提醒，NSTimer 是用了 XNU 内核的 mk_timer，我也仔细调试了一下，发现 NSTimer 确实是由 mk_timer 驱动，而非 GCD 驱动的）。但同时 GCD 提供的某些接口也用到了 RunLoop， 例如 dispatch_async()。
 
@@ -413,7 +413,7 @@ CADisplayLink 是一个和屏幕刷新率一致的定时器（但实际实现原
 
 #### NSURLConnection
 
-通常使用 NSURLConnection 时，会传入一个 Delegate，当调用了 [connection start] 后，这个 Delegate 就会不停收到事件回调。实际上，start 这个函数的内部会会获取 CurrentRunLoop，然后在其中的 DefaultMode 添加了4个 Source0 (即需要手动触发的Source)。CFMultiplexerSource 是负责各种 Delegate 回调的，CFHTTPCookieStorage 是处理各种 Cookie 的。
+通常使用 NSURLConnection 时，会传入一个 Delegate，当调用了 [connection start] 后，这个 Delegate 就会不停收到事件回调。实际上，start 这个函数的内部会获取 CurrentRunLoop，然后在其中的 DefaultMode 添加了4个 Source0 (即需要手动触发的Source)。CFMultiplexerSource 是负责各种 Delegate 回调的，CFHTTPCookieStorage 是处理各种 Cookie 的。
 
 当开始网络传输时，我们可以看到 NSURLConnection 创建了两个新线程：com.apple.NSURLConnectionLoader 和 com.apple.CFSocket.private。其中 CFSocket 线程是处理底层 socket 连接的。NSURLConnectionLoader 这个线程内部会使用 RunLoop 来接收底层 socket 的事件，并通过之前添加的 Source0 通知到上层的 Delegate。
 
@@ -495,7 +495,6 @@ static NSThread *WXBackupBridgeThread;
 用来执行block：
 
 ```objective-c
-
 + (void)_performBlockOnBackupBridgeThread:(void (^)(void))block instance:(NSString*)instanceId
 {
     if ([NSThread currentThread] == [self backupJsThread]) {

@@ -6,10 +6,10 @@
 
 ![Mach-O](/System/Volumes/Data/Users/zhoudengjie/文档/zz/pics/Mach-O.jpeg)
 
-结合可知 Mach-O 文件包含了三部分内容：
+可知 Mach-O 文件包含了三部分内容：
 
 - Header（头部），指明了 cpu 架构、大小端序、文件类型、Load Commands 个数等一些基本信息
-- Load Commands（加载命令)，正如官方的图所示，描述了怎样加载每个 Segment 的信息。在 Mach-O 文件中可以有多个 Segment，每个 Segment 可能包含一个或多个 Section。
+- Load Commands（加载命令)，正如上图所示，描述了怎样加载每个 Segment 的信息。在 Mach-O 文件中可以有多个 Segment，每个 Segment 可能包含一个或多个 Section。
 - Data（数据区），Segment 的具体数据，包含了代码和数据等。
 
 
@@ -120,9 +120,9 @@ segname 在源码中定义的宏
 - `#define SEG_DATA "__DATA" // 数据段`
 - `#define SEG_LINKEDIT "__LINKEDIT" // 包含动态链接器所需的符号、字符串表等数据`
 
-vmaddr 段的虚存地址（未偏移），由于 ALSR，程序会在进程加上一段偏移量（slide），真实的地址 = vm address + slide
+vmaddr 段的虚内存地址（未偏移），由于 ALSR，程序会在进程加上一段偏移量（slide），真实的地址 = vm address + slide
 
-vmsize 段的虚存大小
+vmsize 段的虚内存大小
 
 fileoff 段在文件的偏移
 
@@ -201,14 +201,14 @@ struct section_64 { /* for 64-bit architectures */
 
 链接器的作用，就是完成变量、函数符号和地址的绑定，符号可理解为变量名和函数名。
 
-链接器的主要：
+链接器的主要操作：
 
 - 去项目文件里查找目标代码文件里没有定义的变量
 - 扫描项目中的不同文件，将所有符号定义和引用地址收集起来，并放到全局符号表中
 - 计算合并后长度及位置，生成同类型的段进行合并，建立绑定
 - 对项目中不同文件里的变量进行地址重定位
 
-链接器在整理函数的调用关系时，会以 main 函数为源头，跟随每个引用，并将其标记为 live。跟随完成后，那些未被标记 live 的函数，就是无用函数。然后，链接器可以通过打开 Dead code strippiing 开关，来开启自动去除无用代码的功能。并且，这个开关是默认开启的。
+链接器在整理函数的调用关系时，会以 main 函数为源头，跟随每个引用，并将其标记为 live。跟随完成后，那些未被标记 live 的函数，就是无用函数。然后，链接器可以通过打开 Dead code stripping 开关，来开启自动去除无用代码的功能。并且，这个开关是默认开启的。
 
 
 

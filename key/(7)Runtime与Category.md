@@ -15,7 +15,7 @@
 
 extension在编译器决议，它是类的一部分，随类一起产生消亡。extension一般用来隐藏类的私有信息，你必须有一个类的源码才能为一个类添加extension，所以无法为系统的类添加extension，比如NSString。
 
-category是在运行期决议的，extension可以添加实例变量，而category无法做到，因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内存布局，这对编译型语言是灾难的。
+category是在运行期决议的，extension可以添加实例变量，而category无法做到，因为在运行期，对象的内存布局已经确定，如果添加成员变量就会破坏类的内存布局，这对编译型语言是灾难的。
 
 #### category定义
 
@@ -43,7 +43,7 @@ typedef struct category_t {
 
 
 
-被编译器编译后（使用命令clang -rewrite-objc MyClass.m）生成c++源码文件，可以看到1)、首先编译器生成了实例方法列表*OBJC*$\_CATEGORY\_INSTANCE\_METHODSMyClass$\_MyAddition和属性列表*OBJC*$\_PROP\_LISTMyClass$\_MyAddition，两者的命名都遵循了公共前缀+类名+category名字的命名方式，而且实例方法列表里面填充的正是我们在MyAddition这个category里面写的方法printName，而属性列表里面填充的也正是我们在MyAddition里添加的name属性。还有一个需要注意到的事实就是category的名字用来给各种列表以及后面的category结构体本身命名，而且有static来修饰，所以在同一个编译单元里我们的category名不能重复，否则会出现编译错误。
+被编译器编译后（使用命令clang -rewrite-objc MyClass.m）生成c++源码文件，可以看到)、首先编译器生成了实例方法列表*OBJC*$\_CATEGORY\_INSTANCE\_METHODSMyClass$\_MyAddition和属性列表*OBJC*$\_PROP\_LISTMyClass$\_MyAddition，两者的命名都遵循了公共前缀+类名+category名字的命名方式，而且实例方法列表里面填充的正是我们在MyAddition这个category里面写的方法printName，而属性列表里面填充的也正是我们在MyAddition里添加的name属性。还有一个需要注意到的事实就是category的名字用来给各种列表以及后面的category结构体本身命名，而且有static来修饰，所以在同一个编译单元里我们的category名不能重复，否则会出现编译错误。
 
 2)、其次，编译器生成了category本身*OBJC*\_CATEGORY*MyClass*$\_MyAddition，并用前面生成的列表来初始化category本身。
 
@@ -67,7 +67,7 @@ category被附加到类上面是在map_images的时候发生的，\_objc\_init�
 
 
 
-#### 调用类中被category覆盖掉的方法
+#### 调用类中被category覆盖掉的类实例方法
 
 根据上面category的方法的驾照原理，可知，在类的方法列表里找到最后一个对应名字的方法，即可。
 
@@ -75,7 +75,7 @@ category被附加到类上面是在map_images的时候发生的，\_objc\_init�
 
 #### category和关联对象
 
-在（6）Runtime与NSObject中讲解了使用关联对象的方法间接在category中添加实例变量（实际上不是真的添加实例变量），提到几种内存管理策略。
+在（6）Runtime与NSObject中讲解了使用关联对象的方法间接在category中添加实例变量（实际上不是真的添加成员变量），提到几种内存管理策略。
 
 所有的关联对象都由AssociationsManager管理，AssociationsManager里面是一个静态的AssociationsHashMap来存储所有的关联对象，即把所有对象的关联对象存储在一个全局map。而map的key是这个对象的指针地址，value是另一个AssociationsHashMap（保存了关联对象的kv对）。
 
@@ -119,7 +119,7 @@ void *objc_destructInstance(id obj)
 }
 ```
 
-runtime会的销毁对象函数objc_destructInstance里面会判断这个对象有没有关联对象，如果有，会调用\_object_remove_associations做关联对象的清理工作(根据设置的内存管理策略)
+runtime在销毁对象函数objc_destructInstance里面会判断这个对象有没有关联对象，如果有，会调用\_object_remove_associations做关联对象的清理工作(根据设置的内存管理策略)
 
 
 
