@@ -201,6 +201,7 @@ heading = nil
 
 //报错：Simultaneous accesses to 0x10ea3b060, but modification requires exclusive access.
 //stepSize同时在修改和访问同一块内存，产生了冲突
+/*
 var stepSize = 1
 func increment(_ number: inout Int) {
     number += stepSize
@@ -208,10 +209,10 @@ func increment(_ number: inout Int) {
 var copyOfStepSize = stepSize
 increment(&copyOfStepSize)
 stepSize = copyOfStepSize
-
+*/
 
 /*--------------------------------高级运算符---------------------------*/
-
+/*
 var potentialOverflow = Int16.max
 potentialOverflow = potentialOverflow &+ 1
 
@@ -261,7 +262,7 @@ extension Vector2D {
 var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
 let afterDoubling = +++toBeDoubled
 
-//自定义中缀运算符的优先级和结核性
+//自定义中缀运算符的优先级和结合性
 precedencegroup precedence{ associativity: left
                             higherThan: AdditionPrecedence
                         }
@@ -271,3 +272,21 @@ extension Vector2D {
         return Vector2D(x: left.x + right.x, y: left.y - right.y)
     }
 }
+*/
+
+
+/****************************方法****************************/
+class SomeClass {
+    class func someTypeMethod1(){ print("class method") }
+    static func someTypeMethod2(){ print("class method") }
+}
+
+class SomeSubclass: SomeClass {
+    override class func someTypeMethod1(){ print("class method") }
+    static func someTypeMethod2(){ print("class method") }
+    
+}
+
+SomeClass.someTypeMethod1()
+SomeClass.someTypeMethod2()
+

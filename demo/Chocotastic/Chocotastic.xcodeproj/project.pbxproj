@@ -1,0 +1,773 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9831FF642363F09D0024F0BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FF632363F09D0024F0BA /* AppDelegate.swift */; };
+		9831FF662363F09D0024F0BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FF652363F09D0024F0BA /* SceneDelegate.swift */; };
+		9831FF6B2363F09D0024F0BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9831FF692363F09D0024F0BA /* Main.storyboard */; };
+		9831FF6D2363F0A60024F0BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9831FF6C2363F0A60024F0BA /* Assets.xcassets */; };
+		9831FF702363F0A60024F0BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9831FF6E2363F0A60024F0BA /* LaunchScreen.storyboard */; };
+		9831FF7B2363F0A70024F0BA /* ChocotasticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FF7A2363F0A70024F0BA /* ChocotasticTests.swift */; };
+		9831FF862363F0A70024F0BA /* ChocotasticUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FF852363F0A70024F0BA /* ChocotasticUITests.swift */; };
+		9831FF942363F3330024F0BA /* ChocolateNavigationControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FF932363F3330024F0BA /* ChocolateNavigationControllerViewController.swift */; };
+		9831FF962363F3610024F0BA /* BillingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FF952363F3610024F0BA /* BillingInfoViewController.swift */; };
+		9831FF982363F3740024F0BA /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FF972363F3740024F0BA /* CartViewController.swift */; };
+		9831FF9A2363F3870024F0BA /* ChocolateIsComingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FF992363F3870024F0BA /* ChocolateIsComingViewController.swift */; };
+		9831FF9C2363F39E0024F0BA /* ChocolatesOfTheWorldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FF9B2363F39E0024F0BA /* ChocolatesOfTheWorldViewController.swift */; };
+		9831FF9E2363F7230024F0BA /* ChocolateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FF9D2363F7230024F0BA /* ChocolateCell.swift */; };
+		9831FFA123642BC80024F0BA /* ChocolateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFA023642BC80024F0BA /* ChocolateButton.swift */; };
+		9831FFA4236430F90024F0BA /* Chocolate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFA3236430F90024F0BA /* Chocolate.swift */; };
+		9831FFA62364333C0024F0BA /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFA52364333C0024F0BA /* CurrencyFormatter.swift */; };
+		9831FFA8236434EC0024F0BA /* ShoppingCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFA7236434EC0024F0BA /* ShoppingCart.swift */; };
+		9831FFAA236436B30024F0BA /* CardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFA9236436B30024F0BA /* CardType.swift */; };
+		9831FFAD2364375F0024F0BA /* String+CreditCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFAC2364375F0024F0BA /* String+CreditCard.swift */; };
+		9831FFAF23643ECA0024F0BA /* ImageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFAE23643ECA0024F0BA /* ImageName.swift */; };
+		9831FFB1236484A10024F0BA /* ValidatingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFB0236484A10024F0BA /* ValidatingTextField.swift */; };
+		9831FFB32364856F0024F0BA /* String+ExpirationDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFB22364856F0024F0BA /* String+ExpirationDate.swift */; };
+		9831FFB5236487DF0024F0BA /* NSDate+CurrentComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFB4236487DF0024F0BA /* NSDate+CurrentComponents.swift */; };
+		9831FFB823648B330024F0BA /* SegueHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFB723648B330024F0BA /* SegueHandler.swift */; };
+		9831FFBB236569B10024F0BA /* RxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831FFBA236569B10024F0BA /* RxViewController.swift */; };
+		C401B4991DB2898BB13A4326 /* Pods_Chocotastic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2133BC4B3A4F79D75F2F186C /* Pods_Chocotastic.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9831FF772363F0A70024F0BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9831FF582363F09D0024F0BA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9831FF5F2363F09D0024F0BA;
+			remoteInfo = Chocotastic;
+		};
+		9831FF822363F0A70024F0BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9831FF582363F09D0024F0BA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9831FF5F2363F09D0024F0BA;
+			remoteInfo = Chocotastic;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2133BC4B3A4F79D75F2F186C /* Pods_Chocotastic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chocotastic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9831FF602363F09D0024F0BA /* Chocotastic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chocotastic.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9831FF632363F09D0024F0BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9831FF652363F09D0024F0BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		9831FF6A2363F09D0024F0BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9831FF6C2363F0A60024F0BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9831FF6F2363F0A60024F0BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9831FF712363F0A60024F0BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9831FF762363F0A70024F0BA /* ChocotasticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChocotasticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9831FF7A2363F0A70024F0BA /* ChocotasticTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChocotasticTests.swift; sourceTree = "<group>"; };
+		9831FF7C2363F0A70024F0BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9831FF812363F0A70024F0BA /* ChocotasticUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChocotasticUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9831FF852363F0A70024F0BA /* ChocotasticUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChocotasticUITests.swift; sourceTree = "<group>"; };
+		9831FF872363F0A70024F0BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9831FF932363F3330024F0BA /* ChocolateNavigationControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChocolateNavigationControllerViewController.swift; path = ../ChocolateNavigationControllerViewController.swift; sourceTree = "<group>"; };
+		9831FF952363F3610024F0BA /* BillingInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BillingInfoViewController.swift; path = ../BillingInfoViewController.swift; sourceTree = "<group>"; };
+		9831FF972363F3740024F0BA /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CartViewController.swift; path = ../CartViewController.swift; sourceTree = "<group>"; };
+		9831FF992363F3870024F0BA /* ChocolateIsComingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChocolateIsComingViewController.swift; path = ../ChocolateIsComingViewController.swift; sourceTree = "<group>"; };
+		9831FF9B2363F39E0024F0BA /* ChocolatesOfTheWorldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChocolatesOfTheWorldViewController.swift; path = ../ChocolatesOfTheWorldViewController.swift; sourceTree = "<group>"; };
+		9831FF9D2363F7230024F0BA /* ChocolateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChocolateCell.swift; path = ../ChocolateCell.swift; sourceTree = "<group>"; };
+		9831FFA023642BC80024F0BA /* ChocolateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChocolateButton.swift; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/Views/ChocolateButton.swift"; sourceTree = "<group>"; };
+		9831FFA3236430F90024F0BA /* Chocolate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Chocolate.swift; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/Models/Chocolate.swift"; sourceTree = "<group>"; };
+		9831FFA52364333C0024F0BA /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CurrencyFormatter.swift; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/Models/CurrencyFormatter.swift"; sourceTree = "<group>"; };
+		9831FFA7236434EC0024F0BA /* ShoppingCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShoppingCart.swift; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/Models/ShoppingCart.swift"; sourceTree = "<group>"; };
+		9831FFA9236436B30024F0BA /* CardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CardType.swift; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/Models/CardType.swift"; sourceTree = "<group>"; };
+		9831FFAC2364375F0024F0BA /* String+CreditCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+CreditCard.swift"; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/Extensions/String+CreditCard.swift"; sourceTree = "<group>"; };
+		9831FFAE23643ECA0024F0BA /* ImageName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageName.swift; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/Models/ImageName.swift"; sourceTree = "<group>"; };
+		9831FFB0236484A10024F0BA /* ValidatingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ValidatingTextField.swift; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/Views/ValidatingTextField.swift"; sourceTree = "<group>"; };
+		9831FFB22364856F0024F0BA /* String+ExpirationDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+ExpirationDate.swift"; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/Extensions/String+ExpirationDate.swift"; sourceTree = "<group>"; };
+		9831FFB4236487DF0024F0BA /* NSDate+CurrentComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSDate+CurrentComponents.swift"; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/Extensions/NSDate+CurrentComponents.swift"; sourceTree = "<group>"; };
+		9831FFB723648B330024F0BA /* SegueHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SegueHandler.swift; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/Protocols/SegueHandler.swift"; sourceTree = "<group>"; };
+		9831FFBA236569B10024F0BA /* RxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RxViewController.swift; path = "../../../../../../../../System/Volumes/Data/Users/zhoudengjie/文档/zz/demo/Chocotastic/Chocotastic/ViewControllers/RxViewController.swift"; sourceTree = "<group>"; };
+		9DCF257D777867AF27162FDC /* Pods-Chocotastic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chocotastic.debug.xcconfig"; path = "Target Support Files/Pods-Chocotastic/Pods-Chocotastic.debug.xcconfig"; sourceTree = "<group>"; };
+		FBF5B404BC48C4AF6E91E808 /* Pods-Chocotastic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chocotastic.release.xcconfig"; path = "Target Support Files/Pods-Chocotastic/Pods-Chocotastic.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9831FF5D2363F09D0024F0BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C401B4991DB2898BB13A4326 /* Pods_Chocotastic.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9831FF732363F0A70024F0BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9831FF7E2363F0A70024F0BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		16AE6BF492E3E09081286B15 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9DCF257D777867AF27162FDC /* Pods-Chocotastic.debug.xcconfig */,
+				FBF5B404BC48C4AF6E91E808 /* Pods-Chocotastic.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		9831FF572363F09D0024F0BA = {
+			isa = PBXGroup;
+			children = (
+				9831FF622363F09D0024F0BA /* Chocotastic */,
+				9831FF792363F0A70024F0BA /* ChocotasticTests */,
+				9831FF842363F0A70024F0BA /* ChocotasticUITests */,
+				9831FF612363F09D0024F0BA /* Products */,
+				16AE6BF492E3E09081286B15 /* Pods */,
+				B35E54A6685DFDE8AE90314B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		9831FF612363F09D0024F0BA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9831FF602363F09D0024F0BA /* Chocotastic.app */,
+				9831FF762363F0A70024F0BA /* ChocotasticTests.xctest */,
+				9831FF812363F0A70024F0BA /* ChocotasticUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9831FF622363F09D0024F0BA /* Chocotastic */ = {
+			isa = PBXGroup;
+			children = (
+				9831FFB623648B1F0024F0BA /* Protocols */,
+				9831FFAB2364373B0024F0BA /* Extensions */,
+				9831FFA2236430E60024F0BA /* Models */,
+				9831FF9F23642B820024F0BA /* Views */,
+				9831FF632363F09D0024F0BA /* AppDelegate.swift */,
+				9831FF652363F09D0024F0BA /* SceneDelegate.swift */,
+				9831FF692363F09D0024F0BA /* Main.storyboard */,
+				9831FF6C2363F0A60024F0BA /* Assets.xcassets */,
+				9831FF6E2363F0A60024F0BA /* LaunchScreen.storyboard */,
+				9831FF712363F0A60024F0BA /* Info.plist */,
+				9831FFB9236498EB0024F0BA /* ViewControllers */,
+			);
+			path = Chocotastic;
+			sourceTree = "<group>";
+		};
+		9831FF792363F0A70024F0BA /* ChocotasticTests */ = {
+			isa = PBXGroup;
+			children = (
+				9831FF7A2363F0A70024F0BA /* ChocotasticTests.swift */,
+				9831FF7C2363F0A70024F0BA /* Info.plist */,
+			);
+			path = ChocotasticTests;
+			sourceTree = "<group>";
+		};
+		9831FF842363F0A70024F0BA /* ChocotasticUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9831FF852363F0A70024F0BA /* ChocotasticUITests.swift */,
+				9831FF872363F0A70024F0BA /* Info.plist */,
+			);
+			path = ChocotasticUITests;
+			sourceTree = "<group>";
+		};
+		9831FF9F23642B820024F0BA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9831FF9D2363F7230024F0BA /* ChocolateCell.swift */,
+				9831FFA023642BC80024F0BA /* ChocolateButton.swift */,
+				9831FFB0236484A10024F0BA /* ValidatingTextField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9831FFA2236430E60024F0BA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9831FFA3236430F90024F0BA /* Chocolate.swift */,
+				9831FFA52364333C0024F0BA /* CurrencyFormatter.swift */,
+				9831FFA7236434EC0024F0BA /* ShoppingCart.swift */,
+				9831FFA9236436B30024F0BA /* CardType.swift */,
+				9831FFAE23643ECA0024F0BA /* ImageName.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9831FFAB2364373B0024F0BA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9831FFAC2364375F0024F0BA /* String+CreditCard.swift */,
+				9831FFB22364856F0024F0BA /* String+ExpirationDate.swift */,
+				9831FFB4236487DF0024F0BA /* NSDate+CurrentComponents.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9831FFB623648B1F0024F0BA /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				9831FFB723648B330024F0BA /* SegueHandler.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		9831FFB9236498EB0024F0BA /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				9831FF952363F3610024F0BA /* BillingInfoViewController.swift */,
+				9831FF932363F3330024F0BA /* ChocolateNavigationControllerViewController.swift */,
+				9831FF972363F3740024F0BA /* CartViewController.swift */,
+				9831FF992363F3870024F0BA /* ChocolateIsComingViewController.swift */,
+				9831FF9B2363F39E0024F0BA /* ChocolatesOfTheWorldViewController.swift */,
+				9831FFBA236569B10024F0BA /* RxViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		B35E54A6685DFDE8AE90314B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2133BC4B3A4F79D75F2F186C /* Pods_Chocotastic.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9831FF5F2363F09D0024F0BA /* Chocotastic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9831FF8A2363F0A70024F0BA /* Build configuration list for PBXNativeTarget "Chocotastic" */;
+			buildPhases = (
+				C4E5C5381811C87D966B0FA2 /* [CP] Check Pods Manifest.lock */,
+				9831FF5C2363F09D0024F0BA /* Sources */,
+				9831FF5D2363F09D0024F0BA /* Frameworks */,
+				9831FF5E2363F09D0024F0BA /* Resources */,
+				EEA5EE67728C070F2C2D4A62 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Chocotastic;
+			productName = Chocotastic;
+			productReference = 9831FF602363F09D0024F0BA /* Chocotastic.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9831FF752363F0A70024F0BA /* ChocotasticTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9831FF8D2363F0A70024F0BA /* Build configuration list for PBXNativeTarget "ChocotasticTests" */;
+			buildPhases = (
+				9831FF722363F0A70024F0BA /* Sources */,
+				9831FF732363F0A70024F0BA /* Frameworks */,
+				9831FF742363F0A70024F0BA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9831FF782363F0A70024F0BA /* PBXTargetDependency */,
+			);
+			name = ChocotasticTests;
+			productName = ChocotasticTests;
+			productReference = 9831FF762363F0A70024F0BA /* ChocotasticTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9831FF802363F0A70024F0BA /* ChocotasticUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9831FF902363F0A70024F0BA /* Build configuration list for PBXNativeTarget "ChocotasticUITests" */;
+			buildPhases = (
+				9831FF7D2363F0A70024F0BA /* Sources */,
+				9831FF7E2363F0A70024F0BA /* Frameworks */,
+				9831FF7F2363F0A70024F0BA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9831FF832363F0A70024F0BA /* PBXTargetDependency */,
+			);
+			name = ChocotasticUITests;
+			productName = ChocotasticUITests;
+			productReference = 9831FF812363F0A70024F0BA /* ChocotasticUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9831FF582363F09D0024F0BA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1110;
+				LastUpgradeCheck = 1110;
+				ORGANIZATIONNAME = zdj;
+				TargetAttributes = {
+					9831FF5F2363F09D0024F0BA = {
+						CreatedOnToolsVersion = 11.1;
+					};
+					9831FF752363F0A70024F0BA = {
+						CreatedOnToolsVersion = 11.1;
+						TestTargetID = 9831FF5F2363F09D0024F0BA;
+					};
+					9831FF802363F0A70024F0BA = {
+						CreatedOnToolsVersion = 11.1;
+						TestTargetID = 9831FF5F2363F09D0024F0BA;
+					};
+				};
+			};
+			buildConfigurationList = 9831FF5B2363F09D0024F0BA /* Build configuration list for PBXProject "Chocotastic" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9831FF572363F09D0024F0BA;
+			productRefGroup = 9831FF612363F09D0024F0BA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9831FF5F2363F09D0024F0BA /* Chocotastic */,
+				9831FF752363F0A70024F0BA /* ChocotasticTests */,
+				9831FF802363F0A70024F0BA /* ChocotasticUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9831FF5E2363F09D0024F0BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9831FF702363F0A60024F0BA /* LaunchScreen.storyboard in Resources */,
+				9831FF6D2363F0A60024F0BA /* Assets.xcassets in Resources */,
+				9831FF6B2363F09D0024F0BA /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9831FF742363F0A70024F0BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9831FF7F2363F0A70024F0BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C4E5C5381811C87D966B0FA2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Chocotastic-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EEA5EE67728C070F2C2D4A62 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chocotastic/Pods-Chocotastic-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chocotastic/Pods-Chocotastic-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chocotastic/Pods-Chocotastic-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9831FF5C2363F09D0024F0BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9831FFB1236484A10024F0BA /* ValidatingTextField.swift in Sources */,
+				9831FF9E2363F7230024F0BA /* ChocolateCell.swift in Sources */,
+				9831FFA62364333C0024F0BA /* CurrencyFormatter.swift in Sources */,
+				9831FF962363F3610024F0BA /* BillingInfoViewController.swift in Sources */,
+				9831FFB5236487DF0024F0BA /* NSDate+CurrentComponents.swift in Sources */,
+				9831FF942363F3330024F0BA /* ChocolateNavigationControllerViewController.swift in Sources */,
+				9831FF642363F09D0024F0BA /* AppDelegate.swift in Sources */,
+				9831FFA123642BC80024F0BA /* ChocolateButton.swift in Sources */,
+				9831FFAF23643ECA0024F0BA /* ImageName.swift in Sources */,
+				9831FF982363F3740024F0BA /* CartViewController.swift in Sources */,
+				9831FFA8236434EC0024F0BA /* ShoppingCart.swift in Sources */,
+				9831FFA4236430F90024F0BA /* Chocolate.swift in Sources */,
+				9831FF9C2363F39E0024F0BA /* ChocolatesOfTheWorldViewController.swift in Sources */,
+				9831FF9A2363F3870024F0BA /* ChocolateIsComingViewController.swift in Sources */,
+				9831FFBB236569B10024F0BA /* RxViewController.swift in Sources */,
+				9831FFAD2364375F0024F0BA /* String+CreditCard.swift in Sources */,
+				9831FFB32364856F0024F0BA /* String+ExpirationDate.swift in Sources */,
+				9831FF662363F09D0024F0BA /* SceneDelegate.swift in Sources */,
+				9831FFB823648B330024F0BA /* SegueHandler.swift in Sources */,
+				9831FFAA236436B30024F0BA /* CardType.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9831FF722363F0A70024F0BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9831FF7B2363F0A70024F0BA /* ChocotasticTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9831FF7D2363F0A70024F0BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9831FF862363F0A70024F0BA /* ChocotasticUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9831FF782363F0A70024F0BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9831FF5F2363F09D0024F0BA /* Chocotastic */;
+			targetProxy = 9831FF772363F0A70024F0BA /* PBXContainerItemProxy */;
+		};
+		9831FF832363F0A70024F0BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9831FF5F2363F09D0024F0BA /* Chocotastic */;
+			targetProxy = 9831FF822363F0A70024F0BA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9831FF692363F09D0024F0BA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9831FF6A2363F09D0024F0BA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9831FF6E2363F0A60024F0BA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9831FF6F2363F0A60024F0BA /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9831FF882363F0A70024F0BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9831FF892363F0A70024F0BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9831FF8B2363F0A70024F0BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9DCF257D777867AF27162FDC /* Pods-Chocotastic.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RBZ4UX882P;
+				INFOPLIST_FILE = Chocotastic/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = zdj.Chocotastic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9831FF8C2363F0A70024F0BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBF5B404BC48C4AF6E91E808 /* Pods-Chocotastic.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RBZ4UX882P;
+				INFOPLIST_FILE = Chocotastic/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = zdj.Chocotastic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9831FF8E2363F0A70024F0BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RBZ4UX882P;
+				INFOPLIST_FILE = ChocotasticTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = zdj.ChocotasticTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chocotastic.app/Chocotastic";
+			};
+			name = Debug;
+		};
+		9831FF8F2363F0A70024F0BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RBZ4UX882P;
+				INFOPLIST_FILE = ChocotasticTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = zdj.ChocotasticTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chocotastic.app/Chocotastic";
+			};
+			name = Release;
+		};
+		9831FF912363F0A70024F0BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RBZ4UX882P;
+				INFOPLIST_FILE = ChocotasticUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = zdj.ChocotasticUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Chocotastic;
+			};
+			name = Debug;
+		};
+		9831FF922363F0A70024F0BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RBZ4UX882P;
+				INFOPLIST_FILE = ChocotasticUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = zdj.ChocotasticUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Chocotastic;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9831FF5B2363F09D0024F0BA /* Build configuration list for PBXProject "Chocotastic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9831FF882363F0A70024F0BA /* Debug */,
+				9831FF892363F0A70024F0BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9831FF8A2363F0A70024F0BA /* Build configuration list for PBXNativeTarget "Chocotastic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9831FF8B2363F0A70024F0BA /* Debug */,
+				9831FF8C2363F0A70024F0BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9831FF8D2363F0A70024F0BA /* Build configuration list for PBXNativeTarget "ChocotasticTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9831FF8E2363F0A70024F0BA /* Debug */,
+				9831FF8F2363F0A70024F0BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9831FF902363F0A70024F0BA /* Build configuration list for PBXNativeTarget "ChocotasticUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9831FF912363F0A70024F0BA /* Debug */,
+				9831FF922363F0A70024F0BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9831FF582363F09D0024F0BA /* Project object */;
+}
