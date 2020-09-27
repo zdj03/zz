@@ -25,6 +25,7 @@ typedef struct  Stack *Stack;
 Stack init(int size);
 void push(Stack stack, int e);
 int pop(Stack stack);
+int peekInStack(Stack stack);
 
 void printStack(Stack stack);
 

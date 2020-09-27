@@ -155,7 +155,7 @@ https://www.cnblogs.com/guohai-stronger/p/10419156.html
 
 https://www.cnblogs.com/guohai-stronger/p/10430106.html
 
-#### weeak原理
+#### weak原理
 
 weak表其实是一个哈希表，key是所指对象的指针，value是weak指针的地址数组。（value是数组的原因是：因为一个对象可能被多个弱引用指针指向）
 

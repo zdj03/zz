@@ -18,3 +18,19 @@ void print(){
         printf("hello world\n");
     }
 }
+
+int searchTarget(int a[100][100], int rows, int cols, int target){
+    int row = 0;
+    
+    while (row < rows && cols >= 0) {
+        int val = a[row][cols-1];
+        if (target == val) {
+            return 1;
+        } else if (target > val){
+            row++;
+        } else {
+            cols--;
+        }
+    }
+    return 0;
+}

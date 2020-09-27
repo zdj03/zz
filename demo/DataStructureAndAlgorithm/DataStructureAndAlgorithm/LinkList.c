@@ -41,7 +41,7 @@ dual_list initDual_list(int *a, int length){
 
 void printDualList(dual_list list) {
     if (!list) {
-           printf("list do not exist!");
+           printf("list do not exist!\n");
            return;
        }
 
@@ -53,7 +53,7 @@ void printDualList(dual_list list) {
 
 void printList(List list) {
     if (!list) {
-        printf("list do not exist!");
+        printf("list do not exist!\n");
         return;
     }
     
@@ -108,22 +108,25 @@ void delNode(List list, int i){
 
 //单链表反转
 List reverseList(List list) {
-    LNode *tmp = list;
     
+    //pre用于暂存当前节点的上一个节点
     LNode *pre =  NULL;
+    //next用于暂存当前节点的下一节点
     LNode *next = NULL;
 
-    while (tmp) {
-        next = tmp->next;
-        tmp->next = pre;
-        pre = tmp;
-        tmp = next;
+    //如果list节点为null，表示已经到达链表尾部,此时pre指向链表头部
+    while (list) {
+        //1、将next往后移动，保证链表不会因为失去head而断裂
+        next = list->next;
+        //2、将当前节点的next反转
+        list->next = pre;
+        //3、将pre指向当前节点
+        pre = list;
+        //4、当前节点更新为下一节点，用于进行下一次迭代
+        list = next;
     }
     
-    //此时tmp是一个空指针，pre才是反转后的头结点
-    tmp = pre;
-    
-    return tmp;
+    return pre;
 }
 
 

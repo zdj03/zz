@@ -11,6 +11,14 @@
 
 #include <stdio.h>
 
+#define EXCHANGE(num1, num2) \
+{\
+num1 = num1 ^ num2;\
+num2 = num1 ^ num2;\
+num1 = num1 ^ num2;\
+}\
+
+
 //冒泡排序
 void bubbleSort(int a[], int length);
 //插入排序

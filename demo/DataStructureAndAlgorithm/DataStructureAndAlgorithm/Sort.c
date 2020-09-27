@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 
+
 /***************************************/
 /********** 归并排序 *****************/
 /***************************************/
@@ -100,7 +101,7 @@ void quick_sort_c(int *a, int p, int r){
     quick_sort_c(a, q+1, r);
 }
 
-/// 选择数组中下标p到r之间的数据任意一个数据作为分区点（pivot），遍历这组数据，将小于pivot的放到坐标，大于pivot的放到右边。时间复杂度：一般情况：O(nlogn)，极端：O(n2)
+/// 选择数组中下标p到r之间的数据任意一个数据作为分区点（pivot），遍历这组数据，将小于pivot的放到左边，大于pivot的放到右边。时间复杂度：一般情况：O(nlogn)，极端：O(n2)
 /// @param a 数组
 /// @param length 数组长度
 void quickSort(int a[], int length){
@@ -119,6 +120,23 @@ void selectionSort(int a[], int length) {
         int min = i;
         for (int j = i; j < length; ++j) {
             if (a[j] < a[j+1]) {//找到最小值
+                min = j;
+            }
+        }
+        
+        if (min != i) {
+            int value = a[i];
+            a[i] = a[min];
+            a[min] = value;
+        }
+    }
+}
+
+void selectionSort2(int a[], int length){
+    for (int i = 0; i < length; ++i) {
+        int min = i;
+        for (int j = i; j < length; ++j) {
+            if (a[j] < a[j+1]) {
                 min = j;
             }
         }
@@ -161,6 +179,23 @@ void insertSort(int a[], int length){
     }
 }
 
+void insertSort2(int a[], int length){
+    
+    for (int i = 1; i < length; ++i) {
+        int value = a[i];
+        int j = i - 1;
+        
+        for (; j >= 0; --j) {
+            if (a[j] > value) {
+                a[j+1] = a[j];
+            } else {
+                break;
+            }
+        }
+        a[j+1] = value;
+    }
+}
+
 /***************************************/
 /********** 冒泡排序 *****************/
 /***************************************/
@@ -171,20 +206,20 @@ void insertSort(int a[], int length){
 /// @param a 数组
 /// @param length 数组长度
 void bubbleSort(int a[], int length){
-        
+
     static int loops = 0;
-    
+
     for (int i = 0; i < length-1; ++i) {//需要冒泡的轮数
-        
+
         //0:表示没有发生数据交换，1：表示发生了数据交换。如果数组已经有序，则无需进行冒泡
         int hasSwap = 0;
-        
+
         for (int j = 0; j < length - i - 1; ++j) {//每轮两两比较的次数
             if (a[j] < a[j+1]) {
                 int tmp = a[j];
                 a[j] = a[j+1];
                 a[j+1] = tmp;
-                
+
                 hasSwap = 1;
                 loops++;
             }
@@ -195,7 +230,6 @@ void bubbleSort(int a[], int length){
     }
     printf("loops ：%d\n", loops);
 }
-
 
 /***************************************/
 /********** 数组打印 *****************/

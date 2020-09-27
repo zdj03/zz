@@ -42,6 +42,13 @@ int pop(Stack stack) {
     return top;
 }
 
+int peekInStack(Stack stack){
+    if (stack->elemCount == 0) {
+        return -1;
+    }
+    return stack->items[--stack->elemCount];
+}
+
 
 void printStack(Stack stack){
     
