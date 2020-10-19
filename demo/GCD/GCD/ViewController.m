@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "GCDTimer.h"
+#import <objc/runtime.h>
 
 @interface ViewController ()
 
@@ -23,9 +24,54 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = UIColor.redColor;
+
     
-   
     
+    
+//    [self performSelector:@selector(test) onThread:[self.class shareThread] withObject:nil waitUntilDone:NO];
+    
+    
+    [self performSelector:@selector(fun)];
+    
+    NSString *i = @"1";
+//    NSLog(@"------%@",[i isEqualToString:@"1"] ? @"aaa": @"ddddd");
+    
+    
+}
+
++ (BOOL)resolveInstanceMethod:(SEL)sel{
+    if (sel == @selector(fun)) {
+        class_addMethod([self class], sel , (IMP)funMethod, "v@:");
+        return  YES;
+    }
+    return [super resolveInstanceMethod:sel];
+}
+
+void funMethod(id obj, SEL _cmd){
+    NSLog(@"funMethod");
+}
+
+
+- (void)test{
+    NSLog(@"test:%@", [NSThread currentThread]);
+}
+
+
++ (NSThread *)shareThread{
+    static NSThread *sharedThread = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedThread = [[NSThread alloc] initWithTarget:self selector:@selector(threadTest) object:nil];
+        [sharedThread setName:@"threadTest"];
+        [sharedThread start];
+    });
+    return sharedThread;
+}
+
++ (void)threadTest{
+    NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+    [runLoop addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];
+    [runLoop run];
 }
 
 //

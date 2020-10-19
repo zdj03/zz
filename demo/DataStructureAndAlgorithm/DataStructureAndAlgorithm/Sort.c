@@ -39,7 +39,7 @@ void _merge(int *a, int start, int mid, int end){
             tmp[k++] = a[i++];
         }
     }
-    memcpy(a+start, tmp, (end - start + 1) * sizeof(int));
+//    memcpy(a+start, tmp, (end - start + 1) * sizeof(int));
     
     free(tmp);
 }
@@ -71,17 +71,17 @@ void mergeSort(int *a, int length){
 
 int partition(int *a, int p, int r){
     
-    int pivot = a[r];
-    int i = p;//i是已排区间尾部
-    for (int j = p; j < r; ++j) {
-        if (a[j] < pivot) {
+    int pivot = a[r];//选中主元素，用来划分区间
+    int i = p;//i记录小于pivot元素的区间的尾部
+    for (int j = p; j < r; ++j) {//遍历p到r区间的元素
+        if (a[j] < pivot) {//如果小于pivot，将该元素与i交换，大于则不操作
             int tmp = a[i];
             a[i] = a[j];
             a[j] = tmp;
             ++i;
         }
     }
-    
+    //将pivot与i交换，完成后，三个区间就完成了划分
     int tmp = a[i];
     a[i] = pivot;
     a[r] = tmp;
@@ -124,7 +124,7 @@ void selectionSort(int a[], int length) {
             }
         }
         
-        if (min != i) {
+        if (min != i) {//将最小元素与未排序区间首元素进行交换
             int value = a[i];
             a[i] = a[min];
             a[min] = value;
@@ -132,19 +132,26 @@ void selectionSort(int a[], int length) {
     }
 }
 
-void selectionSort2(int a[], int length){
-    for (int i = 0; i < length; ++i) {
-        int min = i;
-        for (int j = i; j < length; ++j) {
-            if (a[j] < a[j+1]) {
-                min = j;
+//二分插入排序,在左边的有序序列按照二分查找合适的插入位置。时间复杂度：O(log₂n)，平均情况和最坏情况是o(n²)
+void insertSortBinary(int a[], int length){
+    int i,j;
+    for (i = 1; i<length; ++i) {
+        if (a[i] < a[i-1]) {
+            int tmp = a[i];
+            
+            int left = 0, right = i - 1;
+            while (left <= right) {//折半查找，优化效率
+                int mid = (left+right)/2;
+                if (a[mid] < tmp) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
             }
-        }
-        
-        if (min != i) {
-            int value = a[i];
-            a[i] = a[min];
-            a[min] = value;
+            for (j=i; j>left; j--) {//移动元素
+                a[j] = a[j-1];
+            }
+            a[left] = tmp;
         }
     }
 }
@@ -170,7 +177,7 @@ void insertSort(int a[], int length){
                 //数据移动
                 a[j+1] = a[j];
             } else {
-                //此时已经有序，无需再比较
+                //找到插入位置
                 break;
             }
         }
@@ -179,22 +186,6 @@ void insertSort(int a[], int length){
     }
 }
 
-void insertSort2(int a[], int length){
-    
-    for (int i = 1; i < length; ++i) {
-        int value = a[i];
-        int j = i - 1;
-        
-        for (; j >= 0; --j) {
-            if (a[j] > value) {
-                a[j+1] = a[j];
-            } else {
-                break;
-            }
-        }
-        a[j+1] = value;
-    }
-}
 
 /***************************************/
 /********** 冒泡排序 *****************/
@@ -230,6 +221,7 @@ void bubbleSort(int a[], int length){
     }
     printf("loops ：%d\n", loops);
 }
+
 
 /***************************************/
 /********** 数组打印 *****************/
