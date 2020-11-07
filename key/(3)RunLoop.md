@@ -608,9 +608,9 @@ static NSThread *WXBackupBridgeThread;
 
 ```objective-c
 @autoreleasepool {
-        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
-        [runLoop addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];
-        [runLoop run];
+  NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+ 	[runLoop addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];
+  [runLoop run];
 }
 ```
 

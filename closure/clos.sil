@@ -1,0 +1,280 @@
+sil_stage canonical
+
+import Builtin
+import Swift
+import SwiftShims
+
+// c1
+sil_global hidden @_Tv4clos2c1CS_6aClass : $aClass
+
+// c2
+sil_global hidden @_Tv4clos2c2CS_6aClass : $aClass
+
+// fSpec
+sil_global hidden @_Tv4clos5fSpecFT_T_ : $@callee_owned () -> ()
+
+// static CommandLine._argc
+sil_global [fragile] @_TZvOs11CommandLine5_argcVs5Int32 : $Int32
+
+// globalinit_33_FD9A49A256BEB6AF7C48013347ADC3BA_token4
+sil_global private_external [fragile] @globalinit_33_FD9A49A256BEB6AF7C48013347ADC3BA_token4 : $Builtin.Word
+
+// static CommandLine._unsafeArgv
+sil_global [fragile] @_TZvOs11CommandLine11_unsafeArgvGSpGSqGSpVs4Int8___ : $UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>
+
+sil_scope 1 {  parent @main : $@convention(c) (Int32, UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>) -> Int32 }
+sil_scope 2 { loc "clos.swift":14:1 parent 1 }
+
+// main
+sil @main : $@convention(c) (Int32, UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>) -> Int32 {
+// %0                                             // user: %4
+// %1                                             // user: %10
+bb0(%0 : $Int32, %1 : $UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>):
+  %2 = alloc_stack $@sil_unowned aClass, let, name "c1", loc "clos.swift":9:14, scope 2 // users: %53, %29
+  %3 = global_addr @_TZvOs11CommandLine5_argcVs5Int32 : $*Int32, scope 1 // user: %4
+  store %0 to %3 : $*Int32, scope 1               // id: %4
+  %5 = global_addr @globalinit_33_FD9A49A256BEB6AF7C48013347ADC3BA_token4 : $*Builtin.Word, scope 1 // user: %6
+  %6 = address_to_pointer %5 : $*Builtin.Word to $Builtin.RawPointer, scope 1 // user: %8
+  // function_ref globalinit_33_FD9A49A256BEB6AF7C48013347ADC3BA_func4
+  %7 = function_ref @globalinit_33_FD9A49A256BEB6AF7C48013347ADC3BA_func4 : $@convention(thin) () -> (), scope 1 // user: %8
+  %8 = builtin "once"(%6 : $Builtin.RawPointer, %7 : $@convention(thin) () -> ()) : $(), scope 1
+  %9 = global_addr @_TZvOs11CommandLine11_unsafeArgvGSpGSqGSpVs4Int8___ : $*UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>, scope 1 // user: %10
+  store %1 to %9 : $*UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>, scope 1 // id: %10
+  %11 = tuple (), scope 1
+  alloc_global @_Tv4clos2c1CS_6aClass, loc "clos.swift":5:5, scope 1 // id: %12
+  %13 = global_addr @_Tv4clos2c1CS_6aClass : $*aClass, loc "clos.swift":5:5, scope 1 // users: %26, %17
+  // function_ref aClass.__allocating_init() -> aClass
+  %14 = function_ref @_TFC4clos6aClassCfT_S0_ : $@convention(method) (@thick aClass.Type) -> @owned aClass, loc "clos.swift":5:10, scope 1 // user: %16
+  %15 = metatype $@thick aClass.Type, loc "clos.swift":5:10, scope 1 // user: %16
+  %16 = apply %14(%15) : $@convention(method) (@thick aClass.Type) -> @owned aClass, loc "clos.swift":5:17, scope 1 // user: %17
+  store %16 to %13 : $*aClass, loc "clos.swift":5:17, scope 1 // id: %17
+  alloc_global @_Tv4clos2c2CS_6aClass, loc "clos.swift":6:5, scope 1 // id: %18
+  %19 = global_addr @_Tv4clos2c2CS_6aClass : $*aClass, loc "clos.swift":6:5, scope 1 // users: %32, %23
+  // function_ref aClass.__allocating_init() -> aClass
+  %20 = function_ref @_TFC4clos6aClassCfT_S0_ : $@convention(method) (@thick aClass.Type) -> @owned aClass, loc "clos.swift":6:10, scope 1 // user: %22
+  %21 = metatype $@thick aClass.Type, loc "clos.swift":6:10, scope 1 // user: %22
+  %22 = apply %20(%21) : $@convention(method) (@thick aClass.Type) -> @owned aClass, loc "clos.swift":6:17, scope 1 // user: %23
+  store %22 to %19 : $*aClass, loc "clos.swift":6:17, scope 1 // id: %23
+  alloc_global @_Tv4clos5fSpecFT_T_, loc "clos.swift":8:5, scope 1 // id: %24
+  %25 = global_addr @_Tv4clos5fSpecFT_T_ : $*@callee_owned () -> (), loc "clos.swift":8:5, scope 1 // users: %48, %45
+  %26 = load %13 : $*aClass, loc "clos.swift":9:14, scope 2 // user: %27
+  %27 = ref_to_unowned %26 : $aClass to $@sil_unowned aClass, loc "clos.swift":9:14, scope 2 // users: %47, %38, %39, %29, %28
+  unowned_retain %27 : $@sil_unowned aClass, loc "clos.swift":9:14, scope 2 // id: %28
+  store %27 to %2 : $*@sil_unowned aClass, loc "clos.swift":9:14, scope 2 // id: %29
+  %30 = alloc_box $@sil_weak Optional<aClass>, var, name "c2", loc "clos.swift":9:23, scope 2 // users: %46, %44, %43, %31
+  %31 = project_box %30 : $@box @sil_weak Optional<aClass>, loc "clos.swift":9:23, scope 2 // user: %35
+  %32 = load %19 : $*aClass, loc "clos.swift":9:23, scope 2 // users: %34, %33
+  strong_retain %32 : $aClass, loc "clos.swift":9:23, scope 2 // id: %33
+  %34 = enum $Optional<aClass>, #Optional.some!enumelt.1, %32 : $aClass, loc "clos.swift":9:23, scope 2 // users: %36, %35
+  store_weak %34 to [initialization] %31 : $*@sil_weak Optional<aClass>, loc "clos.swift":9:23, scope 2 // id: %35
+  release_value %34 : $Optional<aClass>, loc "clos.swift":9:23, scope 2 // id: %36
+  // function_ref (closure #1)
+  %37 = function_ref @_TF4closU_FT_T_ : $@convention(thin) (@owned @sil_unowned aClass, @owned @box @sil_weak Optional<aClass>) -> (), loc "clos.swift":8:13, scope 2 // user: %44
+  strong_retain_unowned %27 : $@sil_unowned aClass, loc "clos.swift":8:13, scope 2 // id: %38
+  %39 = unowned_to_ref %27 : $@sil_unowned aClass to $aClass, loc "clos.swift":8:13, scope 2 // users: %42, %40
+  %40 = ref_to_unowned %39 : $aClass to $@sil_unowned aClass, loc "clos.swift":8:13, scope 2 // users: %44, %41
+  unowned_retain %40 : $@sil_unowned aClass, loc "clos.swift":8:13, scope 2 // id: %41
+  strong_release %39 : $aClass, loc "clos.swift":8:13, scope 2 // id: %42
+  strong_retain %30 : $@box @sil_weak Optional<aClass>, loc "clos.swift":8:13, scope 2 // id: %43
+  %44 = partial_apply %37(%40, %30) : $@convention(thin) (@owned @sil_unowned aClass, @owned @box @sil_weak Optional<aClass>) -> (), loc "clos.swift":8:13, scope 2 // user: %45
+  store %44 to %25 : $*@callee_owned () -> (), loc "clos.swift":8:13, scope 2 // id: %45
+  strong_release %30 : $@box @sil_weak Optional<aClass>, loc "clos.swift":14:1, scope 2 // id: %46
+  unowned_release %27 : $@sil_unowned aClass, loc "clos.swift":9:14, scope 2 // id: %47
+  %48 = load %25 : $*@callee_owned () -> (), loc "clos.swift":17:1, scope 2 // users: %50, %49
+  strong_retain %48 : $@callee_owned () -> (), loc "clos.swift":17:1, scope 2 // id: %49
+  %50 = apply %48() : $@callee_owned () -> (), loc "clos.swift":17:7, scope 2
+  %51 = integer_literal $Builtin.Int32, 0, scope 2 // user: %52
+  %52 = struct $Int32 (%51 : $Builtin.Int32), scope 2 // user: %54
+  dealloc_stack %2 : $*@sil_unowned aClass, loc "clos.swift":9:14, scope 2 // id: %53
+  return %52 : $Int32, scope 2                    // id: %54
+}
+
+sil_scope 3 {  parent @_TFs20_stdlib_didEnterMainFT4argcVs5Int324argvGSpGSqGSpVs4Int8____T_ : $@convention(thin) (Int32, UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>) -> () }
+
+// _stdlib_didEnterMain(argc : Int32, argv : UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>) -> ()
+sil public_external [transparent] [fragile] @_TFs20_stdlib_didEnterMainFT4argcVs5Int324argvGSpGSqGSpVs4Int8____T_ : $@convention(thin) (Int32, UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>) -> () {
+// %0                                             // users: %5, %2
+// %1                                             // users: %11, %3
+bb0(%0 : $Int32, %1 : $UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>):
+  debug_value %0 : $Int32, scope 3                // id: %2
+  debug_value %1 : $UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>, scope 3 // id: %3
+  %4 = global_addr @_TZvOs11CommandLine5_argcVs5Int32 : $*Int32, scope 3 // user: %5
+  store %0 to %4 : $*Int32, scope 3               // id: %5
+  %6 = global_addr @globalinit_33_FD9A49A256BEB6AF7C48013347ADC3BA_token4 : $*Builtin.Word, scope 3 // user: %7
+  %7 = address_to_pointer %6 : $*Builtin.Word to $Builtin.RawPointer, scope 3 // user: %9
+  // function_ref globalinit_33_FD9A49A256BEB6AF7C48013347ADC3BA_func4
+  %8 = function_ref @globalinit_33_FD9A49A256BEB6AF7C48013347ADC3BA_func4 : $@convention(thin) () -> (), scope 3 // user: %9
+  %9 = builtin "once"(%7 : $Builtin.RawPointer, %8 : $@convention(thin) () -> ()) : $(), scope 3
+  %10 = global_addr @_TZvOs11CommandLine11_unsafeArgvGSpGSqGSpVs4Int8___ : $*UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>, scope 3 // user: %11
+  store %1 to %10 : $*UnsafeMutablePointer<Optional<UnsafeMutablePointer<Int8>>>, scope 3 // id: %11
+  %12 = tuple (), scope 3                         // user: %13
+  return %12 : $(), scope 3                       // id: %13
+}
+
+sil_scope 4 { loc "clos.swift":1:7 parent @_TFC4clos6aClassD : $@convention(method) (@owned aClass) -> () }
+
+// aClass.__deallocating_deinit
+sil hidden @_TFC4clos6aClassD : $@convention(method) (@owned aClass) -> () {
+// %0                                             // users: %3, %1
+bb0(%0 : $aClass):
+  debug_value %0 : $aClass, let, name "self", argno 1, loc "clos.swift":1:7, scope 4 // id: %1
+  // function_ref aClass.deinit
+  %2 = function_ref @_TFC4clos6aClassd : $@convention(method) (@guaranteed aClass) -> @owned Builtin.NativeObject, scope 4 // user: %3
+  %3 = apply %2(%0) : $@convention(method) (@guaranteed aClass) -> @owned Builtin.NativeObject, scope 4 // user: %4
+  %4 = unchecked_ref_cast %3 : $Builtin.NativeObject to $aClass, scope 4 // user: %5
+  dealloc_ref %4 : $aClass, scope 4               // id: %5
+  %6 = tuple (), scope 4                          // user: %7
+  return %6 : $(), scope 4                        // id: %7
+}
+
+sil_scope 5 { loc "clos.swift":1:7 parent @_TFC4clos6aClassd : $@convention(method) (@guaranteed aClass) -> @owned Builtin.NativeObject }
+sil_scope 6 { loc "clos.swift":1:7 parent 5 }
+
+// aClass.deinit
+sil hidden @_TFC4clos6aClassd : $@convention(method) (@guaranteed aClass) -> @owned Builtin.NativeObject {
+// %0                                             // users: %2, %1
+bb0(%0 : $aClass):
+  debug_value %0 : $aClass, let, name "self", argno 1, loc "clos.swift":1:7, scope 5 // id: %1
+  %2 = unchecked_ref_cast %0 : $aClass to $Builtin.NativeObject, scope 6 // user: %3
+  return %2 : $Builtin.NativeObject, scope 6      // id: %3
+}
+
+sil_scope 7 { loc "clos.swift":2:9 parent @_TFC4clos6aClassg5valueSi : $@convention(method) (@guaranteed aClass) -> Int }
+sil_scope 8 { loc "clos.swift":2:9 parent 7 }
+
+// aClass.value.getter
+sil hidden [transparent] @_TFC4clos6aClassg5valueSi : $@convention(method) (@guaranteed aClass) -> Int {
+// %0                                             // users: %2, %1
+bb0(%0 : $aClass):
+  debug_value %0 : $aClass, let, name "self", argno 1, loc "clos.swift":2:9, scope 7 // id: %1
+  %2 = ref_element_addr %0 : $aClass, #aClass.value, scope 8 // user: %3
+  %3 = load %2 : $*Int, scope 8                   // user: %4
+  return %3 : $Int, loc "clos.swift":2:9, scope 8 // id: %4
+}
+
+sil_scope 9 { loc "clos.swift":2:9 parent @_TFC4clos6aClasss5valueSi : $@convention(method) (Int, @guaranteed aClass) -> () }
+sil_scope 10 { loc "clos.swift":2:9 parent 9 }
+
+// aClass.value.setter
+sil hidden [transparent] @_TFC4clos6aClasss5valueSi : $@convention(method) (Int, @guaranteed aClass) -> () {
+// %0                                             // users: %5, %2
+// %1                                             // users: %4, %3
+bb0(%0 : $Int, %1 : $aClass):
+  debug_value %0 : $Int, let, name "value", argno 1, loc "clos.swift":2:9, scope 9 // id: %2
+  debug_value %1 : $aClass, let, name "self", argno 2, loc "clos.swift":2:9, scope 9 // id: %3
+  %4 = ref_element_addr %1 : $aClass, #aClass.value, scope 10 // user: %5
+  store %0 to %4 : $*Int, scope 10                // id: %5
+  %6 = tuple (), loc "clos.swift":2:9, scope 10   // user: %7
+  return %6 : $(), loc "clos.swift":2:9, scope 10 // id: %7
+}
+
+sil_scope 11 { loc "clos.swift":2:9 parent @_TFC4clos6aClassm5valueSi : $@convention(method) (Builtin.RawPointer, @inout Builtin.UnsafeValueBuffer, @guaranteed aClass) -> (Builtin.RawPointer, Optional<Builtin.RawPointer>) }
+
+// aClass.value.materializeForSet
+sil hidden [transparent] @_TFC4clos6aClassm5valueSi : $@convention(method) (Builtin.RawPointer, @inout Builtin.UnsafeValueBuffer, @guaranteed aClass) -> (Builtin.RawPointer, Optional<Builtin.RawPointer>) {
+// %2                                             // user: %3
+bb0(%0 : $Builtin.RawPointer, %1 : $*Builtin.UnsafeValueBuffer, %2 : $aClass):
+  %3 = ref_element_addr %2 : $aClass, #aClass.value, scope 11 // user: %4
+  %4 = address_to_pointer %3 : $*Int to $Builtin.RawPointer, scope 11 // user: %6
+  %5 = enum $Optional<Builtin.RawPointer>, #Optional.none!enumelt, scope 11 // user: %6
+  %6 = tuple (%4 : $Builtin.RawPointer, %5 : $Optional<Builtin.RawPointer>), scope 11 // user: %7
+  return %6 : $(Builtin.RawPointer, Optional<Builtin.RawPointer>), scope 11 // id: %7
+}
+
+sil_scope 12 { loc "clos.swift":1:7 parent @_TFC4clos6aClasscfT_S0_ : $@convention(method) (@owned aClass) -> @owned aClass }
+sil_scope 13 {  parent 12 }
+
+// aClass.init() -> aClass
+sil hidden @_TFC4clos6aClasscfT_S0_ : $@convention(method) (@owned aClass) -> @owned aClass {
+// %0                                             // users: %4, %6, %1
+bb0(%0 : $aClass):
+  debug_value %0 : $aClass, let, name "self", loc "clos.swift":1:7, scope 12 // id: %1
+  %2 = integer_literal $Builtin.Int64, 1, loc "clos.swift":2:17, scope 12 // user: %3
+  %3 = struct $Int (%2 : $Builtin.Int64), loc "clos.swift":2:17, scope 12 // user: %5
+  %4 = ref_element_addr %0 : $aClass, #aClass.value, loc "clos.swift":2:9, scope 12 // user: %5
+  store %3 to %4 : $*Int, loc "clos.swift":2:9, scope 12 // id: %5
+  return %0 : $aClass, loc "clos.swift":1:7, scope 13 // id: %6
+}
+
+sil_scope 14 { loc "clos.swift":1:7 parent @_TFC4clos6aClassCfT_S0_ : $@convention(method) (@thick aClass.Type) -> @owned aClass }
+
+// aClass.__allocating_init() -> aClass
+sil hidden @_TFC4clos6aClassCfT_S0_ : $@convention(method) (@thick aClass.Type) -> @owned aClass {
+bb0(%0 : $@thick aClass.Type):
+  %1 = alloc_ref $aClass, scope 14                // user: %3
+  // function_ref aClass.init() -> aClass
+  %2 = function_ref @_TFC4clos6aClasscfT_S0_ : $@convention(method) (@owned aClass) -> @owned aClass, scope 14 // user: %3
+  %3 = apply %2(%1) : $@convention(method) (@owned aClass) -> @owned aClass, scope 14 // user: %4
+  return %3 : $aClass, scope 14                   // id: %4
+}
+
+sil_scope 15 {  parent @_TFSiCfT22_builtinIntegerLiteralBi2048__Si : $@convention(method) (Builtin.Int2048, @thin Int.Type) -> Int }
+
+// Int.init(_builtinIntegerLiteral : Builtin.Int2048) -> Int
+sil public_external [transparent] [fragile] @_TFSiCfT22_builtinIntegerLiteralBi2048__Si : $@convention(method) (Builtin.Int2048, @thin Int.Type) -> Int {
+// %0                                             // users: %3, %2
+bb0(%0 : $Builtin.Int2048, %1 : $@thin Int.Type):
+  debug_value %0 : $Builtin.Int2048, scope 15     // id: %2
+  %3 = builtin "s_to_s_checked_trunc_Int2048_Int64"(%0 : $Builtin.Int2048) : $(Builtin.Int64, Builtin.Int1), scope 15 // user: %4
+  %4 = tuple_extract %3 : $(Builtin.Int64, Builtin.Int1), 0, scope 15 // user: %5
+  %5 = struct $Int (%4 : $Builtin.Int64), scope 15 // user: %6
+  return %5 : $Int, scope 15                      // id: %6
+}
+
+sil_scope 16 { loc "clos.swift":8:13 parent @_TF4closU_FT_T_ : $@convention(thin) (@owned @sil_unowned aClass, @owned @box @sil_weak Optional<aClass>) -> () }
+sil_scope 17 { loc "clos.swift":14:1 parent 16 }
+sil_scope 18 { loc "clos.swift":13:5 parent 17 }
+sil_scope 19 { loc "clos.swift":13:5 parent 18 }
+
+// (closure #1)
+sil shared @_TF4closU_FT_T_ : $@convention(thin) (@owned @sil_unowned aClass, @owned @box @sil_weak Optional<aClass>) -> () {
+// %0                                             // users: %24, %6, %5, %2
+// %1                                             // users: %23, %3
+bb0(%0 : $@sil_unowned aClass, %1 : $@box @sil_weak Optional<aClass>):
+  debug_value %0 : $@sil_unowned aClass, let, name "c1", argno 1, loc "clos.swift":9:14, scope 16 // id: %2
+  %3 = project_box %1 : $@box @sil_weak Optional<aClass>, loc "clos.swift":9:23, scope 16 // users: %12, %4
+  debug_value_addr %3 : $*@sil_weak Optional<aClass>, var, name "c2", argno 2, loc "clos.swift":9:23, scope 16 // id: %4
+  strong_retain_unowned %0 : $@sil_unowned aClass, loc "clos.swift":10:5, scope 17 // id: %5
+  %6 = unowned_to_ref %0 : $@sil_unowned aClass to $aClass, loc "clos.swift":10:5, scope 17 // users: %11, %10, %9
+  %7 = integer_literal $Builtin.Int64, 42, loc "clos.swift":10:16, scope 17 // user: %8
+  %8 = struct $Int (%7 : $Builtin.Int64), loc "clos.swift":10:16, scope 17 // user: %10
+  %9 = class_method %6 : $aClass, #aClass.value!setter.1 : (aClass) -> (Int) -> () , $@convention(method) (Int, @guaranteed aClass) -> (), loc "clos.swift":10:14, scope 17 // user: %10
+  %10 = apply %9(%8, %6) : $@convention(method) (Int, @guaranteed aClass) -> (), loc "clos.swift":10:14, scope 17
+  strong_release %6 : $aClass, loc "clos.swift":10:16, scope 17 // id: %11
+  %12 = load_weak %3 : $*@sil_weak Optional<aClass>, loc "clos.swift":11:18, scope 18 // user: %13
+  switch_enum %12 : $Optional<aClass>, case #Optional.some!enumelt.1: bb2, default bb1, loc "clos.swift":11:18, scope 18 // id: %13
+
+bb1:                                              // Preds: bb0
+  br bb3, loc "clos.swift":11:18, scope 16        // id: %14
+
+// %15                                            // users: %21, %20, %19, %16
+bb2(%15 : $aClass):                               // Preds: bb0
+  debug_value %15 : $aClass, let, name "c2o", loc "clos.swift":11:12, scope 18 // id: %16
+  %17 = integer_literal $Builtin.Int64, 42, loc "clos.swift":12:21, scope 19 // user: %18
+  %18 = struct $Int (%17 : $Builtin.Int64), loc "clos.swift":12:21, scope 19 // user: %20
+  %19 = class_method %15 : $aClass, #aClass.value!setter.1 : (aClass) -> (Int) -> () , $@convention(method) (Int, @guaranteed aClass) -> (), loc "clos.swift":12:19, scope 19 // user: %20
+  %20 = apply %19(%18, %15) : $@convention(method) (Int, @guaranteed aClass) -> (), loc "clos.swift":12:19, scope 19
+  strong_release %15 : $aClass, loc "clos.swift":13:5, scope 18 // id: %21
+  br bb3, loc "clos.swift":13:5, scope 18         // id: %22
+
+bb3:                                              // Preds: bb1 bb2
+  strong_release %1 : $@box @sil_weak Optional<aClass>, loc "clos.swift":14:1, scope 17 // id: %23
+  unowned_release %0 : $@sil_unowned aClass, loc "clos.swift":14:1, scope 17 // id: %24
+  %25 = tuple (), loc "clos.swift":14:1, scope 17 // user: %26
+  return %25 : $(), loc "clos.swift":14:1, scope 17 // id: %26
+}
+
+
+// globalinit_33_FD9A49A256BEB6AF7C48013347ADC3BA_func4
+sil private_external [fragile] @globalinit_33_FD9A49A256BEB6AF7C48013347ADC3BA_func4 : $@convention(thin) () -> ()
+
+sil_vtable aClass {
+  #aClass.deinit!deallocator: _TFC4clos6aClassD	// aClass.__deallocating_deinit
+  #aClass.value!getter.1: _TFC4clos6aClassg5valueSi	// aClass.value.getter
+  #aClass.value!setter.1: _TFC4clos6aClasss5valueSi	// aClass.value.setter
+  #aClass.value!materializeForSet.1: _TFC4clos6aClassm5valueSi	// aClass.value.materializeForSet
+  #aClass.init!initializer.1: _TFC4clos6aClasscfT_S0_	// aClass.init() -> aClass
+}
+
+
+

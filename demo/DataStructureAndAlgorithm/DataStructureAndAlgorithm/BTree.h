@@ -20,6 +20,7 @@ struct TreeNode{
 typedef struct TreeNode *BTree, TreeNode;
 
 BTree initBTree(int val);
+TreeNode* initNode(int val);
 void setLNode(BTree bT, TreeNode *l);
 void setRNode(BTree bT, TreeNode *r);
 //先序遍历
@@ -28,5 +29,14 @@ void printBTreeFirstTraversal(BTree bT);
 void printBTreeInOrderTraversal(BTree bT);
 //后序遍历
 void printBTreePostOrderTraversal(BTree bT);
+
+//二叉搜索树
+//搜索
+TreeNode * find(BTree T, int data);
+//插入
+void insert(BTree T, int data);
+//删除
+void del(BTree T, int data);
+
 
 #endif /* BTree_h */
