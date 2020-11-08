@@ -30,7 +30,6 @@ class QuartzLineView: QuartzView {
                     context.move(to: CGPoint(x: d.originX, y: d.originY))
 
                 case .AddTo(let d):
-                    print(d.pressure)
                     context.setLineWidth(d.pressure)
                     context.addLine(to: CGPoint(x: d.originX, y: d.originY))
                 }

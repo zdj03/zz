@@ -64,13 +64,24 @@ class ViewController: UIViewController {
 
                 var count = 0
                 var oldDots: [Track] = []
+
                 Timer.scheduledTimer(withTimeInterval: 1/5.0, repeats: true) { (timer) in
                     if count < dots.count {
                         oldDots = oldDots + dots[count]
                         lineView.dots = oldDots
-                        lineView.setNeedsDisplay()
+                        
+                        //通过降低重绘频率，减少cpu占用，维持着15%以下；内存占用维持在21M左右
+                        if count % 5 == 0 {
+                            lineView.setNeedsDisplay()
+                        }
+                        count += 1
+
+                    } else {
+                        //达到无限绘制，测试性能参数
+                        count = 0
+                        oldDots = []
+                        print("drawing: \(count)")
                     }
-                    count += 1
                 }
             }
         }
