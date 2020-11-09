@@ -46,8 +46,9 @@ class ViewController: UIViewController {
         
         let scroll = UIScrollView(frame: self.view.bounds)
         scroll.minimumZoomScale = 1.0
-        scroll.maximumZoomScale = 4.0
+        scroll.maximumZoomScale = 3.0
         scroll.delegate = self
+    
         view.addSubview(scroll)
         
         let lineView =  QuartzLineView(frame: CGRect(x: 0, y: 0, width:UIScreen.main.bounds.width, height:UIScreen.main.bounds.height))
@@ -65,22 +66,21 @@ class ViewController: UIViewController {
                 var count = 0
                 var oldDots: [Track] = []
 
-                Timer.scheduledTimer(withTimeInterval: 1/5.0, repeats: true) { (timer) in
+                Timer.scheduledTimer(withTimeInterval: 1/60, repeats: true) { (timer) in
                     if count < dots.count {
                         oldDots = oldDots + dots[count]
-                        lineView.dots = oldDots
-                        
                         //通过降低重绘频率，减少cpu占用，维持着15%以下；内存占用维持在21M左右
-                        if count % 5 == 0 {
-                            lineView.setNeedsDisplay()
-                        }
+                        lineView.dots = oldDots
+
+//                        if count % 2 == 0 {
+//                        }
                         count += 1
 
                     } else {
                         //达到无限绘制，测试性能参数
-                        count = 0
-                        oldDots = []
-                        print("drawing: \(count)")
+//                        count = 0
+//                        oldDots = []
+//                        print("drawing: \(count)")
                     }
                 }
             }
@@ -104,7 +104,7 @@ class ViewController: UIViewController {
         var isEndPoint = false //结束绘画
         var WhitespacesAndNewlines = true
 
-        let scale:CGFloat = 3.0//UIScreen.main.scale
+        let scale:CGFloat = 3//UIScreen.main.scale
 
         var tracks: [Track] = []
 
@@ -118,7 +118,7 @@ class ViewController: UIViewController {
                 let x = c[0].trimmingCharacters(in: whitespace)
                 let y = c[1].trimmingCharacters(in: whitespace)
                 let p = c[2].trimmingCharacters(in: whitespace)
-                let dot = Dot(originX: CGFloat(Float(x)!)/scale, originY: CGFloat(Float(y)!)/scale, pressure:scale * CGFloat(Float(p)!)/255.0)
+                let dot = Dot(originX: CGFloat(Float(x)!)/scale, originY: CGFloat(Float(y)!)/scale, pressure:scale * CGFloat(Float(p)!-32)/255.0)
                                
                 if isStartPoint {//开始绘画，定起点
                     isStartPoint = false
@@ -154,11 +154,13 @@ extension ViewController: UIScrollViewDelegate{
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        
+
     }
     
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        
+        print(scale)
+        //解决放大后内容锯齿问题
+        view?.contentScaleFactor = scale
     }
 }
 

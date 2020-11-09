@@ -10,32 +10,33 @@ import PencilKit
 
 import UIKit
 
-
-
-
 class QuartzLineView: QuartzView {
     
-    var dots: [Track] = []
+    var dots: [Track] = []{
+        didSet{
+            self.setNeedsDisplay()
+        }
+    }
     
     override func drawInContext(_ context: CGContext) {
         centerDrawing(inContext: context, drawingExtent: self.bounds,scaleToFit: true)
         
         context.setStrokeColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-
-        context.savingGState {
-    
+//        context.savingGState {
+        
+        
+        
             for dot in dots {
                 switch dot {
                 case .MoveTo(let d):
+                    context.strokePath()
                     context.move(to: CGPoint(x: d.originX, y: d.originY))
-
                 case .AddTo(let d):
                     context.setLineWidth(d.pressure)
                     context.addLine(to: CGPoint(x: d.originX, y: d.originY))
                 }
             }
-        }
-        context.strokePath()
+//        }
     }
 }
 

@@ -34,7 +34,7 @@ class QuartzView: UIView {
         let xExtra = bounds.width - drawingExtent.width*doScale
         let yExtra = bounds.height - drawingExtent.height*doScale
         inContext.translateBy(x: xExtra/2, y: yExtra/2)
-        inContext.scaleBy(x: doScale, y: doScale)        
+        inContext.scaleBy(x: doScale, y: doScale)
     }
 
 
