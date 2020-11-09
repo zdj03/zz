@@ -10,51 +10,49 @@ import PencilKit
 
 import UIKit
 
+class BHBPaintPath: UIBezierPath{
+
+    static func paintPathWithLineWidth(width: CGFloat,startP:CGPoint) -> BHBPaintPath{
+        let path = BHBPaintPath()
+        path.lineWidth = width
+        path.lineCapStyle = .round //线条拐角
+        path.lineJoinStyle = .round //终点处理
+        path.flatness = 0.1
+        path.move(to: startP)
+        return path
+    }
+}
+
+
+
 class QuartzLineView: QuartzView {
+    
+    var path: BHBPaintPath?
+    var sLayer: CAShapeLayer?
     
     var curDot: Track?{
         didSet{
-            if let dot = curDot {
-                self.dots.append(dot)
-            }
-        }
-    }
-    
-    var lastDot: Track?
-    
-    var dots: [Track] = []{
-        didSet{
-//            self.setNeedsDisplay()
-        }
-    }
-    
-    
-    override func drawInContext(_ context: CGContext) {
-        
-        let beginDate = Date()
-        
-        centerDrawing(inContext: context, drawingExtent: self.bounds,scaleToFit: true)
-        
-        context.setStrokeColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-        context.savingGState {
-        
-            for dot in dots {
-                switch dot {
-                case .MoveTo(_):
-                    lastDot = dot
+            if let curDot = curDot {
+                switch curDot {
+                case .MoveTo(let d):
+                    path = BHBPaintPath.paintPathWithLineWidth(width: 0, startP: CGPoint(x: d.originX, y: d.originY))
+                    let slayer = CAShapeLayer()
+                    slayer.path = path?.cgPath
+                    slayer.backgroundColor = UIColor.white.cgColor
+                    slayer.fillColor = UIColor.white.cgColor
+                    slayer.lineCap = .round
+                    slayer.lineJoin = .round
+                    slayer.strokeColor = UIColor.black.cgColor
+                    slayer.lineWidth = d.pressure
+                    self.layer.addSublayer(slayer)
+                    sLayer = slayer;
+                    
                 case .AddTo(let d):
-                    if case .MoveTo(let dd) = lastDot {
-                        context.move(to: CGPoint(x: dd.originX, y: dd.originY))
-                    }
-                    context.setLineWidth(d.pressure)
-                    context.addLine(to: CGPoint(x: d.originX, y: d.originY))
-                    context.strokePath()
-                    lastDot = .MoveTo(dot: d)
-                
+                    path?.lineWidth = d.pressure
+                    path?.addLine(to: CGPoint(x: d.originX, y: d.originY))
+                    sLayer?.path = path?.cgPath
                 }
             }
-        print(Date().timeIntervalSince(beginDate) * 1000)
-        
         }
     }
 }

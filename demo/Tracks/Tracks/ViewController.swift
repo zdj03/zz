@@ -65,22 +65,12 @@ class ViewController: UIViewController {
             for i in 0..<dots.count {
                 oldDots = oldDots + dots[i]
             }
-            
             DispatchQueue.main.async {
-
                 var count = 0
-
                 Timer.scheduledTimer(withTimeInterval: 1/120, repeats: true) { (timer) in
                     if count < oldDots.count {
                         lineView.curDot = oldDots[count]
-                        lineView.setNeedsDisplay()
-
                         count += 1
-
-                    } else {
-                        //达到无限绘制，测试性能参数
-                        count = 0
-                        print("drawing: \(count)")
                     }
                 }
             }
