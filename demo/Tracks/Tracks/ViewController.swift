@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         
         let scroll = UIScrollView(frame: self.view.bounds)
         scroll.minimumZoomScale = 1.0
-        scroll.maximumZoomScale = 3.0
+        scroll.maximumZoomScale = 10.0
         scroll.delegate = self
     
         view.addSubview(scroll)
@@ -57,30 +57,30 @@ class ViewController: UIViewController {
         self.lineView = lineView
         
         
-        
-        
         DispatchQueue.global().async {
             let dots:[[Track]] = self.standardizeCoordinateData()
+            
+            var oldDots: [Track] = []
+
+            for i in 0..<dots.count {
+                oldDots = oldDots + dots[i]
+            }
+            
             DispatchQueue.main.async {
 
                 var count = 0
-                var oldDots: [Track] = []
 
-                Timer.scheduledTimer(withTimeInterval: 1/60, repeats: true) { (timer) in
-                    if count < dots.count {
-                        oldDots = oldDots + dots[count]
-                        //通过降低重绘频率，减少cpu占用，维持着15%以下；内存占用维持在21M左右
-                        lineView.dots = oldDots
+                Timer.scheduledTimer(withTimeInterval: 1/120, repeats: true) { (timer) in
+                    if count < oldDots.count {
+                        lineView.curDot = oldDots[count]
+                        lineView.setNeedsDisplay()
 
-//                        if count % 2 == 0 {
-//                        }
                         count += 1
 
                     } else {
                         //达到无限绘制，测试性能参数
-//                        count = 0
-//                        oldDots = []
-//                        print("drawing: \(count)")
+                        count = 0
+                        print("drawing: \(count)")
                     }
                 }
             }
@@ -158,9 +158,13 @@ extension ViewController: UIScrollViewDelegate{
     }
     
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        print(scale)
         //解决放大后内容锯齿问题
-        view?.contentScaleFactor = scale
+
+//view的contentScaleFactor 默认 = UIScreen.main.scale，当scale大于时，设置为scale，可以抗锯齿，但是当scale最小为1时，view的内容会模糊，所以此处设置为二者最大值
+        view?.contentScaleFactor = max(UIScreen.main.scale, scale)
+        
+        
+        
     }
 }
 
