@@ -56,33 +56,6 @@ int gcd1(int a, int b){
 
 /*-------------------------------------------------------------------*/
 
-char* reverseStr(char *c){
-//    char *head = c;
-//    char *tail = &c[strlen(c)-1];
-//
-//
-//    char t;
-//    while (head != tail) {
-//        t = *head;
-//        *head = *tail;
-//        *tail = t;
-//        head++;
-//        tail--;
-//    }
-//
-//    return c;
-    
-    int len = strlen(c),i = 0;
-    char *ret = malloc(sizeof(char)*len);
-    ret[0] = "a";
-
-//    while (len >= 0) {
-//        ret[i++] = "a";
-//        printf("ret:%s\n",ret);
-//    }
-    return ret;
-}
-
 
 
 char * stringReplace(char *str0, int len){
@@ -554,7 +527,7 @@ Tree newFile(char *x){
 }
 
 //添加某个文件或目录到指定目录中
-Tree insert(Tree des, Tree src){
+Tree insertFile(Tree des, Tree src){
     //插入到des成为其子节点
     src->parent = des;
     
@@ -599,7 +572,7 @@ void copy(Tree file, Tree dir){
     }
     //不存在，将file插入到dir目录中
     if(flag == 1) {
-        dir = insert(dir, file);
+        dir = insertFile(dir, file);
     }
 }
 
@@ -646,4 +619,244 @@ int minInStack(int a[], int len){
         }
     }
     return peekInStack(minStack);
+}
+
+
+/* ----------------------------------------------------------------*/
+//牛顿迭代思想:https://blog.csdn.net/weixin_41722370/article/details/96590510
+ double absolute(double x){ return (x>0 ? x : -x); }
+
+double getCubeRoot_Newton(double input){
+    double x;
+    for (x=1.0; absolute(x*x*x-input)>1e-7; x=(2*x+input/x/x)/3);
+    return x;
+}
+
+//二分法求解，有bug：当输入为负或者小于1时，得不到解
+double getCubeRoot_binary(double input){
+    double low = 0;
+    double high = input;
+    double mid = low;
+    while(input - low > 0.0001){
+        mid = (low + high)/2;
+        double cub = mid * mid * mid;
+        if(cub > input) high = mid;
+        else if (cub < input)  low = mid;
+        else return mid;
+    }
+    return high;
+}
+
+
+/* ----------------------------------------------------------------*/
+char *reverseString(char *a){
+    size_t length = strlen(a);
+    
+    for (int i = 0; i < length/2; i++) {
+        char ch = a[i];
+        a[i] = a[length-i-1];
+        a[length-i-1] = ch;
+    }
+    
+    return a;
+}
+
+
+
+/* ----------------------------------------------------------------*/
+//从输入任意个整型数，统计其中的负数个数并求所有非负数的平均值，结果保留一位小数，如果没有非负数，则平均值为0
+//本题有多组输入数据，输入到文件末尾，请使用while(cin>>)读入
+//数据范围小于1e6
+//int main(int argc, const char * argv[]){
+//    @autoreleasepool {
+//        int num, cnt1=0,cnt2=0,sum=0;
+//        while (scanf("%d",&num)!=EOF) {
+//            if(num < 0){
+//                cnt1++;
+//            } else {
+//                cnt2++;
+//                sum += num;
+//            }
+//        }
+//        float result = (cnt2>0) ? ((float)sum/cnt2) : 0;
+//        printf("%d\n%.1f\n",cnt1,result);
+//    }
+//    return 0;
+//}
+
+/* ----------------------------------------------------------------*/
+//取子字符串
+char* subStringFrom(char *string, int start, int length){
+    int from = 0;
+    char ret[9];
+    while (from < length) {
+        ret[from] = string[from+start];
+        from++;
+    }
+    char *p = ret;
+    return p;
+}
+
+void splitStringArrayDividBy8(char (*input)[100], int rows){
+  
+    for (int i = 0; i<rows; i++) {
+        char *str = input[i];
+        
+        if (strlen(str) == 0) {
+            return;
+        }
+        
+        //补齐'0'
+        int len = (int)strlen(str);
+        if (len%8 != 0) {
+            for (int i = 0; i < 8 - len%8; i++) {
+                str[len+i] = '0';
+            }
+        }
+        
+        int strLength = (int)strlen(str);
+        int rows = strLength/8;
+        
+        char output[100][9]={0};
+        for (int j = 0; j < rows; j++) {
+            for (int i = 0; i < 8; i++) {
+                output[j][i] = str[j*8 + i];
+            }
+            printf("%s\n", output[j]);
+        }
+    }
+}
+
+/* ----------------------------------------------------------------*/
+// 8v26ktzk069lm400061m0v965we88850o6omqi532ktir6esb55t0kqm026y8rk63aj82kcx48gd1tiylvs0xo32zem65q7z5ce2185d2ascz62a2p3ajr45h637t2p290lc043gicp5ldzzmx2 --> 206583kmzct4aeil19dopqrsvx7gjybhw
+
+// dafasdfsdSDFSAFDSAF#$!@$@!234235234523RWEGFERF#$%$345346234523dfbsbgdfe1234325,/,.;';'.......>>>>>>><....。。。。。。。。。。。。。。。。。。。。。。。。。-->3245FdfSsADERab16GWeg
+
+//     sdfssdf23432542SGDFG$%@#$%#45235325235geregvfdsdfgdsg..,./';[]\aaaAAA --> 2 35dsfg4AaGeDFSrv
+
+//数组中二分查找data：找到返回对应的索引，否则返回-1
+int binarySearch(int a[],int length, int data){
+    
+    int start = 0, end = length - 1;
+
+    while (start <= end) {
+        int mid = start + (end - start)/2;
+
+        if(a[mid] == data){
+            return mid;
+        } else if (a[mid] < data) {
+            start = mid + 1;
+        } else if (a[mid] > data) {
+            end = mid - 1;
+        }
+    }
+    return -1;
+}
+
+typedef struct {
+    int asc;
+    int cnt;
+}S;
+void statisticsChars(char *s){
+    int length = (int)strlen(s);
+    S chs[128] = {0};
+    
+    
+    //hash思想：初始化asc码数组：数组下标为ascii码，出现次数为下标对应的值
+    int i = 0;
+    while (i < 128) {
+        chs[i].asc = i;
+        i++;
+    }
+    
+    //统计字符串中字符与出现次数：
+    for (int j = 0; j < length; j++) {
+        int asc = s[j];//字符转化为asc
+        chs[asc].cnt++;
+    }
+    
+   
+    //冒泡排序
+    for (int m = 0; m < 127; m++) {
+        int hasSwap = 0;//0表示未发生数据交换，表明已经是有序
+        for (int n = 0; n < 127 - m; n++) {
+            if (chs[n].cnt < chs[n+1].cnt) {
+                S s = chs[n];
+                chs[n] = chs[n+1];
+                chs[n+1] = s;
+                hasSwap = 1;
+            }
+        }
+        if (hasSwap == 0) {
+            break;
+        }
+    }
+    
+    //大小写字母、数字、空格的字符ascii码
+    int targets[63] = {32,48,49,50,51,52,53,54,55,56,57,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122};
+    
+    for(int p = 0;p < 128;p++){
+        S s = chs[p];
+        if (s.cnt != 0 && binarySearch(targets, 63, s.asc) != -1) {
+            printf("%c",chs[p].asc);
+        }
+    }
+}
+
+
+/* ----------------------------------------------------------------*/
+void sortIntegerArray(int pIntegerArray[], int length,int iSortFlag) {
+    int i, j;
+    for (i = 1; i < length; i++) {
+        
+        int tmp = pIntegerArray[i];
+        int start = 0, end = i - 1;
+        
+        int needInsert = 0;
+        
+        if (iSortFlag == 0) {//升序
+            
+            if (pIntegerArray[i] < pIntegerArray[i-1]) {
+                //二分查找插入位置
+                while (start <= end) {
+                    int mid = start + (end - start)/2;
+                    if (pIntegerArray[mid] < tmp) {
+                        start = mid + 1;
+                    } else if (pIntegerArray[mid] > tmp) {
+                        end = mid - 1;
+                    }
+                }
+                
+                needInsert = 1;
+            }
+        } else if (iSortFlag == 1){//降序
+            
+            if (pIntegerArray[i] > pIntegerArray[i-1]) {
+               
+                while (start <= end) {
+                    int mid = start + (end - start)/2;
+                    if (pIntegerArray[mid] > tmp) {
+                        start = mid + 1;
+                    } else if (pIntegerArray[mid] < tmp) {
+                        end = mid - 1;
+                    }
+                }
+                
+                needInsert = 1;
+
+            }
+        }
+        
+        if (needInsert == 1) {
+            //从插入位置到第i-1个元素向后移动
+            for (j = i; j > start; j--) {
+                int tmp = pIntegerArray[j];
+                pIntegerArray[j] = pIntegerArray[j-1];
+                pIntegerArray[j-1] = tmp;
+            }
+            
+            //插值
+            pIntegerArray[start] = tmp;
+        }
+    }
 }

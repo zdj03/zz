@@ -18,8 +18,6 @@
 //求最小公倍数(minimum common multiple)
 int mcm(int a, int b);
 
-//字符串逆序
-char* reverseStr(char *);
 
 /* ----------剑指offer----------- */
 //1、链表逆转
@@ -78,5 +76,37 @@ int minInStack(int a[], int len);
 //22\输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4，5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
 
 
+//21 、计算一个数字的立方根，不使用库函数
+//详细描述：
+//•接口说明
+//原型：
+//public static double getCubeRoot(double input)
+//输入:double 待求解参数
+//返回值:double  输入参数的立方根，保留一位小数
+double getCubeRoot_Newton(double input);
+
+//22、字符串反转
+char *reverseString(char *a);
+
+////23、输入描述:
+//首先输入数字n，表示要输入多少个字符串。连续输入字符串(输出次数为N,字符串长度小于100)。
+//输出描述:
+//按长度为8拆分每个字符串后输出到新的字符串数组，长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。
+void splitStringArrayDividBy8(char (*input)[100], int rows);
+
+//24、如果统计的个数相同，则按照ASCII码由小到大排序输出。如果有其他字符，则对这些字符不用进行统计。
+//实现以下接口：
+//输入一个字符串，对字符中的各个英文字符，数字，空格进行统计（可反复调用）
+//按照统计个数由多到少输出统计结果，如果统计的个数相同，则按照ASCII码由小到大排序输出
+//清空目前的统计结果，重新统计
+//调用者会保证：
+//输入的字符串以‘\0’结尾。
+
+void statisticsChars(char *s);
+
+
+// 25、排序：iSortFlag 0-升序 1-降序
+void sortIntegerArray(int pIntegerArray[], int length, int iSortFlag);
 
 #endif /* Algorithm_h */
+

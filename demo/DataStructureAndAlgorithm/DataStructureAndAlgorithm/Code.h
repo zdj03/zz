@@ -9,5 +9,12 @@
 #ifndef Code_h
 #define Code_h
 
+#include <stdio.h>
+
+
+// 求回文数字
+void plalindrome(void);
+
+
 
 #endif /* Code_h */

@@ -39,6 +39,11 @@ enum Track:Equatable {
 class ViewController: UIViewController {
     
     var lineView: QuartzLineView!
+    var displayLink: CADisplayLink!
+    
+    var oldDots: [Track] = []
+    var count = 0
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,24 +61,29 @@ class ViewController: UIViewController {
         scroll.addSubview(lineView)
         self.lineView = lineView
         
-        
+        /*
         DispatchQueue.global().async {
             let dots:[[Track]] = self.standardizeCoordinateData()
             
-            var oldDots: [Track] = []
-
             for i in 0..<dots.count {
-                oldDots = oldDots + dots[i]
+                self.oldDots = self.oldDots + dots[i]
             }
-            DispatchQueue.main.async {
-                var count = 0
-                Timer.scheduledTimer(withTimeInterval: 1/120, repeats: true) { (timer) in
-                    if count < oldDots.count {
-                        lineView.curDot = oldDots[count]
-                        count += 1
-                    }
-                }
+            DispatchQueue.main.async { [self] in
+                self.displayLink = CADisplayLink(target: self, selector: #selector(drawTrack))
+                self.displayLink.add(to:RunLoop.current, forMode: RunLoop.Mode.common)
+
+//                Timer.scheduledTimer(withTimeInterval: 1/120, repeats: true) { (timer) in
+//
+//                }
             }
+        }
+ */
+    }
+    
+    @objc func drawTrack(){
+        if count < oldDots.count {
+            lineView.curDot = oldDots[count]
+            count += 1
         }
     }
     

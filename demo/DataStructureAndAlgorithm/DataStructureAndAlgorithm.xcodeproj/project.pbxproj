@@ -15,6 +15,7 @@
 		9865239524CC37930079EE52 /* Algorithm.c in Sources */ = {isa = PBXBuildFile; fileRef = 9865239424CC37930079EE52 /* Algorithm.c */; };
 		986523DF24D4BD5E0079EE52 /* BTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 986523DE24D4BD5E0079EE52 /* BTree.c */; };
 		98C037772354402F00380FEB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C037762354402F00380FEB /* main.m */; settings = {COMPILER_FLAGS = "-fno-stack-protector"; }; };
+		98CCE4992663D3D7006E44B0 /* Code.c in Sources */ = {isa = PBXBuildFile; fileRef = 98CCE4982663D3D7006E44B0 /* Code.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,6 +48,8 @@
 		98C037732354402F00380FEB /* DataStructureAndAlgorithm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DataStructureAndAlgorithm; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C037762354402F00380FEB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		98C0377E235446B300380FEB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		98CCE4982663D3D7006E44B0 /* Code.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Code.c; sourceTree = "<group>"; };
+		98CCE49B2663D4B2006E44B0 /* Code.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Code.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +98,8 @@
 				98C037762354402F00380FEB /* main.m */,
 				9865239324CC37930079EE52 /* Algorithm.h */,
 				9865239424CC37930079EE52 /* Algorithm.c */,
+				98CCE4982663D3D7006E44B0 /* Code.c */,
+				98CCE49B2663D4B2006E44B0 /* Code.h */,
 			);
 			path = DataStructureAndAlgorithm;
 			sourceTree = "<group>";
@@ -168,6 +173,7 @@
 				98C037772354402F00380FEB /* main.m in Sources */,
 				986523DF24D4BD5E0079EE52 /* BTree.c in Sources */,
 				9829175E2463C48C00B250AD /* RecursionExample.c in Sources */,
+				98CCE4992663D3D7006E44B0 /* Code.c in Sources */,
 				9829175F2463C48C00B250AD /* Array.c in Sources */,
 				9829175D2463C48C00B250AD /* LinkList.c in Sources */,
 				9865239524CC37930079EE52 /* Algorithm.c in Sources */,

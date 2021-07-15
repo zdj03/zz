@@ -16,6 +16,7 @@
 		98065E4825562C72002EDED0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98065E4725562C72002EDED0 /* main.m */; };
 		98065E5225562C72002EDED0 /* DrawAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98065E5125562C72002EDED0 /* DrawAppTests.m */; };
 		98065E5D25562C72002EDED0 /* DrawAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98065E5C25562C72002EDED0 /* DrawAppUITests.m */; };
+		98065E6F25562C91002EDED0 /* DrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98065E6E25562C91002EDED0 /* DrawView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,8 @@
 		98065E5825562C72002EDED0 /* DrawAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98065E5C25562C72002EDED0 /* DrawAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawAppUITests.m; sourceTree = "<group>"; };
 		98065E5E25562C72002EDED0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98065E6D25562C91002EDED0 /* DrawView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawView.h; sourceTree = "<group>"; };
+		98065E6E25562C91002EDED0 /* DrawView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 				98065E4325562C72002EDED0 /* LaunchScreen.storyboard */,
 				98065E4625562C72002EDED0 /* Info.plist */,
 				98065E4725562C72002EDED0 /* main.m */,
+				98065E6D25562C91002EDED0 /* DrawView.h */,
+				98065E6E25562C91002EDED0 /* DrawView.m */,
 			);
 			path = DrawApp;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				98065E3725562C6E002EDED0 /* AppDelegate.m in Sources */,
 				98065E4825562C72002EDED0 /* main.m in Sources */,
 				98065E3A25562C6E002EDED0 /* SceneDelegate.m in Sources */,
+				98065E6F25562C91002EDED0 /* DrawView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

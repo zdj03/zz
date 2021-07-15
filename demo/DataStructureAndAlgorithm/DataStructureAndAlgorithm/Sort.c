@@ -39,13 +39,18 @@ void _merge(int *a, int start, int mid, int end){
             tmp[k++] = a[i++];
         }
     }
-//    memcpy(a+start, tmp, (end - start + 1) * sizeof(int));
     
+    
+    // 将排好序的数组复制给a
+    for(int m = 0;m < end-start - 1;m++){
+        a[m] = tmp[m];
+    }
+        
     free(tmp);
 }
 
 void merge_sort(int *a, int p, int r) {
-    if (p >= r) {
+    if (p == r) {
         return;
     }
     
@@ -74,7 +79,7 @@ int partition(int *a, int p, int r){
     int pivot = a[r];//选中主元素，用来划分区间
     int i = p;//i记录小于pivot元素的区间的尾部
     for (int j = p; j < r; ++j) {//遍历p到r区间的元素
-        if (a[j] < pivot) {//如果小于pivot，将该元素与i交换，大于则不操作
+        if (a[j] < pivot) {//如果小于pivot，将该元素与i交换，放到已处理区间的尾部，大于则不操作
             int tmp = a[i];
             a[i] = a[j];
             a[j] = tmp;

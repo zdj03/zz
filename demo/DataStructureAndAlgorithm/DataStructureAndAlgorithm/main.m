@@ -13,6 +13,8 @@
 #import "Sort.h"
 #import "Algorithm.h"
 #import "Array.h"
+#include <stdio.h>
+#import "Code.h"
 
 void bubble_Sort(void);
 void listOp(void);
@@ -26,14 +28,86 @@ void _JumpFloor(void);
 void _JumpFloor2(void);
 void _numberOf1(void);
 void _reOrderArray(void);
+void _splitStringArrayDividBy8(void);
+void _sortByBinary(void);
+
+char pair(char c){
+    if(c == '}') return '{';
+    if(c == ']') return '[';
+    if(c == ')') return '(';
+    return 0;
+}
+
+bool isValid(char * s){
+    long length = strlen(s);
+    if(length % 2 == 1) return false;
+
+    char stack[length+1];
+    int top = 0;
+    for(int i = 0;i < length;i++){
+        char ch = s[i];
+        if(ch == '{' || ch == '[' || ch == '('){
+            stack[top] = ch;
+            top++;
+        } else {
+            char c = pair(ch);
+            if(c == stack[top-1]){
+                top--;
+            }
+        }
+    }
+    if(top == 0) return true;
+    return false;
+}
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
- 
-        _reOrderArray();
+
+        char name[128];
+        while(scanf("%s", name) != EOF){
+            
+        }
     }
     return 0;
 }
+
+void _sortByBinary(){
+    int numCnt;
+    scanf("%d",&numCnt);
+    
+    int input[numCnt];
+    int i = 0;
+    while (i<numCnt) {
+        scanf("%d",&input[i++]);
+    }
+    
+    int iSortFlag;//0-升序 1-降序
+    scanf("%d",&iSortFlag);
+    
+    sortIntegerArray(input, numCnt, iSortFlag);
+
+    for (int j = 0; j < numCnt; j++) {
+        printf("%d ", input[j]);
+    }
+}
+
+void _splitStringArrayDividBy8(){
+    int inputCnt;
+    char input[100][100]={0};
+
+//        printf("输入将要输入的字符串个数:");
+    scanf("%d",&inputCnt);
+    
+    int i = 0;
+    while (i < inputCnt) {
+//            printf("输入字符串:");
+        scanf("%s", input[i++]);
+    }
+    
+    char (*p)[100] = input;
+    splitStringArrayDividBy8(p, inputCnt);
+}
+
 
 void _reOrderArray(void){
     int a[] = {1,2,3,4,5,6,7,8,9};

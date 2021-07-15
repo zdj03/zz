@@ -19,7 +19,7 @@ BTree initBTree(int val){
 }
 
 TreeNode* initNode(int val){
-    TreeNode *node = (TreeNode)malloc(sizeof(TreeNode));
+    TreeNode *node = (TreeNode*)malloc(sizeof(TreeNode));
     node->lNode = NULL;
     node->rNode = NULL;
     node->val = val;
