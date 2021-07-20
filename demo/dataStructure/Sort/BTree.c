@@ -49,6 +49,80 @@ void postorderBTree(Root *root){
     printf("%d  ",root->data);
 }
 
+
+int* preorderBTree1(Root *root, int *returnSize){
+    int *ret = (int *)malloc(sizeof(int) * 100);
+       *returnSize = 0;
+       if(root == NULL) return NULL;
+       Node **stack = (Node **)malloc(sizeof(Node*) * 100);
+       int stack_top = -1;
+       stack[++stack_top] = root;
+    // 根->左->右
+       while(stack_top > -1){
+           root = stack[stack_top--];
+           ret[(*returnSize)++] = root->data;
+
+           if(root->rChild){
+               stack[++stack_top] = root->rChild;
+           }
+            if(root->lChild){
+               stack[++stack_top] = root->lChild;
+           }
+       }
+       return ret;
+}
+
+int* inorderBTree1(Root *root, int *returnSize){
+    int *arr = (int *)malloc(sizeof(int) * 100);
+       *returnSize = 0;
+       if(root == NULL) return NULL;
+
+        Node **stack = (Node **)malloc(sizeof(Node *) * 100);
+       int top = -1;
+        Node *cur = root;
+    // 将节点所有左子节点入栈，从最后的左子节点出栈开始访问，顺序左->根->右
+       while(top >= 0 || cur != NULL){
+           while (cur) {
+               stack[++top] = cur;
+               // 一直把左子树遍历完
+               cur = cur->lChild;
+           }
+           cur = stack[top--];
+           arr[(*returnSize)++] = cur->data;
+           // 遍历右子节点
+           cur = cur->rChild;
+       }
+    return arr;
+}
+int* postorderBTree1(Root *root, int *returnSize){
+    int *arr = (int *)malloc(sizeof(int) * 100);
+       *returnSize = 0;
+       if(root == NULL) return NULL;
+
+        Node **stack = (Node **)malloc(sizeof(Node *) * 100);
+       int top = -1;
+       stack[++top] = root;
+    // 按根->右->左压栈，最后反转数组
+       while(top >= 0){
+           Node *cur = stack[top--];
+           arr[(*returnSize)++] = cur->data;
+           if (cur->lChild) {
+               stack[++top] = cur->lChild;
+           }
+           if (cur->rChild) {
+               stack[++top] = cur->rChild;
+           }
+       }
+    for (int i = 0; i< (*returnSize)/2; i++) {
+        int tmp = arr[i];
+        arr[i] = arr[*returnSize - 1 - i];
+        arr[*returnSize - 1 - i] = tmp;
+    }
+    
+    return arr;
+}
+
+
 void _traverseBTree(Queue *queue){
     Node *node = dequeue(queue);
     if (node == NULL) {

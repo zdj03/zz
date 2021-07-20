@@ -21,13 +21,21 @@ typedef struct BTree Root, Node;
 Node * node(int val);
 Root* createBTree(int val);
 
-//前中后序遍历
+//前中后序遍历(递归)
 void preorderBTree(Root *root);
 void inorderBTree(Root *root);
 void postorderBTree(Root *root);
+
+//前中后序遍历(迭代)
+int* preorderBTree1(Root *root, int *returnSize);
+int* inorderBTree1(Root *root, int *returnSize);
+int* postorderBTree1(Root *root, int *returnSize);
+
+
 //按层次遍历
 void traverseBTree(Root *root);
 
+// 二叉查找树
 Node* searchBTree(Root *root, int val);
 void insertBTree(Root *root, int val);
 int delBTree(Root *root, int val);

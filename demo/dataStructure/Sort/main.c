@@ -49,13 +49,17 @@ int main(int argc, const char * argv[]) {
     insertBTree(bTree, 23);
     insertBTree(bTree, 100);
     
-    inorderBTree(bTree);
+//    inorderBTree(bTree);
 //
 //    delBTree(bTree, 23);
+    inorderBTree(bTree);
     printf("------------------\n");
+    int returnSize = -1;
+    int *ret = inorderBTree1(bTree, &returnSize);
+    printArray(ret, returnSize);
 //    inorderBTree(bTree);
-    printf("深度遍历高度：%d", heightRecursionBTree(bTree));
-    printf("层次遍历高度：%d", heightIterationBTree(bTree));
+//    printf("深度遍历高度：%d", heightRecursionBTree(bTree));
+//    printf("层次遍历高度：%d", heightIterationBTree(bTree));
     
 //    printf("maxNode:%d\n", maxNodeBTree(bTree)->data);
 //    printf("minNode:%d\n", minNodeBTree(bTree)->data);
