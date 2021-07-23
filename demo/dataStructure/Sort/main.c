@@ -52,11 +52,19 @@ int main(int argc, const char * argv[]) {
 //    inorderBTree(bTree);
 //
 //    delBTree(bTree, 23);
-    inorderBTree(bTree);
-    printf("------------------\n");
-    int returnSize = -1;
-    int *ret = inorderBTree1(bTree, &returnSize);
-    printArray(ret, returnSize);
+//    inorderBTree(bTree);
+//    printf("------------------\n");
+//    int returnSize = -1;
+//    int *ret = inorderBTree1(bTree, &returnSize);
+//    printArray(ret, returnSize);
+//    printf("------------------\n");
+    
+    int returnSize1 = -1;
+    int *returnColumnSize = NULL;
+    int **result = levelOrder1(bTree, &returnSize1, &returnColumnSize);
+    
+    printArray(returnColumnSize, returnSize1);
+    
 //    inorderBTree(bTree);
 //    printf("深度遍历高度：%d", heightRecursionBTree(bTree));
 //    printf("层次遍历高度：%d", heightIterationBTree(bTree));

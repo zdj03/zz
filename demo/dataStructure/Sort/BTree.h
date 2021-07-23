@@ -47,4 +47,6 @@ int heightRecursionBTree(Root *root);
 //层次遍历法求树高
 int heightIterationBTree(Root *root);
 
+int** levelOrder(Root* root, int* returnSize, int **returnColumnSize);
+
 #endif /* BTree_h */

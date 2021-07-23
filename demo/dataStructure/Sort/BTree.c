@@ -57,7 +57,7 @@ int* preorderBTree1(Root *root, int *returnSize){
        Node **stack = (Node **)malloc(sizeof(Node*) * 100);
        int stack_top = -1;
        stack[++stack_top] = root;
-    // 根->左->右
+    // 根->左->右加入数组
        while(stack_top > -1){
            root = stack[stack_top--];
            ret[(*returnSize)++] = root->data;
@@ -80,7 +80,7 @@ int* inorderBTree1(Root *root, int *returnSize){
         Node **stack = (Node **)malloc(sizeof(Node *) * 100);
        int top = -1;
         Node *cur = root;
-    // 将节点所有左子节点入栈，从最后的左子节点出栈开始访问，顺序左->根->右
+    // 入栈顺序：根->左，接着出栈：左->根，入栈：右，出栈：右
        while(top >= 0 || cur != NULL){
            while (cur) {
                stack[++top] = cur;
@@ -102,7 +102,7 @@ int* postorderBTree1(Root *root, int *returnSize){
         Node **stack = (Node **)malloc(sizeof(Node *) * 100);
        int top = -1;
        stack[++top] = root;
-    // 按根->右->左压栈，最后反转数组
+    // 按根->右->左加入数组，最后反转数组
        while(top >= 0){
            Node *cur = stack[top--];
            arr[(*returnSize)++] = cur->data;
@@ -321,3 +321,41 @@ int heightIterationBTree(Root *root){
     return level;
 }
 
+
+
+int** levelOrder(Root* root, int* returnSize, int **returnColumnSize){
+    *returnSize = 0;
+    *returnColumnSize = (int *)malloc(sizeof(int) * 1000);
+    if(root == NULL) return NULL;
+
+    int **returnArr = (int **)malloc(sizeof(int *) * 1000);
+    int front = -1, rear = -1, last = 0;
+
+    Node **nodesArray = (Node **)malloc(sizeof(Node*) * 1000);
+    nodesArray[++front] = root;
+    int columnIndex = 0;
+    
+    // 根节点只需分配1空间
+    returnArr[*returnSize] = (int *)malloc(sizeof(int));
+    while(rear < front){
+        Node *node = nodesArray[++rear];
+        returnArr[*returnSize][columnIndex++] = node->data;
+        if(node->lChild){
+            nodesArray[++front] = node->lChild;
+        }
+        if(node->rChild){
+            nodesArray[++front] = node->rChild;
+        }
+        if(rear == last){
+            last = front;
+ 
+            (*returnColumnSize)[*returnSize] = columnIndex;
+            (*returnSize)++;
+            columnIndex = 0;
+                        
+            // 该层分配（last-rear）空间
+            returnArr[*returnSize] = (int *)malloc(sizeof(int) * (last - rear));
+        }
+    }
+    return returnArr;
+}
