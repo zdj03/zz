@@ -9,6 +9,7 @@
 #include "Sort.h"
 #include "Search.h"
 #include "BTree.h"
+#include "Heap.h"
 
 void printArray(int array[],int len){
     for (int i = 0; i < len; i++) {
@@ -30,63 +31,35 @@ int *generateRandomArray(int len){
 
     
 int main(int argc, const char * argv[]) {
-    
-    Root *bTree = createBTree(30);
-    insertBTree(bTree, 10);
-    insertBTree(bTree, 5);
-    insertBTree(bTree, 6);
-    insertBTree(bTree, 7);
-    insertBTree(bTree, 8);
-    insertBTree(bTree, 9);
-    insertBTree(bTree, 1);
-    insertBTree(bTree, 12);
-    insertBTree(bTree, 15);
-    insertBTree(bTree, 46);
-    insertBTree(bTree, 64);
-    insertBTree(bTree, 50);
-    insertBTree(bTree, 51);
-    insertBTree(bTree, 32);
-    insertBTree(bTree, 23);
-    insertBTree(bTree, 100);
-    
-//    inorderBTree(bTree);
-//
-//    delBTree(bTree, 23);
-//    inorderBTree(bTree);
-//    printf("------------------\n");
-//    int returnSize = -1;
-//    int *ret = inorderBTree1(bTree, &returnSize);
-//    printArray(ret, returnSize);
-//    printf("------------------\n");
-    
-    int returnSize1 = -1;
-    int *returnColumnSize = NULL;
-    int **result = levelOrder1(bTree, &returnSize1, &returnColumnSize);
-    
-    printArray(returnColumnSize, returnSize1);
-    
-//    inorderBTree(bTree);
-//    printf("深度遍历高度：%d", heightRecursionBTree(bTree));
-//    printf("层次遍历高度：%d", heightIterationBTree(bTree));
-    
-//    printf("maxNode:%d\n", maxNodeBTree(bTree)->data);
-//    printf("minNode:%d\n", minNodeBTree(bTree)->data);
-//    printf("height:%d", heightBTree(bTree));
-    
-//
-//    int len = 20;
-//    int array[] = {3,2,1,7,6,5};//{3,7,9,12, 23,27,29,40,40,42,42,42,42,42,50,72,73,78,87,92};//generateRandomArray(len);
-    
-//    printf("before sort------\n");
-//    printArray(array, len);
-//
-//    mergeSort(array, len);
-//
-//    printf("after sort------\n");
- //   printArray(array, len);
-    
-    
-//    printf("search index: %d\n",search(array, 6, 8));
+  
+    Heap *heap = initHeap(1000);
+    insert(heap, 10);
+    insert(heap, 11);
+    insert(heap, 12);
+    insert(heap, 13);
+    insert(heap, 14);
+    insert(heap, 15);
+    insert(heap, 16);
+    insert(heap, 17);
+    insert(heap, 18);
+    insert(heap, 20);
+    insert(heap, 21);
+    insert(heap, 22);
+    insert(heap, 23);
+    insert(heap, 40);
+    insert(heap, 41);
+    insert(heap, 42);
+    insert(heap, 43);
+    insert(heap, 44);
+    insert(heap, 50);
+    insert(heap, 51);
+    insert(heap, 53);
+    insert(heap, 55);
+    insert(heap, 2);
+    insert(heap, 4);
+    printHeap(heap);
+    del(heap);
+    printHeap(heap);
     
     return 0;
 }

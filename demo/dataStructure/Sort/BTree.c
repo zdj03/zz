@@ -10,6 +10,8 @@
 #include <math.h>
 #include "Queue.h"
 
+
+
 Node * node(int val){
     Node *node = (Node *)malloc(sizeof(Node));
     node->data = val;
@@ -358,4 +360,27 @@ int** levelOrder(Root* root, int* returnSize, int **returnColumnSize){
         }
     }
     return returnArr;
+}
+
+
+bool isSymmetric(struct BTree* root){
+   if(root == NULL) return true;
+   Node **array = (Node **)malloc(sizeof(Node *) * 10000);
+   int front = 0, rear = 0;
+   array[front++] = root->lChild;
+   array[front++] = root->rChild;
+
+   while(rear <= front){
+       Node *left = array[rear++], *right = array[rear++];
+       if(left == NULL && right == NULL) continue;
+       if(left == NULL || right == NULL) return false;
+       if(left->data != right->data) return false;
+
+       array[front++] = left->lChild;
+       array[front++] = right->rChild;
+       array[front++] = left->rChild;
+       array[front++] = right->lChild;
+   }
+
+   return true;
 }

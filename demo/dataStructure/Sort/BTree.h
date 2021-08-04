@@ -10,6 +10,11 @@
 
 #include <stdio.h>
 
+
+typedef int bool;
+#define true 1
+#define false 0
+
 struct BTree {
     int data;
     struct BTree *lChild;
@@ -48,5 +53,9 @@ int heightRecursionBTree(Root *root);
 int heightIterationBTree(Root *root);
 
 int** levelOrder(Root* root, int* returnSize, int **returnColumnSize);
+
+// 对称树
+bool isSymmetric(struct BTree* root);
+
 
 #endif /* BTree_h */
