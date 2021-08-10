@@ -80,3 +80,44 @@ void del(Heap *heap){
         i = j;
     }
 }
+
+
+void heapify(int a[], int n, int i){
+    while (1) {
+        int maxPos = i;
+        // 如果左子节点比跟节点大
+        if (i*2 < n && a[i] < a[i*2]) {
+            maxPos = i*2;
+        }
+        // 如果右子节点比左子节点大
+        if (i*2+1 < n && a[i*2] < a[i*2 + 1]) {
+            maxPos = i*2 + 1;
+        }
+        // 位置为i的节点值比子节点都大，无需交换
+        if (maxPos == i) {
+            break;
+        }
+        swap(&a[i], &a[maxPos]);
+        // 继续往下操作子节点
+        i = maxPos;
+    }
+}
+
+void buildHeap(int a[], int n){
+    for (int i = n / 2; i > 1; --i) {
+        heapify(a, n, i);
+    }
+}
+
+
+void heapSort(int a[], int n){
+    // 建堆完成后，堆顶元素最大
+    buildHeap(a, n);
+    int k = n;
+    // 交换堆顶和第k个叶子节点元素，将剩余元素堆化，逐渐将元素交换到数组尾部，完成排序
+    while (k > 1) {
+        swap(&a[1], &a[k]);
+        --k;
+        heapify(a, k, 1);
+    }
+}
