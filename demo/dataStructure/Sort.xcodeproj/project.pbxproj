@@ -14,6 +14,8 @@
 		984C3ECB268CB4BE003D852D /* SkipList.c in Sources */ = {isa = PBXBuildFile; fileRef = 984C3ECA268CB4BE003D852D /* SkipList.c */; };
 		987C3DD02683787500FD36AC /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 987C3DCF2683787500FD36AC /* main.c */; };
 		9899E5C826BAD5AA00359816 /* Heap.c in Sources */ = {isa = PBXBuildFile; fileRef = 9899E5C726BAD5AA00359816 /* Heap.c */; };
+		9899E5CC26C2D05500359816 /* Graph.c in Sources */ = {isa = PBXBuildFile; fileRef = 9899E5CB26C2D05500359816 /* Graph.c */; };
+		9899E5D026C2D0E600359816 /* LinkedList.c in Sources */ = {isa = PBXBuildFile; fileRef = 9899E5CF26C2D0E600359816 /* LinkedList.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +45,10 @@
 		987C3DCF2683787500FD36AC /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		9899E5C626BAD5AA00359816 /* Heap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Heap.h; sourceTree = "<group>"; };
 		9899E5C726BAD5AA00359816 /* Heap.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Heap.c; sourceTree = "<group>"; };
+		9899E5CA26C2D05500359816 /* Graph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
+		9899E5CB26C2D05500359816 /* Graph.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Graph.c; sourceTree = "<group>"; };
+		9899E5CE26C2D0E600359816 /* LinkedList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LinkedList.h; sourceTree = "<group>"; };
+		9899E5CF26C2D0E600359816 /* LinkedList.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = LinkedList.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +86,8 @@
 				984C3EC62688C25B003D852D /* Search.c */,
 				984C3EC12688C1B3003D852D /* Sort.h */,
 				984C3EC22688C1B3003D852D /* Sort.c */,
+				9899E5CE26C2D0E600359816 /* LinkedList.h */,
+				9899E5CF26C2D0E600359816 /* LinkedList.c */,
 				984C3EC9268CB4BE003D852D /* SkipList.h */,
 				984C3ECA268CB4BE003D852D /* SkipList.c */,
 				98382984269C7E820042D926 /* BTree.h */,
@@ -88,6 +96,8 @@
 				98382989269F2B200042D926 /* Queue.c */,
 				9899E5C626BAD5AA00359816 /* Heap.h */,
 				9899E5C726BAD5AA00359816 /* Heap.c */,
+				9899E5CA26C2D05500359816 /* Graph.h */,
+				9899E5CB26C2D05500359816 /* Graph.c */,
 			);
 			path = Sort;
 			sourceTree = "<group>";
@@ -149,7 +159,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9899E5C826BAD5AA00359816 /* Heap.c in Sources */,
+				9899E5D026C2D0E600359816 /* LinkedList.c in Sources */,
 				987C3DD02683787500FD36AC /* main.c in Sources */,
+				9899E5CC26C2D05500359816 /* Graph.c in Sources */,
 				98382986269C7E820042D926 /* BTree.c in Sources */,
 				984C3EC72688C25B003D852D /* Search.c in Sources */,
 				9838298A269F2B200042D926 /* Queue.c in Sources */,
