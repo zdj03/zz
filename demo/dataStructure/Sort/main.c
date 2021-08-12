@@ -10,6 +10,7 @@
 #include "Search.h"
 #include "BTree.h"
 #include "Heap.h"
+#include "StringMath.h"
 
 void printArray(int array[],int len){
     for (int i = 0; i < len; i++) {
@@ -27,11 +28,7 @@ int *generateRandomArray(int len){
     return array;
 }
 
-
-
-    
-int main(int argc, const char * argv[]) {
-  
+void _heap(){
     Heap *heap = initHeap(1000);
     insert(heap, 10);
     insert(heap, 11);
@@ -60,6 +57,15 @@ int main(int argc, const char * argv[]) {
     printHeap(heap);
     del(heap);
     printHeap(heap);
+}
+
+    
+int main(int argc, const char * argv[]) {
+  
+    char *a = "1234567890sdfafasa😄sdfssadfas阿斯顿发";
+    char *b = "😄";
+    
+    printf("%d\n", bf(a, b));
     
     return 0;
 }
