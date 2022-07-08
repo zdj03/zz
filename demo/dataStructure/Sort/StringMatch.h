@@ -1,12 +1,12 @@
 //
-//  StringMath.h
+//  StringMatch.h
 //  Sort
 //
 //  Created by 周登杰 on 2021/8/12.
 //
 
-#ifndef StringMath_h
-#define StringMath_h
+#ifndef StringMatch_h
+#define StringMatch_h
 
 #include <stdio.h>
 #include <stdbool.h>

@@ -63,9 +63,9 @@ void _heap(){
 int main(int argc, const char * argv[]) {
   
     char *a = "1234567890sdfafasa😄sdfssadfas阿斯顿发";
-    char *b = "😄";
+    char *b = "234567890";
     
-    printf("%d\n", bf(a, b));
+    printf("%d\n", rk(a, b));
     
     return 0;
 }

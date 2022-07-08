@@ -1,11 +1,11 @@
 //
-//  StringMath.c
+//  StringMatch.c
 //  Sort
 //
 //  Created by 周登杰 on 2021/8/12.
 //
 
-#include "StringMath.h"
+#include "StringMatch.h"
 #include <string.h>
 #include <stdlib.h>
 
