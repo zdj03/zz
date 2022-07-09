@@ -10,4 +10,9 @@
 
 #include <stdio.h>
 
+/*
+ 无序对数
+ **/
+int count(int a[], int n);
+
 #endif /* SortCounting_h */

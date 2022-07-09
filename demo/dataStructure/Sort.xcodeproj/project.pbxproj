@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9824274D2878FCAA007404FF /* SortCounting.c in Sources */ = {isa = PBXBuildFile; fileRef = 9824274C2878FCAA007404FF /* SortCounting.c */; };
 		982ED8C926C567C400FC453E /* StringMatch.c in Sources */ = {isa = PBXBuildFile; fileRef = 982ED8C826C567C400FC453E /* StringMatch.c */; };
 		98382986269C7E820042D926 /* BTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 98382985269C7E820042D926 /* BTree.c */; };
 		9838298A269F2B200042D926 /* Queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 98382989269F2B200042D926 /* Queue.c */; };
@@ -33,6 +34,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9824274B2878FCAA007404FF /* SortCounting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SortCounting.h; sourceTree = "<group>"; };
+		9824274C2878FCAA007404FF /* SortCounting.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SortCounting.c; sourceTree = "<group>"; };
 		982ED8C726C567C400FC453E /* StringMatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringMatch.h; sourceTree = "<group>"; };
 		982ED8C826C567C400FC453E /* StringMatch.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = StringMatch.c; sourceTree = "<group>"; };
 		98382984269C7E820042D926 /* BTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTree.h; sourceTree = "<group>"; };
@@ -87,6 +90,8 @@
 		987C3DCE2683787400FD36AC /* Sort */ = {
 			isa = PBXGroup;
 			children = (
+				9824274B2878FCAA007404FF /* SortCounting.h */,
+				9824274C2878FCAA007404FF /* SortCounting.c */,
 				987C3DCF2683787500FD36AC /* main.c */,
 				984C3EC52688C25B003D852D /* Search.h */,
 				984C3EC62688C25B003D852D /* Search.c */,
@@ -170,6 +175,7 @@
 			files = (
 				9899E5C826BAD5AA00359816 /* Heap.c in Sources */,
 				9899E5D026C2D0E600359816 /* LinkedList.c in Sources */,
+				9824274D2878FCAA007404FF /* SortCounting.c in Sources */,
 				987C3DD02683787500FD36AC /* main.c in Sources */,
 				9899E5CC26C2D05500359816 /* Graph.c in Sources */,
 				98382986269C7E820042D926 /* BTree.c in Sources */,

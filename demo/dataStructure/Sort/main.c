@@ -10,7 +10,7 @@
 #include "Search.h"
 #include "BTree.h"
 #include "Heap.h"
-#include "StringMath.h"
+#include "StringMatch.h"
 
 void printArray(int array[],int len){
     for (int i = 0; i < len; i++) {
