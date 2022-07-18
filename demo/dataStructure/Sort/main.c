@@ -11,6 +11,9 @@
 #include "BTree.h"
 #include "Heap.h"
 #include "StringMatch.h"
+#include "DvideConquer.h"
+#include "Backtracking.h"
+#include "DynamicProgramming.h"
 
 void printArray(int array[],int len){
     for (int i = 0; i < len; i++) {
@@ -62,10 +65,9 @@ void _heap(){
     
 int main(int argc, const char * argv[]) {
   
-    char *a = "1234567890sdfafasa😄sdfssadfas阿斯顿发";
-    char *b = "234567890";
-    
-    printf("%d\n", rk(a, b));
-    
+    dp();
+
     return 0;
 }
+
+

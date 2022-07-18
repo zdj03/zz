@@ -1,12 +1,13 @@
 //
-//  SortCounting.c
+//  DvideConquer.c
 //  Sort
 //
 //  Created by 周登杰 on 2022/7/9.
 //
 
-#include "SortCounting.h"
+#include "DvideConquer.h"
 #include <stdlib.h>
+#include <string.h>
 
 int num = 0;// 无序对数
 
@@ -26,15 +27,16 @@ void mergeSortCounting(int a[], int start, int end) {
     }
     int middle = (start + end)/2;
     mergeSortCounting(a, start, middle);
-    mergeSortCounting(a, middle, end);
+    mergeSortCounting(a, middle+1, end);
     merge(a, start, middle, end);
 }
 
 void merge(int a[], int start, int middle, int end) {
     int i = start, j = middle + 1, k = 0;
     int *tmp = (int *) malloc((end - start + 1) * sizeof(int));
+    memset(tmp, 0, sizeof(int) * (end - start + 1));
     
-    while (i <= start && j <= end) {
+    while (i <= middle && j <= end) {
         if (a[i] <= a[j]) {
             tmp[k++] = a[i++];
         } else {
@@ -43,7 +45,7 @@ void merge(int a[], int start, int middle, int end) {
             tmp[k++] = a[j++];
         }
     }
-    while (i <= start) {
+    while (i <= middle) {
         tmp[k++] = a[i++];
     }
     while (j <= end) {
@@ -52,4 +54,21 @@ void merge(int a[], int start, int middle, int end) {
     for (i = 0; i < end - start + 1;i++) {
         a[start+i] = tmp[i];
     }
+}
+
+int* countSmaller(int* nums, int numsSize, int* returnSize){
+    int *tmp = (int *)malloc(sizeof(int) * numsSize);
+       int i = 0, j = i + 1,count = 0;
+       while(i < numsSize){
+           count = 0;
+           for(j = i+1;j < numsSize;j++) {
+               if (nums[i] > nums[j]) {
+                   count++;
+               }
+           }
+           tmp[i++] = count;
+           *returnSize = count;
+           printf("returnSize:%d\n",*returnSize);
+       }
+       return tmp;
 }
