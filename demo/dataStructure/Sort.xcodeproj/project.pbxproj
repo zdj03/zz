@@ -18,6 +18,7 @@
 		9870D9E1287EFCEA003A5A89 /* Backtracking.c in Sources */ = {isa = PBXBuildFile; fileRef = 9870D9E0287EFCEA003A5A89 /* Backtracking.c */; };
 		9870D9E42880461D003A5A89 /* GreedyAlgorithm.c in Sources */ = {isa = PBXBuildFile; fileRef = 9870D9E32880461D003A5A89 /* GreedyAlgorithm.c */; };
 		9870D9E728842DCC003A5A89 /* DynamicProgramming.c in Sources */ = {isa = PBXBuildFile; fileRef = 9870D9E628842DCC003A5A89 /* DynamicProgramming.c */; };
+		9870D9EA288EB673003A5A89 /* ShortestPathAlgorithm.c in Sources */ = {isa = PBXBuildFile; fileRef = 9870D9E9288EB672003A5A89 /* ShortestPathAlgorithm.c */; };
 		987C3DD02683787500FD36AC /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 987C3DCF2683787500FD36AC /* main.c */; };
 		9899E5C826BAD5AA00359816 /* Heap.c in Sources */ = {isa = PBXBuildFile; fileRef = 9899E5C726BAD5AA00359816 /* Heap.c */; };
 		9899E5CC26C2D05500359816 /* Graph.c in Sources */ = {isa = PBXBuildFile; fileRef = 9899E5CB26C2D05500359816 /* Graph.c */; };
@@ -59,6 +60,8 @@
 		9870D9E32880461D003A5A89 /* GreedyAlgorithm.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GreedyAlgorithm.c; sourceTree = "<group>"; };
 		9870D9E528842DCC003A5A89 /* DynamicProgramming.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamicProgramming.h; sourceTree = "<group>"; };
 		9870D9E628842DCC003A5A89 /* DynamicProgramming.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = DynamicProgramming.c; sourceTree = "<group>"; };
+		9870D9E8288EB672003A5A89 /* ShortestPathAlgorithm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShortestPathAlgorithm.h; sourceTree = "<group>"; };
+		9870D9E9288EB672003A5A89 /* ShortestPathAlgorithm.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ShortestPathAlgorithm.c; sourceTree = "<group>"; };
 		987C3DCC2683787400FD36AC /* Sort */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Sort; sourceTree = BUILT_PRODUCTS_DIR; };
 		987C3DCF2683787500FD36AC /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		9899E5C626BAD5AA00359816 /* Heap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Heap.h; sourceTree = "<group>"; };
@@ -128,6 +131,8 @@
 				9870D9E32880461D003A5A89 /* GreedyAlgorithm.c */,
 				9870D9E528842DCC003A5A89 /* DynamicProgramming.h */,
 				9870D9E628842DCC003A5A89 /* DynamicProgramming.c */,
+				9870D9E8288EB672003A5A89 /* ShortestPathAlgorithm.h */,
+				9870D9E9288EB672003A5A89 /* ShortestPathAlgorithm.c */,
 			);
 			path = Sort;
 			sourceTree = "<group>";
@@ -196,6 +201,7 @@
 				9899E5CC26C2D05500359816 /* Graph.c in Sources */,
 				98382986269C7E820042D926 /* BTree.c in Sources */,
 				9870D9E1287EFCEA003A5A89 /* Backtracking.c in Sources */,
+				9870D9EA288EB673003A5A89 /* ShortestPathAlgorithm.c in Sources */,
 				985016C8270526420031B87F /* Trie.c in Sources */,
 				984C3EC72688C25B003D852D /* Search.c in Sources */,
 				9838298A269F2B200042D926 /* Queue.c in Sources */,

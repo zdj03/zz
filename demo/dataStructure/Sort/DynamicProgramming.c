@@ -26,32 +26,245 @@ bool jumpGame(int *a, int n);
 // 有一排N栋房子，每栋房子要漆成3中颜色中的一种：红蓝绿，任何2栋相邻的房子不能漆成相同的颜色，第i栋房子染成红色、蓝色、绿色的话费分别是cost[i][0]、cost[i][1]、cost[i][2]，问最少需要花多少钱油漆这些房子
 int paintHouse(int **costs, int costsSize, int* costsColSize);
 
-void dp(void) {    
-    int a[3][3] = {{17,2,17},{16,16,5},{14,3,19}};
-    int *p[3] = {a[0],a[1],a[2]};
-    int colSize[3] = {3,3,3};
-    printf("\n%d\n", paintHouse(p, 3, colSize));
+// 有一排房子N栋房子（0～N-1），房子i里有A[i]个金币，一个窃贼想选择一些房子偷金币，但是不能偷任何挨着的两家邻居，否则会被警察逮住最多偷多少金币
+int hourseRobber1(int *coins, int n);
+// 有一圈N栋房子，房子i-1里有A[i]个金币，一个窃贼想选择一些房子偷金币，但是不能偷任何挨着的两家邻居，否则会被警察逮住最多偷多少金币
+int hourseRobber2(int *coins, int n);
+// 已知后面N天一支股票的每天的价格p0,p1,...pn-1,可以最多买一股卖一股，求最大利润
+int stock1(int *a, int n);
+// 已知后面N天一支股票的每天的价格p0,p1,...pn-1,可以买卖一股任意多次，但任意时刻手中最多持有一股，求最大利润
+int stock2(int *a, int n);
+// 给定一个字符串S[0...N-1]，要求将这个字符串划分成若干段，每一段都是一个回文串，求最少划分几次
+int palindromePartitioning(char *a);
+bool isPalindrome(char *s, int p, int q);
+
+
+int maxProfit(int k, int* prices, int pricesSize);
+
+
+
+void dp(void) {
+    char a3[] = "a";
+    printf("\n%d\n", palindromePartitioning(a3));
+}
+
+bool isPalindrome1(char *s, int p, int q) {
+    while (p < q) {
+        if (s[p] == s[q]) {
+            ++p;
+            --q;
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
+int palindromePartitioning(char *a){
+    int n = (int)strlen(a);
+        // i~j是否是回文字符串
+        bool palin[n][n];
+        memset(palin, false, sizeof(palin));
+        int i,j,t;
+        for(t=0;t<n;++t){
+            i=j=t;
+            while(i>=0 && j<n && a[i]==a[j]){
+                palin[i][j]=true;
+                --i;
+                ++j;
+            }
+            i=t;
+            j=t+1;
+            while(i>=0 && j<n && a[i]==a[j]){
+                palin[i][j]=true;
+                --i;
+                ++j;
+            }
+        }
+        int f[n+1];
+        f[0]=0;
+        for (i=1; i<=n; ++i) {
+            f[i]=INT_MAX;
+            for(j=0;j<i;++j){
+                //j~i是回文，+1
+                if (palin[j][i-1]) {
+                    f[i]=fmin(f[i], f[j]+1);
+                }
+            }
+        }
+        return f[n]-1;
+}
+
+bool isLowerChar(char ch) {
+    return ('a'<=ch && ch<='z');
+}
+
+bool isNumChar(char ch) {
+    return ('0'<=ch && ch<='9') || ('A'<=ch && ch<='Z') || ('a'<=ch && ch<='z');
+}
+
+// A man, a plan, a canal: Panama
+bool isPalindrome(char *s, int p, int q) {
+    while (p < q) {
+        while (!isNumChar(s[p]) && p<q) {
+            ++p;
+        }
+        while (!isNumChar(s[q]) && p<q) {
+            --q;
+        }
+        if (isLowerChar(s[p])) {
+            s[p] -= 32;
+        }
+        if (isLowerChar(s[q])) {
+            s[q] -= 32;
+        }
+        if (s[p] == s[q]) {
+            ++p;
+            --q;
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
+int maxProfit(int k, int* prices, int pricesSize){
+    if (pricesSize==0) {
+        return 0;
+    }
+    int f[pricesSize+1][k+1];
+    memset(f, 0, sizeof(f));
+    int i, j;
+    f[0][1]=0;
+    f[0][2]=f[0][3]=f[0][4]=f[0][5]=INT_MIN;
+    for (i = 1; i < pricesSize+1; ++i) {
+        for (j=1; j<=5; j += 2) {
+            f[i][j] = f[i-1][j];
+            if (j>1 && i>1 && f[i-1][j-1] != INT_MAX) {
+                f[i][j] = fmax(f[i-1][j-1]+prices[i-1]-prices[i-2], f[i][j]);
+            }
+        }
+        for (j=2; j<=5; j += 2) {
+            f[i][j]=f[i-1][j-1];
+            if (i>1 && f[i-1][j] != INT_MIN) {
+                f[i][j] = fmax(f[i][j], f[i-1][j]+prices[i-1]-prices[i-2]);
+            }
+            if (j!=2 && i > 1 && f[i-1][j-2] != INT_MIN) {
+                f[i][j] = fmax(f[i][j], f[i-1][j]+prices[i-1]-prices[i-2]);
+            }
+        }
+    }
+    
+    return fmax(f[pricesSize][1], fmax(f[pricesSize][3], f[pricesSize][5]));
+}
+
+
+int stock2(int *a, int n) {
+   // 最优策略：价格上升的区间：昨天买入，今天卖出
+    int res=0;
+    for (int i=0; i<n-1; ++i) {
+        if (a[i]<a[i+1]) {
+            res+=a[i+1]-a[i];
+        }
+    }
+    return res;
+}
+
+
+int stock1(int *a, int n) {
+    //  当前时刻之前，买入的最低价格，当前卖出即最大
+    if (n==0) return 0;
+    int max=0;
+    int min=a[0];
+    int i;
+    for (i = 1; i < n; ++i) {
+        if (a[i-1]<min) {
+            min=a[i-1];
+        }
+        max=fmax(max,a[i]-min);
+    }
+    return max;
+}
+
+int hourseRobber2(int *nums, int numsSize) {
+    if(numsSize == 0) return 0;
+    if(numsSize == 1) return nums[0];
+    if(numsSize == 2) return fmax(nums[0],nums[1]);
+    int f[numsSize+1];
+    f[0]=0;
+    f[1]=0;
+    f[2]=nums[1];
+    // 不偷房子1
+    for (int i = 3;i < numsSize+1;++i) {
+        f[i] = fmax(f[i-1], f[i-2] + nums[i-1]);
+    }
+    // 不偷房子n
+    f[1]=nums[0];
+    f[2]=0;
+    for (int i = 2;i < numsSize; ++i) {
+        f[i] = fmax(f[i-1], f[i-2] + nums[i-1]);
+    }
+    return fmax(f[numsSize], f[numsSize-1]);
+}
+
+
+int hourseRobber1(int *coins, int n) {
+    if (n==0) {
+        return 0;
+    }
+    int f[n+1];
+    memset(f, 0, sizeof(f));
+    f[0] = 0;
+    f[1] = coins[0];
+    
+    int i = 2;
+    for (; i < n+1; ++i) {
+        //         fmax(不偷第i栋房子 ， 偷第i栋房子)
+        f[i] = fmax(f[i-1], f[i-2]+coins[i-1]);
+    }
+    return f[n];
 }
 
 int paintHouse(int **costs, int costsSize, int* costsColSize){
     int colors = costsColSize[0];
     int f[costsSize+1][colors];
     int i,j,k;
-    for(i = 0; i < costsSize+1;++i) {
+    
+    // 第i-1栋房子染色的最小值、次小值的颜色坐标
+    int j1 = 0, j2 = 0;
+    // 第i-1栋房子染色的最小值、次小值
+    int min1, min2;
+    
+    for (j = 0; j < colors; ++j) {
+        f[0][j] = 0;
+    }
+    for(i = 1; i < costsSize+1;++i) {
+        min1 = min2 = INT_MAX;
         for(j = 0; j < colors;++j) {
-            if(i == 0) f[i][j] = 0;
-            else {
-                f[i][j] = INT_MAX;
-                for(k = 0; k< colors; ++k) {
-                    if(j != k) {
-                        f[i][j] = fmin(f[i][j], f[i-1][k] + costs[i-1][j]);
-                    }
+            if (f[i-1][j] < min1) {
+                min2 = min1;
+                j2 = j1;
+                min1 = f[i-1][j];
+                j1 = j;
+            } else {
+                if (f[i-1][j] < min2) {
+                    min2 = f[i-1][j];
+                    j2 = j;
+                }
+            }
+            for(k = 0; k< colors; ++k) {
+                // 不为最小值，+次小值
+                if(j != j1) {
+                    f[i][j] = f[i-1][j1] + costs[i-1][j];
+                } else {
+                    // 最小值，+最小值
+                    f[i][j] = f[i-1][j2] + costs[i-1][j];
                 }
             }
         }
     }
-    int res = f[costsSize][0];
-    for(i = 1;i<colors;++i){
+    int res = INT_MAX;
+    for(i = 0;i<colors;++i){
         res = fmin(res,f[costsSize][i]);
     }
     return res;

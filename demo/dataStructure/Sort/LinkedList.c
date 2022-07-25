@@ -40,6 +40,7 @@ void addNode(LinkedList *linkedList, int data){
     linkedList->sum++;
 }
 
+/// 删除尾节点，用作栈
 Node *delLastNode(LinkedList *linkedList){
     if (linkedList == NULL || linkedList->sum == 0) {
         return NULL;

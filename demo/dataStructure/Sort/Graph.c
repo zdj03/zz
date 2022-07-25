@@ -7,7 +7,6 @@
 
 #include "Graph.h"
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 
 
@@ -35,112 +34,144 @@ void print(int *prev, int s, int t){
     printf("%d ", t);
 }
 
-
-void bfs(Graph *graph, int s, int t){
+/*------------------- 图广度优先搜索 -------------------*/
+bool bfs(Graph *graph, int s, int t){
     if (s == t) {
-        return;
+        return true;
     }
+    bool visited[graph->v];
+    memset(visited, false, sizeof(visited));
+    int pre[graph->v];
+    memset(pre, -1, sizeof(pre));
     
-    // 将访问过的元素标记为true
-    bool *visited = (bool *)malloc(sizeof(bool) * graph->v);
     visited[s] = true;
     
-    // 广度遍历队列
     LinkedList *queue = initLinkedList();
     addNode(queue, s);
     
-    // 记录遍历路径,数组下标为元素值，存储图的入度的顶点的值
-    int *pre = (int *)malloc(sizeof(int) * graph->v);
-    memset(pre,-1,graph->v);
-    
+    Node *curNode;
+    int prevData, curData, i;
+    LinkedList *sLinkList;
     while (queue->sum != 0) {
-        // 队头元素出栈
-        int w = delFirstNode(queue)->data;
-        // 遍历对头元素邻接表
-        for (int i = 0; i < graph->adj[w]->sum; ++i) {
-            int q = nodeOfIndex(graph->adj[w], i)->data;
-            if (visited[q] == false) {
-                pre[q] = w;
-                // 已找到t
-                if (q == t) {
-                    // 打印路径
+        prevData = delFirstNode(queue)->data;
+        sLinkList = graph->adj[prevData];
+        for (i = 0; i < sLinkList->sum; ++i) {
+            curNode = nodeOfIndex(sLinkList, i);
+            curData = curNode->data;
+            if (visited[curData] == false) {
+                pre[curData] = prevData;
+                visited[curData] = true;
+                if (curData == t) {
                     print(pre, s, t);
-                    return;
+                    return true;
                 }
-                visited[q] = true;
-                addNode(queue, q);
+                addNode(queue, curData);
+            }
+        }
+    }
+    return false;
+}
+
+
+/*------------------- 图深度优先搜索 -------------------*/
+bool recurDfs(Graph *graph, int s, int t, bool *visited, int *prev){
+    visited[s] = true;
+    if (s == t) {
+        return true;
+    }
+    LinkedList *linkList = graph->adj[s];
+    Node *node;
+    int data, j;
+    for (j = 0; j < linkList->sum; ++j) {
+        node = nodeOfIndex(linkList, j);
+        data = node->data;
+        if (visited[data] == false) {
+            prev[data] = s;
+            return recurDfs(graph, data, t, visited, prev);
+        }
+    }
+    return false;
+}
+
+bool dfs(Graph *graph, int s, int t){
+    bool visited[graph->v];
+    memset(visited, false, sizeof(visited));
+    int prev[graph->v];
+    memset(prev, -1, sizeof(prev));
+    bool found = recurDfs(graph, s, t, visited, prev);
+    if (found) {
+        print(prev, s, t);
+    }
+    return found;
+}
+
+
+/*--------------------- 拓扑排序 -------------------*/
+void topologyByKahn(Graph *graph){
+    // 下标为i的节点的入度
+    int inDegree[graph->v];
+    for (int i = 0; i < graph->v; ++i) {
+        for (int j = 0; j < graph->adj[i]->sum; ++j) {
+            int w = nodeOfIndex(graph->adj[i], j)->data;
+            inDegree[w]++;
+        }
+    }
+    
+    // 入度==0的节点在图中的下标
+    LinkedList *queue = initLinkedList();
+    for (int i = 0; i< graph->v; ++i) {
+        if (inDegree[i] == 0) {
+            addNode(queue, i);
+        }
+    }
+    while (queue->sum != 0) {
+        int i = delFirstNode(queue)->data;
+        LinkedList *iLinkList = graph->adj[i];
+        for (int j = 0; j < iLinkList->sum; ++j) {
+            int k = nodeOfIndex(iLinkList, j)->data;
+            inDegree[k]--;
+            if (inDegree[k] == 0) {
+                addNode(queue, k);
             }
         }
     }
 }
 
-
-bool found = false;
-
-void recurDfs(Graph *graph, int s, int t, bool *visited, int *prev){
-    if (found == true) {
-        return;
+void _topologyByDFS(Graph *graph, bool *visited, int m){
+    LinkedList *mLinkList = graph->adj[m];
+    for (int i = 0; i < mLinkList->sum; ++i) {
+        int data = nodeOfIndex(mLinkList, i)->data;
+        if (visited[data] == false) {
+            visited[data] = true;
+            _topologyByDFS(graph, visited, data);
+        }
+    }
+}
+    
+void topologyByDFS(Graph *graph){
+    // 构建逆邻接表
+    Graph *inverseGraph = createGraph(graph->v);
+    for (int i = 0; i < graph->v; ++i) {
+        inverseGraph->adj[i] = initLinkedList();
     }
     
-    visited[s] = true;
-    if (s == t) {
-        found = true;
-        return;
+    // 入度（s->t s为顶点）变出度（t为顶点）
+    for (int j = 0; j < graph->v; ++j) {
+        LinkedList *jLinkList = graph->adj[j];
+        for (int k = 0; k < jLinkList->sum; ++k) {
+            Node *node = nodeOfIndex(jLinkList, k);
+            addNode(inverseGraph->adj[node->data], j);
+        }
     }
-    //依次从邻接表的每个元素进行递归深度查找
-    for (int i = 0; i < graph->adj[s]->sum; ++i) {
-        int q = nodeOfIndex(graph->adj[s], i)->data;
-        if (visited[q] == false) {
-            prev[q] = s;
-            recurDfs(graph, q, t, visited, prev);
+    
+    bool visited[graph->v];
+    memset(visited, false, sizeof(visited));
+    // 深度遍历
+    for (int m = 0; m < graph->v; ++m) {
+        if (visited[m] == false) {
+            visited[m] = true;
+            _topologyByDFS(inverseGraph, visited, m);
         }
     }
 }
 
-void dfs(Graph *graph, int s, int t){
-    found = false;
-    
-    bool *visited = (bool *)malloc(sizeof(bool) * graph->v);
-    int *prev = (int *)malloc(sizeof(int) * graph->v);
-    memset(prev, -1, graph->v);
-    recurDfs(graph, s, t, visited, prev);
-    print(prev, s, t);
-}
-
-
-
-//kQueue *initQueue(void){
-//    kQueue *q = (kQueue *)malloc(sizeof(kQueue));
-//    q->sum = 0;
-//    Node *node = (Node *)malloc(sizeof(Node));
-//    node->data = -1;
-//    node->next = NULL;
-//
-//    // 初始化，队头队尾指向相同元素
-//    q->head = node;
-//    q->tail = node;
-//
-//    return q;
-//}
-//
-//
-//void enQueue(kQueue *q, int a){
-//    Node *node = initLinkedList(a);
-//    q->tail->next = node;
-//    q->tail = node;
-//    q->sum++;
-//}
-//
-//int dequeue(kQueue *q){
-//    if (q->sum == 0) {
-//        return -1;
-//    }
-//    // 获取队头
-//    Node *firstNode = q->head->next;
-////    队头指向第2个元素
-//    q->head = firstNode->next;
-//    q->sum--;
-//    int ret = firstNode->data;
-//    free(firstNode);
-//    return ret;
-//}
